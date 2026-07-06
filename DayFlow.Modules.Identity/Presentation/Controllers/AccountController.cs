@@ -1,12 +1,22 @@
-using System.Security.Claims;
+﻿using DayFlow.Modules.Identity.Application.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
-using DayFlow.Modules.Identity.Application.Commands;
+using System.Security.Claims;
 
-namespace DayFlow.Web.Controllers
+namespace DayFlow.Modules.Identity.Presentation.Controllers
 {
+    /// <summary>
+    ///   ADD  <Project Sdk="Microsoft.NET.Sdk"> => <Project Sdk="Microsoft.NET.Sdk.Razor">
+    ///   ADD  <ItemGroup>
+    ///            <FrameworkReference Include = "Microsoft.AspNetCore.App" />
+    ///        </ItemGroup>
+    ///   ADD套件 Microsoft.AspNetCore.Mvc
+    ///   ADD  <PropertyGroup>
+    ///            <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    ///        </PropertyGroup>
+    /// </summary>
     public class AccountController : Controller
     {
         private readonly IMediator _mediator;
@@ -15,15 +25,16 @@ namespace DayFlow.Web.Controllers
         {
             _mediator = mediator;
         }
+
         [HttpGet]
-        public IActionResult Login(string returnUrl = "/")
+        public IActionResult SignIn(string returnUrl = "/")
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string email, string password, string returnUrl = "/")
+        public async Task<IActionResult> SignIn(string email, string password, string returnUrl = "/")
         {
             var result = await _mediator.Send(new LoginCommand(email, password));
             if (!result.Success)

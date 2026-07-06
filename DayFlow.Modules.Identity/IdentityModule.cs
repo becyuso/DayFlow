@@ -1,9 +1,16 @@
 ﻿using DayFlow.Modules.Identity.Application;
 using DayFlow.Modules.Identity.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DayFlow.Modules.Identity;
+
+public interface IModule
+{
+    void Register(IServiceCollection services, IConfiguration config, string? connectionString = null);
+    void RegisterMvc(IMvcBuilder mvc);
+}
 
 /// <summary>
 /// Identity Module 對外唯一入口
@@ -12,13 +19,13 @@ namespace DayFlow.Modules.Identity;
 /// 1. 組合 Application + Infrastructure
 /// 2. 提供單一 DI 入口（避免 API 了解內部結構）
 /// </summary>
-public static class IdentityModule
+public class IdentityModule : IModule
 {
     /// <summary>
     /// 註冊 Identity Module 所有依賴
     /// </summary>
-    public static IServiceCollection AddIdentityModule(
-        this IServiceCollection services,
+    public void Register(
+        IServiceCollection services,
         IConfiguration config,
         string? connectionString = null)
     {
@@ -27,7 +34,46 @@ public static class IdentityModule
 
         // 註冊 Infrastructure 層（EF Core / Repository ...）
         services.AddIdentityInfrastructure(config, connectionString);
+    }
 
-        return services;
+    /// <summary>
+    /// Program.cs需要加上 app.MapRazorPages(); 
+    /// </summary>
+    /// <param name="mvc"></param>
+    public void RegisterMvc(IMvcBuilder mvc)
+    {
+        mvc.AddApplicationPart(typeof(IdentityModule).Assembly);
+
+        mvc.AddRazorOptions(options =>
+        {
+            options.ViewLocationExpanders
+            .Add(
+              new IdentityViewLocationExpander()
+            );
+        });
+    }
+
+    public class IdentityViewLocationExpander
+    : IViewLocationExpander
+    {
+        public void PopulateValues(
+            ViewLocationExpanderContext context)
+        {
+        }
+
+
+        public IEnumerable<string> ExpandViewLocations(
+            ViewLocationExpanderContext context,
+            IEnumerable<string> viewLocations)
+        {
+
+            var locations = new[]
+            {
+               "/Presentation/Views/{1}/{0}.cshtml",
+               "/Presentation/Views/Shared/{0}.cshtml"
+            };
+
+            return locations.Concat(viewLocations);
+        }
     }
 }

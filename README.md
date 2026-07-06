@@ -165,3 +165,82 @@ DayFlow.Modules.Identity
    │ └─ Schema: notification 
    ├─ Table: notification.Messages 
    └─ Table: notification.Templates
+
+
+
+
+
+
+
+
+
+
+
+
+
+   需要加入什麼參考？
+
+你的 Module 不應該只是普通 Class Library。
+
+1. Project SDK 改成 Razor SDK
+
+DayFlow.Modules.Identity.csproj
+
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+不是：
+
+<Project Sdk="Microsoft.NET.Sdk">
+2. 加 ASP.NET Core Framework Reference
+<ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+</ItemGroup>
+
+提供：
+
+Controller
+HttpContext
+IActionResult
+View()
+ModelState
+Razor MVC
+3. 如果使用 MVC Controller
+
+加入：
+
+<ItemGroup>
+    <PackageReference 
+        Include="Microsoft.AspNetCore.Mvc.Core"
+        Version="8.0.0" />
+</ItemGroup>
+
+但 .NET 6/7/8 通常不需要，FrameworkReference 已包含。
+
+4. Web Host 引用 Module
+
+DayFlow.Web.csproj
+
+<ItemGroup>
+    <ProjectReference Include="..\DayFlow.Modules.Identity\DayFlow.Modules.Identity.csproj" />
+</ItemGroup>
+5. 啟用 Module Controller 掃描
+
+Web:
+
+builder.Services
+    .AddControllersWithViews()
+    .AddApplicationPart(
+        typeof(LoginController).Assembly);
+6. Razor View 找不到時
+
+需要：
+
+builder.Services
+    .AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
+
+以及 Module：
+
+<PropertyGroup>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+</PropertyGroup>

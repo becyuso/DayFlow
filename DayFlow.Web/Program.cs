@@ -1,24 +1,41 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using DayFlow.Modules.Identity;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var modules = new IModule[]
+{
+    new IdentityModule()
+};
+
+var identityConn = builder.Configuration.GetConnectionString("DayflowDb");
+
+foreach (var module in modules)
+{
+    module.Register(builder.Services, builder.Configuration, identityConn);
+}
+
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+var mvc = builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login";
+        options.LoginPath = "/Account/SignIn";
         options.LogoutPath = "/Account/Logout";
         options.ExpireTimeSpan = TimeSpan.FromHours(8);
     });
 
-// Register Identity module services
-var identityConn = builder.Configuration.GetConnectionString("DayflowDb");
-builder.Services.AddIdentityModule(builder.Configuration, identityConn);
+// Register Identity module services (controllers as application parts)
+foreach (var module in modules)
+{
+    module.RegisterMvc(mvc);
+}
 
 var app = builder.Build();
 
@@ -33,6 +50,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+// Ensure authentication middleware is in pipeline
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
