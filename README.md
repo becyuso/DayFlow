@@ -1,5 +1,64 @@
 務實 DDD　+ Modular Monolith + Cqrs + Transaction Boundary
 
+        MediatR.Extensions.Microsoft.DependencyInjection
+        services.AddMediatR(typeof(IdentityApplication).Assembly);
+
+DayFlow.Modules.Identity 
+
+│ ├─ Domain 
+│ │  
+│ │  ├─ Entities
+│ │  
+│ │  │  ├─ User.cs 
+│ │  
+│ │  ├─ Factory 
+│ │  
+│ │  │  ├─ UserFactory.cs 
+│ │ 
+│ │  ├─ ValueObjects 
+│ │  │  
+│ │  ├─ Enums 
+│ │  │  
+│ │  ├─ Events 
+│ │  
+│ ├─ Application 
+│ │  
+│ │  ├─ Commands 
+│ │  
+│ │  │  ├─ LoginCommand.cs 
+│ │  
+│ │  │  ├─ LoginHandler.cs 
+│ │  
+│ │  ├─ Security 
+│ │  
+│ │  │  ├─ IPasswordHasher.cs 
+│ │  
+│ │  └─ IdentityApplication.cs 
+│ │  
+│ ├─ Infrastructure 
+│ │  
+│ │  ├─ Database
+│ │  
+│ │  │  │  ├─ IdentityDbContext.cs 
+│ │  
+│ │  ├─ Repositories
+│ │  
+│ │  │  │  ├─ UserRepository.cs 
+│ │  
+│ │  │  ├─ Security 
+│ │  
+│ │  ├─ IdentityInfrastructure.cs 
+│ │  
+│ ├─ Presentation 
+│ │  
+│ │  ├─ Controllers 
+│ │  │  
+│ │  ├─ ViewModels 
+│ │  │  
+│ │  └─ Views 
+│ │     
+│ └─ IdentityModule.cs 
+
 完整目錄結構參考
 DayFlow.Modules.Identity
 │

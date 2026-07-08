@@ -1,4 +1,3 @@
-using BCrypt.Net;
 using DayFlow.Modules.Identity.Application.Security;
 using DayFlow.Modules.Identity.Infrastructure.Repositories;
 using DayFlow.Modules.Identity.Infrastructure.Security;

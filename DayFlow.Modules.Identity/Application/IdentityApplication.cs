@@ -15,8 +15,10 @@ public static class IdentityApplication
 {
     public static IServiceCollection AddIdentityApplication(this IServiceCollection services)
     {
-        services.AddMediatR(typeof(IdentityApplication).Assembly);
-
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(typeof(IdentityApplication).Assembly);
+        });
         return services;
     }
 }

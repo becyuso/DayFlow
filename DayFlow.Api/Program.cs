@@ -23,8 +23,8 @@ builder.Services.AddOpenApi();
 
 
 // Register Identity module services
-var dayflowDbConn = builder.Configuration.GetConnectionString("DayflowDb");
-builder.Services.AddIdentityModule(builder.Configuration, dayflowDbConn);
+//var dayflowDbConn = builder.Configuration.GetConnectionString("DayflowDb");
+//builder.Services.AddIdentityModule(builder.Configuration, dayflowDbConn);
 
 var app = builder.Build();
 
