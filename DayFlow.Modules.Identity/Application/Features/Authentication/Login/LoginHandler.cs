@@ -3,7 +3,7 @@ using DayFlow.Modules.Identity.Infrastructure.Repositories;
 using DayFlow.Modules.Identity.Infrastructure.Security;
 using MediatR;
 
-namespace DayFlow.Modules.Identity.Application.Commands
+namespace DayFlow.Modules.Identity.Application.Features.Authentication.Login
 {
     public class LoginHandler : IRequestHandler<LoginCommand, LoginResult>
     {
@@ -32,7 +32,7 @@ namespace DayFlow.Modules.Identity.Application.Commands
 
             //var token = _tokenService.CreateToken(user);
 
-            return LoginResult.Ok(user.Email, user.DisplayName);
+            return LoginResult.Ok(user.UserId, user.PublicId, user.Email, user.DisplayName);
         }
     }
 }

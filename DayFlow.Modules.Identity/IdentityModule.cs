@@ -1,5 +1,6 @@
 ﻿using DayFlow.Modules.Identity.Application;
 using DayFlow.Modules.Identity.Infrastructure;
+using DayFlow.Web.Common.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +43,12 @@ public class IdentityModule : IModule
     /// <param name="mvc"></param>
     public void RegisterMvc(IMvcBuilder mvc)
     {
-        mvc.AddApplicationPart(typeof(IdentityModule).Assembly);
+        mvc.ConfigureApplicationPartManager(manager =>
+        {
+            manager.FeatureProviders.Add(
+                new NamespaceControllerFeatureProvider(
+                    "DayFlow.Modules.Identity.Presentation.Web"));
+        }).AddApplicationPart(typeof(IdentityModule).Assembly);
 
         mvc.AddRazorOptions(options =>
         {
@@ -69,8 +75,8 @@ public class IdentityModule : IModule
 
             var locations = new[]
             {
-               "/Presentation/Views/{1}/{0}.cshtml",
-               "/Presentation/Views/Shared/{0}.cshtml"
+               "/Presentation/Web/Views/{1}/{0}.cshtml",
+               "/Presentation/Web/Views/Shared/{0}.cshtml"
             };
 
             return locations.Concat(viewLocations);

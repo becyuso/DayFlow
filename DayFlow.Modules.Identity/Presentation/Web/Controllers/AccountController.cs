@@ -1,11 +1,11 @@
-﻿using DayFlow.Modules.Identity.Application.Commands;
+﻿using DayFlow.Modules.Identity.Application.Features.Authentication.Login;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace DayFlow.Modules.Identity.Presentation.Controllers
+namespace DayFlow.Modules.Identity.Presentation.Web.Controllers
 {
     /// <summary>
     ///   ADD  <Project Sdk="Microsoft.NET.Sdk"> => <Project Sdk="Microsoft.NET.Sdk.Razor">
