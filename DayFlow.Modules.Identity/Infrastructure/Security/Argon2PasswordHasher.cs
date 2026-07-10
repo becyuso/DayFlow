@@ -28,8 +28,11 @@ namespace DayFlow.Modules.Identity.Infrastructure.Security
         private int MemorySize => _options.MemorySize;
         private int DegreeOfParallelism => _options.DegreeOfParallelism;
 
-        public string Hash(string password)
+        public string Hash(string? password)
         {
+            if (string.IsNullOrWhiteSpace(password))
+                return string.Empty;
+
             byte[] salt = RandomNumberGenerator.GetBytes(SaltSize);
 
             var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password))
@@ -46,8 +49,11 @@ namespace DayFlow.Modules.Identity.Infrastructure.Security
                    $"{Convert.ToBase64String(salt)}.{Convert.ToBase64String(hash)}";
         }
 
-        public bool Verify(string password, string hashedPassword)
+        public bool Verify(string? password, string? hashedPassword)
         {
+            if (string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(hashedPassword))
+                return false;
+
             var parts = hashedPassword.Split('.');
 
             if (parts.Length != 5)

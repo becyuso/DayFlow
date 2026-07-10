@@ -1,5 +1,7 @@
-using MediatR;
+using DayFlow.Api.Configuration;
+using DayFlow.Api.Diagnostics;
 using DayFlow.Modules.Identity;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,27 +19,45 @@ var builder = WebApplication.CreateBuilder(args);
 //    cfg.RegisterServicesFromAssemblies(assemblies);
 //});
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+//builder.Services.AddOpenApi();
 
 
 // Register Identity module services
-//var dayflowDbConn = builder.Configuration.GetConnectionString("DayflowDb");
-//builder.Services.AddIdentityModule(builder.Configuration, dayflowDbConn);
+var dayflowDbConn = builder.Configuration.GetConnectionString("DayflowDb");
+
+builder.Services.AddSwaggerConfiguration();
+
+//builder.Services.AddAuthenticationConfiguration(builder.Configuration);
+
+//builder.Services.AddAuthorizationConfiguration();
+
+//builder.Services.AddCorsConfiguration(builder.Configuration);
+
+builder.Services.AddProblemDetails();
+
+builder.Services.AddModuleConfiguration(builder.Configuration, dayflowDbConn);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.MapOpenApi();
+//}
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseSwaggerConfiguration(app.Environment.IsDevelopment());
 
-app.MapControllers();
+//app.UseAuthentication();
+
+//app.UseAuthorization();
+
+//app.MapControllers();
+app.MapIdentityEndpoints();
+
+//app.LogEndpoints();
 
 app.Run();

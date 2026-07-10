@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace DayFlow.Api.Controllers
+namespace DayFlow.Api
 {
     [ApiController]
     [Route("[controller]")]

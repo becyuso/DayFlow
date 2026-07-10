@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
 namespace DayFlow.Modules.Identity.Presentation.Api.Authentication.Login
@@ -19,12 +20,11 @@ namespace DayFlow.Modules.Identity.Presentation.Api.Authentication.Login
                 .Produces<LoginResponse>(StatusCodes.Status200OK)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
                 .ProducesProblem(StatusCodes.Status401Unauthorized);
-
             return app;
         }
 
         private static async Task<IResult> HandleAsync(
-            LoginRequest request,
+            [FromBody] LoginRequest request,
             ISender sender,
             CancellationToken cancellationToken)
         {

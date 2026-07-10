@@ -12,6 +12,9 @@ Login
 ├── Handler.cs
 └── Result.cs
 
+PS E:\Code\C#\DayFlow> cd DayFlow.Web.Common
+PS E:\Code\C#\DayFlow\DayFlow.Web.Common> dotnet list package
+
 
 務實 DDD　+ Modular Monolith + Cqrs + Transaction Boundary
 

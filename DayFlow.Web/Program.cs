@@ -12,11 +12,11 @@ var modules = new IModule[]
     new IdentityModule()
 };
 
-var identityConn = builder.Configuration.GetConnectionString("DayflowDb");
+var dayflowDbConn = builder.Configuration.GetConnectionString("DayflowDb");
 
 foreach (var module in modules)
 {
-    module.Register(builder.Services, builder.Configuration, identityConn);
+    module.Register(builder.Services, builder.Configuration, dayflowDbConn);
 }
 
 // Add services to the container.

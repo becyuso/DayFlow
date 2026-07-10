@@ -6,7 +6,7 @@ namespace DayFlow.Modules.Identity.Infrastructure.Repositories
 {
     public interface IUserRepository
     {
-        Task<User?> GetByEmailAsync(string email);
+        Task<User?> GetByEmailAsync(string? email);
     }
 
     public class UserRepository : IUserRepository
@@ -18,7 +18,7 @@ namespace DayFlow.Modules.Identity.Infrastructure.Repositories
             _db = db;
         }
 
-        public async Task<User?> GetByEmailAsync(string email)
+        public async Task<User?> GetByEmailAsync(string? email)
         {
             return await _db.Users.FirstOrDefaultAsync(x => x.Email == email);
         }
