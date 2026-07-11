@@ -1,0 +1,20 @@
+﻿#editor {
+    border: 1px solid #ddd;
+    min-height: 300px;
+    padding: 20px;
+}
+
+
+.tiptap {
+    outline: none;
+}
+
+
+    .tiptap h2 {
+        font-size: 24px;
+    }
+
+
+    .tiptap p {
+        margin: 10px 0;
+    }

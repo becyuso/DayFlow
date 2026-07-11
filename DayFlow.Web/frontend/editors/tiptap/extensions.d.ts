@@ -1,0 +1,2 @@
+export declare const editorExtensions: (import("@tiptap/core").Extension<import("@tiptap/starter-kit").StarterKitOptions, any> | import("@tiptap/core").Node<import("@tiptap/extension-image").ImageOptions, any>)[];
+//# sourceMappingURL=extensions.d.ts.map

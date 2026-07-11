@@ -1,6 +1,25 @@
 
 # 學習隨手紀錄
 
+| --------------------------------------------------------------
+## TypeScript                                                    
+| --------------------------------------------------------------
+**Microsoft.TypeScript.MSBuild** 是一個 NuGet 套件，它將 TypeScript 編譯器 (tsc) 與 MSBuild 整合
+專案: ASP.NET Framework、ASP.NET Core（使用 MSBuild 編譯 TypeScript）、MVC、Razor Pages
+
+**Node Package Manager**
+npm install typescript --save-dev  接著 npx tsc --init (產生 tsconfig.json)
+npm install vite --save-dev  用來開發和打包 JavaScript/TypeScript 應用程式
+npm install -D @types/node  是 Node.js 的 TypeScript 型別定義
+| --------------------------------------------------------------
+## tiptap                                                    
+| --------------------------------------------------------------
+**Node Package Manager**
+npm install @tiptap/core @tiptap/starter-kit
+npm install @tiptap/extension-image  插入圖片
+
+
+
 更企業級版本會再加：
 Login
 ├── Endpoint.cs
@@ -11,6 +30,8 @@ Login
 ├── Command.cs
 ├── Handler.cs
 └── Result.cs
+
+cd /d "E:\Code\C#\DayFlow\DayFlow.Web"
 
 PS E:\Code\C#\DayFlow> cd DayFlow.Web.Common
 PS E:\Code\C#\DayFlow\DayFlow.Web.Common> dotnet list package

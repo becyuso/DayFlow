@@ -7,11 +7,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="frontend\app\editor.ts" />
+    <None Remove="vite.config.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="14.2.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="6.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DayFlow.Modules.Identity\DayFlow.Modules.Identity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="frontend\types\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="frontend\app\editor.ts" />
+    <TypeScriptCompile Include="frontend\editors\tiptap\extensions.ts" />
+    <TypeScriptCompile Include="frontend\editors\tiptap\index.ts" />
+    <TypeScriptCompile Include="vite.config.ts" />
   </ItemGroup>
 
 </Project>
