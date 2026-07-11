@@ -1,4 +1,5 @@
-﻿using DayFlow.Modules.Identity;
+﻿using DayFlow.BuildingBlocks.DependencyInjection;
+using DayFlow.Modules.Identity;
 
 namespace DayFlow.Api.Configuration
 {
@@ -9,7 +10,9 @@ namespace DayFlow.Api.Configuration
             IConfiguration config,
             string? connectionString = null)
         {
-            services.AddIdentityEndpoint(config, connectionString);
+            services
+                .AddBuildingBlocks()
+                .AddIdentityEndpoint(config, connectionString);
 
             return services;
         }

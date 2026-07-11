@@ -7,12 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DayFlow.Modules.Identity;
 
-public interface IModule
-{
-    void Register(IServiceCollection services, IConfiguration config, string? connectionString = null);
-    void RegisterMvc(IMvcBuilder mvc);
-}
-
 /// <summary>
 /// Identity Module 對外唯一入口
 /// 
@@ -20,13 +14,13 @@ public interface IModule
 /// 1. 組合 Application + Infrastructure
 /// 2. 提供單一 DI 入口（避免 API 了解內部結構）
 /// </summary>
-public class IdentityModule : IModule
+public static class IdentityModule
 {
     /// <summary>
     /// 註冊 Identity Module 所有依賴
     /// </summary>
-    public void Register(
-        IServiceCollection services,
+    public static IServiceCollection AddIdentityModule(
+        this IServiceCollection services,
         IConfiguration config,
         string? connectionString = null)
     {
@@ -35,13 +29,16 @@ public class IdentityModule : IModule
 
         // 註冊 Infrastructure 層（EF Core / Repository ...）
         services.AddIdentityInfrastructure(config, connectionString);
+
+        return services;
     }
 
     /// <summary>
     /// Program.cs需要加上 app.MapRazorPages(); 
     /// </summary>
     /// <param name="mvc"></param>
-    public void RegisterMvc(IMvcBuilder mvc)
+    public static IMvcBuilder AddIdentityPresentation(
+        this IMvcBuilder mvc)
     {
         mvc.ConfigureApplicationPartManager(manager =>
         {
@@ -57,6 +54,8 @@ public class IdentityModule : IModule
               new IdentityViewLocationExpander()
             );
         });
+
+        return mvc;
     }
 
     public class IdentityViewLocationExpander

@@ -13,6 +13,7 @@
 | Transaction Boundary      | 設計原則 | 如何控制交易(Transaction)範圍 |
 | ------------------------- | -------- | ----------------------------- |
 
+本系統採用 Modular Monolith，模組內遵循 Clean Architecture 的依賴規則，Application 與 Presentation 層採用 Vertical Slice Architecture 以 Use Case 為單位組織。
 
 ## 模組目錄參考
 DayFlow.Modules.Identity 
@@ -38,9 +39,11 @@ DayFlow.Modules.Identity
 │ │  
 │ │  │  ├─ Authentication
 │ │  
-│ │  │  │  ├─ LoginCommand.cs 
+│ │  │  │  ├─ Login 
 │ │  
-│ │  │  │  ├─ LoginHandler.cs 
+│ │  │  │  │  ├─ LoginCommand.cs 
+│ │  
+│ │  │  │  │  ├─ LoginHandler.cs 
 │ │  
 │ │  ├─ Security 
 │ │  

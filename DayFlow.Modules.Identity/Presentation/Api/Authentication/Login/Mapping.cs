@@ -1,15 +1,15 @@
-﻿using DayFlow.Modules.Identity.Application.Features.Authentication.Login;
-using DayFlow.Modules.Identity.Domain.Entities;
+﻿
+using DayFlow.Modules.Identity.Application.Features.Authentication.Login;
 
 namespace DayFlow.Modules.Identity.Presentation.Api.Authentication.Login;
 
 public static class Mapping
 {
 
-    public static LoginCommand ToCommand(
+    public static Command ToCommand(
         this LoginRequest request)
     {
-        return new LoginCommand
+        return new Command
         (
             request.Account,
             request.Password
@@ -19,7 +19,7 @@ public static class Mapping
 
 
     public static LoginResponse ToResponse(
-        this LoginResult result)
+        this Result result)
     {
         return new LoginResponse
         (

@@ -20,6 +20,18 @@ npm install @tiptap/extension-image  插入圖片
 
 
 
+
+Application
+ └── Features
+      └── Authentication
+           └── Login
+                ├── Command
+                └── Handler
+
+Vertical Slice Architecture（VSA） 傾向把一個 Use Case 的所有東西放在一起（包含 Endpoint）。
+Clean Architecture + CQRS 分層 傾向把 API 層（Endpoint）放在 Presentation，把 Application 層保持純粹。
+
+
 更企業級版本會再加：
 Login
 ├── Endpoint.cs

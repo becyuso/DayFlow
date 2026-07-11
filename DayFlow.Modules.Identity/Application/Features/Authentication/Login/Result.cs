@@ -1,11 +1,6 @@
-using MediatR;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
-
-namespace DayFlow.Modules.Identity.Application.Features.Authentication.Login
+﻿namespace DayFlow.Modules.Identity.Application.Features.Authentication.Login
 {
-    public record LoginCommand(string? Email, string? Password) : IRequest<LoginResult>;
-
-    public record LoginResult
+    public record Result
     {
         public bool Success { get; init; }
         public string? ErrorMessage { get; init; }
@@ -14,13 +9,13 @@ namespace DayFlow.Modules.Identity.Application.Features.Authentication.Login
         public string? Email { get; init; }
         public string? DisplayName { get; init; }
 
-        public static LoginResult Fail(string message) => new()
+        public static Result Fail(string message) => new()
         {
             Success = false,
             ErrorMessage = message
         };
 
-        public static LoginResult Ok(long userId, Guid publicId, string email, string displayName) => new()
+        public static Result Ok(long userId, Guid publicId, string email, string displayName) => new()
         {
             Success = true,
             UserId = userId,

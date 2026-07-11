@@ -1,23 +1,17 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System;
+using DayFlow.BuildingBlocks.DependencyInjection;
 using DayFlow.Modules.Identity;
-using System.IO;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var modules = new IModule[]
-{
-    new IdentityModule()
-};
-
 var dayflowDbConn = builder.Configuration.GetConnectionString("DayflowDb");
 
-foreach (var module in modules)
-{
-    module.Register(builder.Services, builder.Configuration, dayflowDbConn);
-}
+builder.Services.AddBuildingBlocks();
+
+builder.Services
+    .AddBuildingBlocks()
+    .AddIdentityModule(builder.Configuration, dayflowDbConn);
 
 // Add services to the container.
 var mvc = builder.Services.AddControllersWithViews();
@@ -31,11 +25,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromHours(8);
     });
 
-// Register Identity module services (controllers as application parts)
-foreach (var module in modules)
-{
-    module.RegisterMvc(mvc);
-}
+mvc.AddIdentityPresentation();
 
 var app = builder.Build();
 

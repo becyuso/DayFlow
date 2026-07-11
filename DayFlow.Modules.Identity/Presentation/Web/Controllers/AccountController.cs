@@ -36,7 +36,7 @@ namespace DayFlow.Modules.Identity.Presentation.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(string email, string password, string returnUrl = "/")
         {
-            var result = await _mediator.Send(new LoginCommand(email, password));
+            var result = await _mediator.Send(new Command(email, password));
             if (!result.Success)
             {
                 ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Invalid credentials");
