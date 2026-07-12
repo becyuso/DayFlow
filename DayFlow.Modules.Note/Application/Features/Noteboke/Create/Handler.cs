@@ -1,23 +1,24 @@
-﻿using MediatR;
-using DayFlow.Modules.Note.Infrastructure.Database;
-using DayFlow.Modules.Note.Domain.Entities;
+﻿using DayFlow.Modules.Note.Infrastructure.Database;
+using MediatR;
 
-namespace DayFlow.Modules.Note.Application.Features.Noteboke.CreateNotebook
+using DomainEntities = DayFlow.Modules.Note.Domain.Entities;
+
+namespace DayFlow.Modules.Note.Application.Features.Notebook.Create
 {
-    internal class Handler : IRequestHandler<CreateNotebook.Command, CreateNotebook.Result>
+    internal class Handler : IRequestHandler<CreateCommand, CreateResult>
     {
         private readonly NoteDbContext _db;
 
         public Handler(NoteDbContext db) => _db = db;
 
-        public async Task<CreateNotebook.Result> Handle(CreateNotebook.Command request, CancellationToken cancellationToken)
+        public async Task<CreateResult> Handle(CreateCommand request, CancellationToken cancellationToken)
         {
             if (request.UserId == null || request.UserId == System.Guid.Empty)
-                return CreateNotebook.Result.Fail("Invalid user");
+                return CreateResult.Fail("Invalid user");
 
             var id = System.Guid.NewGuid();
 
-            var entity = new Notebook(id,
+            var entity = new DomainEntities.Notebook(id,
                                       request.UserId.Value,
                                       request.Name ?? string.Empty,
                                       request.Color,
@@ -28,7 +29,7 @@ namespace DayFlow.Modules.Note.Application.Features.Noteboke.CreateNotebook
             _db.Notebooks.Add(entity);
             await _db.SaveChangesAsync(cancellationToken);
 
-            return CreateNotebook.Result.Ok(id);
+            return CreateResult.Ok(id);
         }
     }
 }

@@ -1,35 +1,35 @@
-﻿using DayFlow.Modules.Identity.Application;
-using DayFlow.Modules.Identity.Infrastructure;
-using DayFlow.Modules.Identity.Presentation.Api.Authentication.Login;
+﻿using DayFlow.Modules.Note.Application;
+using DayFlow.Modules.Note.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DayFlow.Modules.Identity
+namespace DayFlow.Modules.Note
 {
-    public static class IdentityEndpoint
+    public static class NoteEndpoint
     {
-        public static IEndpointRouteBuilder MapIdentityEndpoint(
+        public static IEndpointRouteBuilder MapNoteEndpoints(
             this IEndpointRouteBuilder app)
         {
-            app.MapAuthenticationLoginEndpoint();
+            //app.MapNotebookCreateEndpoint();
 
             return app;
         }
 
-        public static IServiceCollection AddIdentityEndpoint(
+        public static IServiceCollection AddNoteEndpoint(
             this IServiceCollection services,
             IConfiguration config,
             string? connectionString = null)
         {
 
             // 註冊 Application 層（CQRS / MediatR）
-            services.AddIdentityApplication();
+            services.AddNoteApplication();
 
             // 註冊 Infrastructure 層（EF Core / Repository ...）
-            services.AddIdentityInfrastructure(config, connectionString);
+            services.AddNoteInfrastructure(config, connectionString);
 
             return services;
         }
     }
 }
+

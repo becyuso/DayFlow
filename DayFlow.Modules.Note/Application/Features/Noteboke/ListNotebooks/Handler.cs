@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DayFlow.Modules.Note.Application.Features.Noteboke.ListNotebooks
+namespace DayFlow.Modules.Note.Application.Features.Notebook.List
 {
     internal class Handler
     {

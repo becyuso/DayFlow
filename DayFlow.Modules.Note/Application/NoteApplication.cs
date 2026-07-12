@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace DayFlow.Modules.Identity.Application;
+namespace DayFlow.Modules.Note.Application;
 
 /// <summary>
 /// Application Layer DI 設定
@@ -9,13 +9,13 @@ namespace DayFlow.Modules.Identity.Application;
 /// 註冊 MediatR
 /// 掃描 Commands / Queries / Handlers
 /// </summary>
-public static class IdentityApplication
+public static class NoteApplication
 {
-    public static IServiceCollection AddIdentityApplication(this IServiceCollection services)
+    public static IServiceCollection AddNoteApplication(this IServiceCollection services)
     {
         services.AddMediatR(cfg =>
         {
-            cfg.RegisterServicesFromAssembly(typeof(IdentityApplication).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(NoteApplication).Assembly);
         });
         return services;
     }

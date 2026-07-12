@@ -1,7 +1,4 @@
-﻿
-using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
-
-namespace DayFlow.Modules.Identity.Presentation.Api.Authentication.Login;
+﻿namespace DayFlow.Modules.Identity.Presentation.Api.Authentication.Login;
 
 public sealed record LoginResponse
 (

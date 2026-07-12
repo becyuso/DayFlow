@@ -1,7 +1,7 @@
 using DayFlow.BuildingBlocks.DependencyInjection;
 using DayFlow.Modules.Identity;
+using DayFlow.Modules.Note;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +23,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 // Add module
 builder.Services
     .AddBuildingBlocks()
-    .AddIdentityModule(builder.Configuration, dayflowDbConn);
-mvc.AddIdentityPresentation();
+    .AddIdentityModule(builder.Configuration, dayflowDbConn)
+    .AddNoteModule(builder.Configuration, dayflowDbConn); ;
+
+mvc
+    .AddIdentityPresentation()
+    .AddNotePresentation();
 
 var app = builder.Build();
 

@@ -1,15 +1,14 @@
-﻿
-using FeatureLogin = DayFlow.Modules.Identity.Application.Features.Authentication.Login.Login;
+﻿using DayFlow.Modules.Identity.Application.Features.Authentication.Login;
 
 namespace DayFlow.Modules.Identity.Presentation.Api.Authentication.Login
 {
     public static class Mapping
     {
 
-        public static FeatureLogin.Command ToCommand(
+        public static LoginCommand ToCommand(
             this LoginRequest request)
         {
-            return new FeatureLogin.Command
+            return new LoginCommand
             (
                 request.Account,
                 request.Password
@@ -19,7 +18,7 @@ namespace DayFlow.Modules.Identity.Presentation.Api.Authentication.Login
 
 
         public static LoginResponse ToResponse(
-            this FeatureLogin.Result result)
+            this LoginResult result)
         {
             return new LoginResponse
             (

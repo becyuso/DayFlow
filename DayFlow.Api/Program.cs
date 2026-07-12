@@ -1,7 +1,6 @@
 using DayFlow.Api.Configuration;
-using DayFlow.Api.Diagnostics;
+using DayFlow.BuildingBlocks.DependencyInjection;
 using DayFlow.Modules.Identity;
-using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +36,8 @@ builder.Services.AddSwaggerConfiguration();
 
 builder.Services.AddProblemDetails();
 
-builder.Services.AddModuleConfiguration(builder.Configuration, dayflowDbConn);
+builder.Services.AddBuildingBlocks()
+                .AddIdentityEndpoint(builder.Configuration, dayflowDbConn);
 
 var app = builder.Build();
 
@@ -56,7 +56,7 @@ app.UseSwaggerConfiguration(app.Environment.IsDevelopment());
 //app.UseAuthorization();
 
 //app.MapControllers();
-app.MapIdentityEndpoints();
+app.MapIdentityEndpoint();
 
 //app.LogEndpoints();
 

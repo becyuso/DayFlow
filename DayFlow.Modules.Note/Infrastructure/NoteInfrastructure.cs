@@ -1,11 +1,10 @@
-﻿using DayFlow.Modules.Identity.Infrastructure.Database;
-using DayFlow.Modules.Identity.Infrastructure.Repositories;
-using DayFlow.Modules.Identity.Infrastructure.Security;
+﻿using DayFlow.Modules.Note.Infrastructure.Database;
+using DayFlow.Modules.Note.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DayFlow.Modules.Identity.Infrastructure;
+namespace DayFlow.Modules.Note.Infrastructure;
 
 /// <summary>
 /// Infrastructure Layer DI 設定
@@ -15,9 +14,9 @@ namespace DayFlow.Modules.Identity.Infrastructure;
 /// 2. Repository 實作
 /// 3. 外部資源（DB / Redis / File 等）
 /// </summary>
-public static class IdentityInfrastructure
+public static class NoteInfrastructure
 {
-    public static IServiceCollection AddIdentityInfrastructure(
+    public static IServiceCollection AddNoteInfrastructure(
         this IServiceCollection services,
         IConfiguration config,
         string? connectionString = null)
@@ -25,15 +24,15 @@ public static class IdentityInfrastructure
         // --------------------------------------------------
         // DbContext 註冊
         // --------------------------------------------------
-        services.AddDbContext<IdentityDbContext>(options =>
+        services.AddDbContext<NoteDbContext>(options =>
         {
             if (!string.IsNullOrWhiteSpace(connectionString)) // Production：使用 SQL Server
             {
-                options.UseSqlServer(connectionString); 
+                options.UseSqlServer(connectionString);
             }
             else // Development / Test：使用 InMemory DB
             {
-                options.UseInMemoryDatabase("DayFlow.Identity.InMemory");
+                options.UseInMemoryDatabase("DayFlow.Note.InMemory");
             }
         });
 
@@ -41,9 +40,10 @@ public static class IdentityInfrastructure
         // Repository 註冊
         // --------------------------------------------------
         // Scoped = 每個 request 一個 DbContext lifecycle
-        services.AddScoped<IUserRepository, UserRepository>();
-
-        services.AddSecurity(config);
+        services.AddScoped<INotebookRepository, NotebookRepository>();
+        services.AddScoped<INoteRepository, NoteRepository>();
+        services.AddScoped<INoteTagRepository, NoteTagRepository>();
+        services.AddScoped<ITagRepository, TagRepository>();
 
         return services;
     }

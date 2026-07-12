@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace DayFlow.Modules.Note.Application.Features.Noteboke.ListNotebooks
+namespace DayFlow.Modules.Note.Application.Features.Notebook.ListNotebooks
 {
     public static class ListNotebooks
     {

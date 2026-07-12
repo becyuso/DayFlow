@@ -1,30 +1,31 @@
-﻿using MediatR;
+﻿using DayFlow.Modules.Identity.Presentation.Api.Notebook.Create;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace DayFlow.Modules.Identity.Presentation.Api.Authentication.Login
+namespace DayFlow.Modules.Note.Presentation.Api.Notebook.Create
 {
     public static class Endpoint
     {
-        public static IEndpointRouteBuilder MapAuthenticationLoginEndpoint(
+        public static IEndpointRouteBuilder MapNotebookCreateEndpoint(
             this IEndpointRouteBuilder app)
         {
             app.MapPost(
-                    "/api/authentication/login",
+                    "/api/notebook/create",
                     HandleAsync)
                 .AllowAnonymous()
-                .WithName("Login")
-                .WithTags("Authentication")
-                .Produces<LoginResponse>(StatusCodes.Status200OK)
+                .WithName("Create")
+                .WithTags("Notebook")
+                .Produces<CreateResponse>(StatusCodes.Status200OK)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
                 .ProducesProblem(StatusCodes.Status401Unauthorized);
             return app;
         }
 
         private static async Task<IResult> HandleAsync(
-            [FromBody] LoginRequest request,
+            [FromBody] CreateRequest request,
             ISender sender,
             CancellationToken cancellationToken)
         {

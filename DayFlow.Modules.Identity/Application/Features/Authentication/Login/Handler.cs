@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DayFlow.Modules.Identity.Application.Features.Authentication.Login
 {
-    public class Handler : IRequestHandler<Login.Command, Login.Result>
+    public class Handler : IRequestHandler<LoginCommand, LoginResult>
     {
         private readonly IUserRepository _repo;
         private readonly IPasswordHasher _passwordHasher;
@@ -16,22 +16,22 @@ namespace DayFlow.Modules.Identity.Application.Features.Authentication.Login
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<Login.Result> Handle(Login.Command request, CancellationToken cancellationToken)
+        public async Task<LoginResult> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _repo.GetByEmailAsync(request.Email);
 
             if (user == null)
-                return Login.Result.Fail("Invalid credentials");
+                return LoginResult.Fail("Invalid credentials");
 
             bool valid = _passwordHasher.Verify(request.Password, user.PasswordHash);
 
             if (!valid)
-                return Login.Result.Fail("Invalid credentials");
+                return LoginResult.Fail("Invalid credentials");
             //    throw new UnauthorizedAccessException("Invalid credentials");
 
             //var token = _tokenService.CreateToken(user);
 
-            return Login.Result.Ok(user.UserId, user.PublicId, user.Email, user.DisplayName);
+            return LoginResult.Ok(user.UserId, user.PublicId, user.Email, user.DisplayName);
         }
     }
 }

@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using DayFlow.Modules.Note.Presentation.Web.Notebook.ViewModels;
-using DayFlow.Modules.Note.Application.Features.Noteboke.UpdateNotebook;
-using DayFlow.Modules.Note.Application.Features.Noteboke.CreateNotebook;
-using DayFlow.Modules.Note.Application.Features.Noteboke.DeleteNotebook;
+using DayFlow.Modules.Note.Application.Features.Notebook.Update;
+using DayFlow.Modules.Note.Application.Features.Notebook.Create;
+using DayFlow.Modules.Note.Application.Features.Notebook.Delete;
 
 namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
 {
@@ -34,7 +34,7 @@ namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
 
             var userId = GetCurrentUserId();
 
-            var cmd = new CreateNotebook.Command(userId == Guid.Empty ? null : userId, model.Name, model.Color, model.SortOrder);
+            var cmd = new CreateCommand(userId == Guid.Empty ? null : userId, model.Name, model.Color, model.SortOrder);
             var result = await _mediator.Send(cmd);
 
             if (result == null || !result.Success)
@@ -65,7 +65,7 @@ namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
 
             var userId = GetCurrentUserId();
 
-            var cmd = new UpdateNotebook.Command(model.NotebookId.Value, userId, model.Name, model.Color, model.SortOrder);
+            var cmd = new UpdateCommand(model.NotebookId.Value, userId, model.Name, model.Color, model.SortOrder);
             var result = await _mediator.Send(cmd);
 
             if (!result.Success)
@@ -88,7 +88,7 @@ namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid notebookId)
         {
             var userId = GetCurrentUserId();
-            var cmd = new DeleteNotebook.Command(notebookId, userId);
+            var cmd = new DeleteCommand(notebookId, userId);
             var result = await _mediator.Send(cmd);
 
             if (!result.Success)

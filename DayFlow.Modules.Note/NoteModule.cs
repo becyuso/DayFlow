@@ -1,34 +1,34 @@
-﻿using DayFlow.Modules.Identity.Application;
-using DayFlow.Modules.Identity.Infrastructure;
+﻿using DayFlow.Modules.Note.Application;
+using DayFlow.Modules.Note.Infrastructure;
 using DayFlow.Web.Common.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DayFlow.Modules.Identity;
+namespace DayFlow.Modules.Note;
 
 /// <summary>
-/// Identity Module 對外唯一入口
+/// Note Module 對外唯一入口
 /// 
 /// 職責：
 /// 1. 組合 Application + Infrastructure
 /// 2. 提供單一 DI 入口（避免 API 了解內部結構）
 /// </summary>
-public static class IdentityModule
+public static class NoteModule
 {
     /// <summary>
-    /// 註冊 Identity Module 所有依賴
+    /// 註冊 Note Module 所有依賴
     /// </summary>
-    public static IServiceCollection AddIdentityModule(
+    public static IServiceCollection AddNoteModule(
         this IServiceCollection services,
         IConfiguration config,
         string? connectionString = null)
     {
         // 註冊 Application 層（CQRS / MediatR）
-        services.AddIdentityApplication();
+        services.AddNoteApplication();
 
         // 註冊 Infrastructure 層（EF Core / Repository ...）
-        services.AddIdentityInfrastructure(config, connectionString);
+        services.AddNoteInfrastructure(config, connectionString);
 
         return services;
     }
@@ -37,28 +37,28 @@ public static class IdentityModule
     /// Program.cs需要加上 app.MapRazorPages(); 
     /// </summary>
     /// <param name="mvc"></param>
-    public static IMvcBuilder AddIdentityPresentation(
+    public static IMvcBuilder AddNotePresentation(
         this IMvcBuilder mvc)
     {
         mvc.ConfigureApplicationPartManager(manager =>
         {
             manager.FeatureProviders.Add(
                 new NamespaceControllerFeatureProvider(
-                    $"{typeof(IdentityModule).Assembly.GetName().Name}.Presentation.Web"));
-        }).AddApplicationPart(typeof(IdentityModule).Assembly);
+                    $"{typeof(NoteModule).Assembly.GetName().Name}.Presentation.Web"));
+        }).AddApplicationPart(typeof(NoteModule).Assembly);
 
         mvc.AddRazorOptions(options =>
         {
             options.ViewLocationExpanders
             .Add(
-                new IdentityViewLocationExpander()
+                new NoteViewLocationExpander()
             );
         });
 
         return mvc;
     }
 
-    public class IdentityViewLocationExpander
+    public class NoteViewLocationExpander
     : IViewLocationExpander
     {
         public void PopulateValues(
@@ -73,7 +73,7 @@ public static class IdentityModule
         {
             var features = new[]
             {
-                "Authentication"
+                "Notebook"
             };
 
             IEnumerable<string> locations = features.SelectMany(m => new[]

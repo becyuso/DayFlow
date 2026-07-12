@@ -3,7 +3,7 @@ using DayFlow.Modules.Note.Domain.Entities;
 
 namespace DayFlow.Modules.Note.Infrastructure.Database
 {
-    internal class NoteDbContext : DbContext
+    public class NoteDbContext : DbContext
     {
         public NoteDbContext(DbContextOptions<NoteDbContext> options) : base(options)
         {
