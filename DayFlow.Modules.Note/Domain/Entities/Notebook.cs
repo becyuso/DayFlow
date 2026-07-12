@@ -23,5 +23,17 @@ namespace DayFlow.Modules.Note.Domain.Entities
 
         // EF 用的 protected ctor
         protected Notebook() { }
+
+        // Public factory-like ctor for application code
+        public Notebook(Guid notebookId, Guid userId, string name, string? color, int sortOrder, DateTime createdAt, Guid createdBy)
+        {
+            NotebookId = notebookId;
+            UserId = userId;
+            Name = name;
+            Color = color;
+            SortOrder = sortOrder;
+            CreatedAt = createdAt;
+            CreatedBy = createdBy;
+        }
     }
 }

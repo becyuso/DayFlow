@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace DayFlow.Modules.Identity.Presentation.Web.Controllers
+namespace DayFlow.Modules.Identity.Presentation.Web.Authentication.Controllers
 {
     /// <summary>
     ///   ADD  <Project Sdk="Microsoft.NET.Sdk"> => <Project Sdk="Microsoft.NET.Sdk.Razor">
@@ -36,7 +36,7 @@ namespace DayFlow.Modules.Identity.Presentation.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(string email, string password, string returnUrl = "/")
         {
-            var result = await _mediator.Send(new Command(email, password));
+            var result = await _mediator.Send(new Login.Command(email, password));
             if (!result.Success)
             {
                 ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Invalid credentials");

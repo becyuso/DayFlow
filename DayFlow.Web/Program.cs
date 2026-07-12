@@ -7,11 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var dayflowDbConn = builder.Configuration.GetConnectionString("DayflowDb");
 
-builder.Services.AddBuildingBlocks();
-
-builder.Services
-    .AddBuildingBlocks()
-    .AddIdentityModule(builder.Configuration, dayflowDbConn);
 
 // Add services to the container.
 var mvc = builder.Services.AddControllersWithViews();
@@ -25,6 +20,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromHours(8);
     });
 
+// Add module
+builder.Services
+    .AddBuildingBlocks()
+    .AddIdentityModule(builder.Configuration, dayflowDbConn);
 mvc.AddIdentityPresentation();
 
 var app = builder.Build();

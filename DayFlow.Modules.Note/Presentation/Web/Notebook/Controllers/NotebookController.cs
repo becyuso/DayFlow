@@ -1,0 +1,116 @@
+﻿using System.Security.Claims;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using DayFlow.Modules.Note.Presentation.Web.Notebook.ViewModels;
+using DayFlow.Modules.Note.Application.Features.Noteboke.UpdateNotebook;
+using DayFlow.Modules.Note.Application.Features.Noteboke.CreateNotebook;
+using DayFlow.Modules.Note.Application.Features.Noteboke.DeleteNotebook;
+
+namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
+{
+    public class NotebookController : Controller
+    {
+        private readonly IMediator _mediator;
+        public NotebookController(IMediator mediator) => _mediator = mediator;
+
+        public async Task<IActionResult> Index()
+        {
+            // TODO: integrate ListNotebooks query when implemented
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View(new NotebookEditViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(NotebookEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var userId = GetCurrentUserId();
+
+            var cmd = new CreateNotebook.Command(userId == Guid.Empty ? null : userId, model.Name, model.Color, model.SortOrder);
+            var result = await _mediator.Send(cmd);
+
+            if (result == null || !result.Success)
+            {
+                ModelState.AddModelError(string.Empty, result?.ErrorMessage ?? "Failed to create notebook");
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            // Incomplete: when GetNotebook.Query exists, use it to fill the view model
+            return View(new NotebookEditViewModel { NotebookId = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(NotebookEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if (model.NotebookId == null || model.NotebookId == Guid.Empty)
+                return BadRequest();
+
+            var userId = GetCurrentUserId();
+
+            var cmd = new UpdateNotebook.Command(model.NotebookId.Value, userId, model.Name, model.Color, model.SortOrder);
+            var result = await _mediator.Send(cmd);
+
+            if (!result.Success)
+            {
+                ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Failed to update notebook");
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Delete(Guid id)
+        {
+            return View(new NotebookEditViewModel { NotebookId = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid notebookId)
+        {
+            var userId = GetCurrentUserId();
+            var cmd = new DeleteNotebook.Command(notebookId, userId);
+            var result = await _mediator.Send(cmd);
+
+            if (!result.Success)
+            {
+                // surface error to UI via TempData and redirect back to Delete view
+                TempData["Error"] = result.ErrorMessage ?? "Failed to delete notebook";
+                return RedirectToAction(nameof(Delete), new { id = notebookId });
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        private Guid GetCurrentUserId()
+        {
+            // Try common claim types; return Guid.Empty when not found
+            var idClaim = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                          ?? User?.FindFirst("sub")?.Value;
+
+            if (Guid.TryParse(idClaim, out var userId))
+                return userId;
+
+            return Guid.Empty;
+        }
+    }
+}

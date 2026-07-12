@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MediatR;
 
 namespace DayFlow.Modules.Note.Application.Features.Noteboke.ListNotebooks
 {
-    internal class Query
+    public static class ListNotebooks
     {
+        //public sealed record Command(System.Guid NotebookId, System.Guid UserId) : IRequest<Result>;
     }
 }

@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Presentation\Controllers\" />
-    <Folder Include="Presentation\Views\" />
-    <Folder Include="Presentation\ViewModels\" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,9 +19,13 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.9" />
     <PackageReference Include="MediatR" Version="14.2.0" />
     <PackageReference Include="FluentValidation" Version="11.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DayFlow.SharedKernel\DayFlow.SharedKernel.csproj" />
+    <ProjectReference Include="..\DayFlow.Web.Common\DayFlow.Web.Common.csproj" />
   </ItemGroup>
 
 </Project>

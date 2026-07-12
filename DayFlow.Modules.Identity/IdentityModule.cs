@@ -44,14 +44,14 @@ public static class IdentityModule
         {
             manager.FeatureProviders.Add(
                 new NamespaceControllerFeatureProvider(
-                    "DayFlow.Modules.Identity.Presentation.Web"));
+                    $"{typeof(IdentityModule).Assembly.GetName().Name}.Presentation.Web"));
         }).AddApplicationPart(typeof(IdentityModule).Assembly);
 
         mvc.AddRazorOptions(options =>
         {
             options.ViewLocationExpanders
             .Add(
-              new IdentityViewLocationExpander()
+                new IdentityViewLocationExpander()
             );
         });
 
@@ -71,12 +71,16 @@ public static class IdentityModule
             ViewLocationExpanderContext context,
             IEnumerable<string> viewLocations)
         {
-
-            var locations = new[]
+            var modules = new[]
             {
-               "/Presentation/Web/Views/{1}/{0}.cshtml",
-               "/Presentation/Web/Views/Shared/{0}.cshtml"
+                "Authentication"
             };
+
+            var locations = modules.SelectMany(m => new[]
+            {
+                $"/Presentation/Web/{m}/Views/{{1}}/{{0}}.cshtml",
+                $"/Presentation/Web/{m}/Views/Shared/{{0}}.cshtml"
+            });
 
             return locations.Concat(viewLocations);
         }
