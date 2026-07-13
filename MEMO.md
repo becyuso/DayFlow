@@ -10,6 +10,7 @@
 
 **Node Package Manager**
 
+| ---------------------------------- | ---------------------------------------------- |
 | npm install typescript --save-dev  | 接著 npx tsc --init (產生 tsconfig.json)       | 
 | npm install vite --save-dev        | 用來開發和打包 JavaScript/TypeScript 應用程式  | 
 | npm install -D @types/node         | 是 Node.js 的 TypeScript 型別定義              | 
@@ -17,7 +18,7 @@
 ## tiptap                                                    
 
 **Node Package Manager**
-
+| ---------------------------------------------- | -------- |
 | npm install @tiptap/core @tiptap/starter-kit   |          |
 | npm install @tiptap/extension-image            | 插入圖片 |
 
@@ -31,6 +32,7 @@ cd /d "E:\Code\C#\DayFlow\專案名稱"
 
 先 cd /d "E:\Code\C#\DayFlow\專案名稱"
 
+| ------------------------------- | ----------------------------------------------------------------- |
 | dotnet package list	          | 顯示目前專案所安裝的 NuGet 套件。查看是否有可更新版本或過時套件。 | 
 | dotnet package list --outdated  | 檢查有哪些套件可升級。                                            | 
 | dotnet add package	          | 安裝 NuGet 套件。                                                 | 
