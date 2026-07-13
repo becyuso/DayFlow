@@ -1,13 +1,15 @@
-﻿using System.Security.Claims;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using DayFlow.Modules.Note.Presentation.Web.Notebook.ViewModels;
-using DayFlow.Modules.Note.Application.Features.Notebook.Update;
-using DayFlow.Modules.Note.Application.Features.Notebook.Create;
+﻿using DayFlow.Modules.Note.Application.Features.Notebook.Create;
 using DayFlow.Modules.Note.Application.Features.Notebook.Delete;
+using DayFlow.Modules.Note.Application.Features.Notebook.Update;
+using DayFlow.Modules.Note.Presentation.Web.Notebook.ViewModels;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
 {
+    [Authorize]
     public class NotebookController : Controller
     {
         private readonly IMediator _mediator;

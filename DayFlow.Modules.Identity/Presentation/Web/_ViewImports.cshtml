@@ -1,2 +1,8 @@
 ﻿@using DayFlow.Web
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@* 多語系 *@
+@using Microsoft.Extensions.Localization
+@using DayFlow.Modules.Identity.Presentation.Resource
+@inject IStringLocalizer<IdentityPresentationResource> Localizer
+

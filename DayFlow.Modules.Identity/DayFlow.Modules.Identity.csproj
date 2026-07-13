@@ -36,4 +36,19 @@
     <ProjectReference Include="..\DayFlow.Web.Common\DayFlow.Web.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Presentation\Resource\IdentityPresentationResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IdentityPresentationResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Presentation\Resource\IdentityPresentationResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>IdentityPresentationResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

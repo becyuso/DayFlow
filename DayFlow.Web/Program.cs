@@ -2,14 +2,18 @@ using DayFlow.BuildingBlocks.DependencyInjection;
 using DayFlow.Modules.Identity;
 using DayFlow.Modules.Note;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var dayflowDbConn = builder.Configuration.GetConnectionString("DayflowDb");
 
-
 // Add services to the container.
-var mvc = builder.Services.AddControllersWithViews();
+var mvc = builder.Services
+    .AddControllersWithViews()
+    .AddViewLocalization(
+        LanguageViewLocationExpanderFormat.Suffix
+    ); ;
 builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

@@ -4,6 +4,7 @@ using DayFlow.Web.Common.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 
 namespace DayFlow.Modules.Identity;
 

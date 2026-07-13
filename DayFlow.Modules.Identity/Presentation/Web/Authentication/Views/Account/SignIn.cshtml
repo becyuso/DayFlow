@@ -1,19 +1,19 @@
 @{
-    ViewData["Title"] = "SignIn";
+    ViewData["Title"] = Localizer["SignIn"];
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row justify-content-center">
     <div class="col-md-4">
-        <h2>SignIn</h2>
+        <h2>@Localizer["SignIn"]</h2>
         <form method="post" asp-action="SignIn">
             <input type="hidden" name="returnUrl" value="@(ViewData["ReturnUrl"] ?? "/")" />
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
+                <label for="email" class="form-label">@Localizer["Email"]</label>
                 <input type="text" class="form-control" id="email" name="email" />
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">@Localizer["Password"]</label>
                 <input type="password" class="form-control" id="password" name="password" />
             </div>
             <div class="mb-3 text-danger">
@@ -22,7 +22,7 @@
                     <div>@err.ErrorMessage</div>
                 }
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary">@Localizer["SignIn"]</button>
         </form>
     </div>
 </div>
