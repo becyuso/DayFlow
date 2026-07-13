@@ -11,9 +11,9 @@
 **Node Package Manager**
 
 | ---------------------------------- | ---------------------------------------------- |
-| npm install typescript --save-dev  | 接著 npx tsc --init (產生 tsconfig.json)       | 
-| npm install vite --save-dev        | 用來開發和打包 JavaScript/TypeScript 應用程式  | 
-| npm install -D @types/node         | 是 Node.js 的 TypeScript 型別定義              | 
+| npm install typescript --save-dev  | 接著 npx tsc --init (產生 tsconfig.json)        | 
+| npm install vite --save-dev        | 用來開發和打包 JavaScript/TypeScript 應用程式    | 
+| npm install -D @types/node         | 是 Node.js 的 TypeScript 型別定義               | 
 
 ## tiptap                                                    
 
