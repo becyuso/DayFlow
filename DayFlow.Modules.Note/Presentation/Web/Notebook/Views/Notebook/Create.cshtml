@@ -1,35 +1,118 @@
 @model DayFlow.Modules.Note.Presentation.Web.Notebook.ViewModels.NotebookEditViewModel
 
 @{
-    ViewData["Title"] = "建立筆記本"; 
+    ViewData["Title"] = "建立筆記本";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Create" method="post">
-    @Html.AntiForgeryToken()
+<div class="container mt-4">
+    <div class="card shadow-sm" style="max-width: 600px;">
+       @* <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+                建立筆記本
+            </h5>
+        </div> *@
 
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="card-body">
+
+            <form asp-action="Create" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div class="mb-4">
+                    <label asp-for="Name" class="form-label fw-bold"></label>
+
+                    <input asp-for="Name"
+                           class="form-control"
+                           placeholder="例如：備忘錄" />
+
+                    <span asp-validation-for="Name"
+                          class="text-danger"></span>
+                </div>
+
+
+                <div class="mb-4">
+                    <label asp-for="Color" class="form-label fw-bold"></label>
+
+                    <div class="d-flex align-items-center gap-2">
+
+                        <!-- 顏色選擇 -->
+                        <input type="color"
+                               id="colorPicker"
+                               class="form-control form-control-color"
+                               value="@(Model.Color ?? "#0d6efd")" />
+
+
+                        <!-- 色碼輸入 -->
+                        <input asp-for="Color"
+                               id="colorText"
+                               class="form-control"
+                               style="max-width:180px;"
+                               placeholder="#0d6efd"
+                               value="@(Model.Color ?? "#0d6efd")" />
+
+                    </div>
+
+                    <span asp-validation-for="Color"
+                          class="text-danger"></span>
+                </div>
+
+
+                <div class="mb-4">
+                    <label asp-for="SortOrder"
+                           class="form-label fw-bold"></label>
+
+                    <input asp-for="SortOrder"
+                           class="form-control"
+                           style="max-width:150px;" />
+                </div>
+
+
+                <div class="text-end">
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+                        取消
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        建立
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
     </div>
+</div>
 
-    <div class="mb-3">
-        <label asp-for="Color" class="form-label"></label>
-        <input asp-for="Color" class="form-control" />
-        <span asp-validation-for="Color" class="text-danger"></span>
-    </div>
+<script>
+    const picker = document.getElementById("colorPicker");
+    const text = document.getElementById("colorText");
 
-    <div class="mb-3">
-        <label asp-for="SortOrder" class="form-label"></label>
-        <input asp-for="SortOrder" class="form-control" />
-    </div>
 
-    <button type="submit" class="btn btn-primary">建立</button>
-    <a asp-action="Index" class="btn btn-secondary">取消</a>
-</form>
+    // 點選顏色 -> 更新文字框
+    picker.addEventListener("input", function () {
+        text.value = picker.value;
+    });
+
+
+    // 輸入文字 -> 更新顏色選擇器
+    text.addEventListener("input", function () {
+
+        const value = text.value;
+
+        if(/^#[0-9A-Fa-f]{6}$/.test(value))
+        {
+            picker.value = value;
+        }
+
+    });
+</script>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
