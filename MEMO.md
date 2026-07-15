@@ -61,8 +61,6 @@ Modular Monolith
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
 </ItemGroup>
 
-提供：
-
 3. 如果模組使用 MVC Controller
 加入：
 <ItemGroup>
@@ -93,5 +91,4 @@ builder.Services
 <PropertyGroup>
     <PreserveCompilationContext>true</PreserveCompilationContext>
 </PropertyGroup>
--------------------------------------------------
 ```

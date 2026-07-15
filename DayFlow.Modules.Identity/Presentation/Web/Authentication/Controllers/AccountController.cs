@@ -46,8 +46,9 @@ namespace DayFlow.Modules.Identity.Presentation.Web.Authentication.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, result.Email ?? email),
-                new Claim(ClaimTypes.Email, result.Email ?? email)
+                new (ClaimTypes.Name, result.DisplayName ?? string.Empty),
+                new (ClaimTypes.Email, result.Email ?? string.Empty),
+                new (ClaimTypes.NameIdentifier, result.PublicId?.ToString() ?? string.Empty)
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
