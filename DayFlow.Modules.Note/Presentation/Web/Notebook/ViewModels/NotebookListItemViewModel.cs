@@ -1,6 +1,6 @@
 using System;
 
-namespace DayFlow.Modules.Note.Presentation.Web.Notebook.ViewModels
+namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels
 {
     public class NotebookListItemViewModel
     {

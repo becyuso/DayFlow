@@ -1,6 +1,6 @@
 using System;
 
-namespace DayFlow.Modules.Note.Domain.Entities
+namespace DayFlow.Modules.Notes.Domain.Entities
 {
     // Represents notes.tags
     public class Tag

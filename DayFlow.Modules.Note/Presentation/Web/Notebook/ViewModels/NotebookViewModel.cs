@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DayFlow.Modules.Note.Presentation.Web.Notebook.ViewModels
+namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels
 {
     internal class NotebookViewModel
     {

@@ -1,9 +1,9 @@
 using System;
 
-namespace DayFlow.Modules.Note.Domain.Entities
+namespace DayFlow.Modules.Notes.Domain.Entities
 {
     // Represents notes.notes
-    public class Notes
+    public class Note
     {
         public Guid NoteId { get; set; }
         public Guid NotebookId { get; set; }
@@ -24,7 +24,7 @@ namespace DayFlow.Modules.Note.Domain.Entities
         public ICollection<NoteTag>? NoteTags { get; set; }
 
         // EF 用的 protected ctor
-        protected Notes() { }
+        protected Note() { }
 
     }
 }

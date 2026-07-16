@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using DayFlow.Modules.Note.Domain.Entities;
+using DayFlow.Modules.Notes.Domain.Entities;
 
-namespace DayFlow.Modules.Note.Infrastructure.Database
+namespace DayFlow.Modules.Notes.Infrastructure.Database
 {
     public class NoteDbContext : DbContext
     {
@@ -9,7 +9,7 @@ namespace DayFlow.Modules.Note.Infrastructure.Database
         {
         }
 
-        public DbSet<Notes> Notes { get; set; } = null!;
+        public DbSet<Note> Notes { get; set; } = null!;
         public DbSet<Notebook> Notebooks { get; set; } = null!;
         public DbSet<Tag> Tags { get; set; } = null!;
         public DbSet<NoteTag> NoteTags { get; set; } = null!;
@@ -38,7 +38,7 @@ namespace DayFlow.Modules.Note.Infrastructure.Database
             });
 
             // notes.notes
-            modelBuilder.Entity<Notes>(b =>
+            modelBuilder.Entity<Note>(b =>
             {
                 b.ToTable("notes", "notes");
                 b.HasKey(x => x.NoteId).HasName("pk_notes");

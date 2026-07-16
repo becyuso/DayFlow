@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using DayFlow.Modules.Note.Domain.Entities;
-using DayFlow.Modules.Note.Infrastructure.Database;
+using DayFlow.Modules.Notes.Domain.Entities;
+using DayFlow.Modules.Notes.Infrastructure.Database;
 
-namespace DayFlow.Modules.Note.Infrastructure.Repositories
+namespace DayFlow.Modules.Notes.Infrastructure.Repositories
 {
     public interface INoteTagRepository
     {

@@ -80,10 +80,7 @@ public static class IdentityModule
             IEnumerable<string> locations = features.SelectMany(m => new[]
             {
                 $"/Presentation/Web/{m}/Views/{{1}}/{{0}}.cshtml",
-                $"/Presentation/Web/{m}/Views/Shared/{{0}}.cshtml"
             });
-
-            locations.Append($"/Presentation/Web/_ViewStart.cshtml");
 
             return locations.Concat(viewLocations);
         }

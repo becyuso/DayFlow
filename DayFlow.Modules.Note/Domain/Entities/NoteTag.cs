@@ -1,4 +1,4 @@
-namespace DayFlow.Modules.Note.Domain.Entities
+namespace DayFlow.Modules.Notes.Domain.Entities
 {
     // Represents notes.note_tags
     public class NoteTag
@@ -10,7 +10,7 @@ namespace DayFlow.Modules.Note.Domain.Entities
         public Guid CreatedBy { get; set; }
 
         // Navigation (optional)
-        public Notes? Notes { get; set; }
+        public Note? Notes { get; set; }
         public Tag? Tag { get; set; }
 
         // EF 用的 protected ctor

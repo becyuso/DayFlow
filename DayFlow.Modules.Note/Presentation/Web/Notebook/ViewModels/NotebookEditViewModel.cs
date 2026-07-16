@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DayFlow.Modules.Note.Presentation.Web.Notebook.ViewModels
+namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels
 {
     public class NotebookEditViewModel
     {

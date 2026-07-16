@@ -1,10 +1,10 @@
-﻿using DayFlow.Modules.Note.Application;
-using DayFlow.Modules.Note.Infrastructure;
+﻿using DayFlow.Modules.Notes.Application;
+using DayFlow.Modules.Notes.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DayFlow.Modules.Note
+namespace DayFlow.Modules.Notes
 {
     public static class NoteEndpoint
     {

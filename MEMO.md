@@ -1,6 +1,9 @@
 
 # 個人學習隨手筆記
 
+## 下載後 Build:找不到 'vite/client' 的類型定義檔案。
+專案 > 相依性 > npm > 右鍵 > 還原封裝
+
 ## TypeScript                                                    
 
 **Microsoft.TypeScript.MSBuild** 

@@ -1,25 +1,30 @@
 ﻿using DayFlow.BuildingBlocks.Identity;
-using DayFlow.Modules.Note.Infrastructure.Database;
+using DayFlow.BuildingBlocks.Time;
+using DayFlow.Modules.Notes.Application.Common;
+using DayFlow.Modules.Notes.Infrastructure.Database;
 using MediatR;
 
-using DomainEntities = DayFlow.Modules.Note.Domain.Entities;
+using DomainEntities = DayFlow.Modules.Notes.Domain.Entities;
 
-namespace DayFlow.Modules.Note.Application.Features.Notebook.Create
+namespace DayFlow.Modules.Notes.Application.Features.Notebook.Create
 {
-    internal class Handler : IRequestHandler<CreateCommand, CreateResult>
+    internal class Handler : IRequestHandler<CreateCommand, Result<CreateResult>>
     {
         private readonly NoteDbContext _db;
         private readonly IIdGenerator _idGenerator;
+        private readonly IClock _iClock;
 
-        public Handler(NoteDbContext db, IIdGenerator idGenerator) =>
-            (_db, _idGenerator) = (db, idGenerator);
+        public Handler(NoteDbContext db, IIdGenerator idGenerator, IClock iClock) =>
+            (_db, _idGenerator, _iClock) = (db, idGenerator, iClock);
 
-        public async Task<CreateResult> Handle(
-            CreateCommand request, 
+        public async Task<Result<CreateResult>> Handle(
+            CreateCommand request,
             CancellationToken cancellationToken)
         {
             if (request.UserId == null || request.UserId == System.Guid.Empty)
-                return CreateResult.Fail("Invalid user");
+                return Result<CreateResult>.Fail("Invalid user");
+
+            var time = _iClock.TaiwanNow;
 
             var entity = new DomainEntities.Notebook(
                                       _idGenerator.NewId(),
@@ -27,13 +32,18 @@ namespace DayFlow.Modules.Note.Application.Features.Notebook.Create
                                       request.Name ?? string.Empty,
                                       request.Color,
                                       request.SortOrder ?? 0,
-                                      System.DateTime.UtcNow,
+                                      time,
+                                      request.UserId.Value,
+                                      time,
                                       request.UserId.Value);
 
             _db.Notebooks.Add(entity);
-            await _db.SaveChangesAsync(cancellationToken);
 
-            return CreateResult.Ok(entity.NotebookId);
+            return Result<CreateResult>.Ok(
+                new CreateResult
+                {
+                    NotebookId = entity.NotebookId
+                });
         }
     }
 }

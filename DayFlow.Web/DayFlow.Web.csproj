@@ -22,7 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DayFlow.BuildingBlocks\DayFlow.BuildingBlocks.csproj" />
     <ProjectReference Include="..\DayFlow.Modules.Identity\DayFlow.Modules.Identity.csproj" />
-    <ProjectReference Include="..\DayFlow.Modules.Note\DayFlow.Modules.Note.csproj" />
+    <ProjectReference Include="..\DayFlow.Modules.Note\DayFlow.Modules.Notes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

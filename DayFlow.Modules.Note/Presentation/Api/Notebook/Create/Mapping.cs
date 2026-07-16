@@ -1,5 +1,5 @@
-﻿using DayFlow.Modules.Note.Application.Features.Notebook.Create;
-using DayFlow.Modules.Note.Presentation.Api.Notebook.Create;
+﻿using DayFlow.Modules.Notes.Application.Features.Notebook.Create;
+using DayFlow.Modules.Notes.Presentation.Api.Notebook.Create;
 
 namespace DayFlow.Modules.Identity.Presentation.Api.Notebook.Create
 {

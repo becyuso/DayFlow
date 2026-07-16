@@ -8,7 +8,7 @@
   <Project Path="DayFlow.Api/DayFlow.Api.csproj" Id="908a2513-38a8-4a35-ac50-a314c09e7e11" />
   <Project Path="DayFlow.BuildingBlocks/DayFlow.BuildingBlocks.csproj" Id="89efba5a-33b8-4c43-8d03-22aedcbe7bc9" />
   <Project Path="DayFlow.Modules.Identity/DayFlow.Modules.Identity.csproj" Id="eb62d79b-1fa0-4fb0-a29b-9571979e116e" />
-  <Project Path="DayFlow.Modules.Note/DayFlow.Modules.Note.csproj" Id="43113010-7615-4566-85bc-f8e946d4c68a" />
+  <Project Path="DayFlow.Modules.Note/DayFlow.Modules.Notes.csproj" Id="43113010-7615-4566-85bc-f8e946d4c68a" />
   <Project Path="DayFlow.Modules.Schedule/DayFlow.Modules.Schedule.csproj" Id="3b708926-de12-4770-aea6-ac41813b2ad2" />
   <Project Path="DayFlow.SharedKernel/DayFlow.SharedKernel.csproj" Id="36f7fb98-5c39-49ab-9cc4-76f60745382c" />
   <Project Path="DayFlow.Test/DayFlow.Test.csproj" Id="6525398f-6e10-4d5a-b580-cf8ce9746c72" />

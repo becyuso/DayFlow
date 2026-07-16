@@ -1,6 +1,6 @@
 using DayFlow.BuildingBlocks.DependencyInjection;
 using DayFlow.Modules.Identity;
-using DayFlow.Modules.Note;
+using DayFlow.Modules.Notes;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Razor;
 

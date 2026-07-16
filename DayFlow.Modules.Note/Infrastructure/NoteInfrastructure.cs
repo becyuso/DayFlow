@@ -1,10 +1,10 @@
-﻿using DayFlow.Modules.Note.Infrastructure.Database;
-using DayFlow.Modules.Note.Infrastructure.Repositories;
+﻿using DayFlow.Modules.Notes.Infrastructure.Database;
+using DayFlow.Modules.Notes.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DayFlow.Modules.Note.Infrastructure;
+namespace DayFlow.Modules.Notes.Infrastructure;
 
 /// <summary>
 /// Infrastructure Layer DI 設定

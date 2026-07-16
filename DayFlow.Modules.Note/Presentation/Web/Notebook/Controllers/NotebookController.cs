@@ -1,13 +1,13 @@
-﻿using DayFlow.Modules.Note.Application.Features.Notebook.Create;
-using DayFlow.Modules.Note.Application.Features.Notebook.Delete;
-using DayFlow.Modules.Note.Application.Features.Notebook.Update;
-using DayFlow.Modules.Note.Presentation.Web.Notebook.ViewModels;
+﻿using DayFlow.Modules.Notes.Application.Features.Notebook.Create;
+using DayFlow.Modules.Notes.Application.Features.Notebook.Delete;
+using DayFlow.Modules.Notes.Application.Features.Notebook.Update;
+using DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
+namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
 {
     [Authorize]
     public class NotebookController : Controller
@@ -41,7 +41,7 @@ namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
 
             if (result == null || !result.Success)
             {
-                ModelState.AddModelError(string.Empty, result?.ErrorMessage ?? "Failed to create notebook");
+                ModelState.AddModelError(string.Empty, result?.Message ?? "Failed to create notebook");
                 return View(model);
             }
 
@@ -72,7 +72,7 @@ namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
 
             if (!result.Success)
             {
-                ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Failed to update notebook");
+                ModelState.AddModelError(string.Empty, result.Message ?? "Failed to update notebook");
                 return View(model);
             }
 
@@ -96,7 +96,7 @@ namespace DayFlow.Modules.Note.Presentation.Web.Notebook.Controllers
             if (!result.Success)
             {
                 // surface error to UI via TempData and redirect back to Delete view
-                TempData["Error"] = result.ErrorMessage ?? "Failed to delete notebook";
+                TempData["Error"] = result.Message ?? "Failed to delete notebook";
                 return RedirectToAction(nameof(Delete), new { id = notebookId });
             }
 

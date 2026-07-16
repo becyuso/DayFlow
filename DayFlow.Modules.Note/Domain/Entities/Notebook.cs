@@ -1,6 +1,6 @@
 using System;
 
-namespace DayFlow.Modules.Note.Domain.Entities
+namespace DayFlow.Modules.Notes.Domain.Entities
 {
     // Represents notes.notebooks
     public class Notebook
@@ -19,13 +19,13 @@ namespace DayFlow.Modules.Note.Domain.Entities
         public Guid? DeletedBy { get; set; }
 
         // Navigation
-        public ICollection<Notes>? Notes { get; set; }
+        public ICollection<Note>? Notes { get; set; }
 
         // EF 用的 protected ctor
         protected Notebook() { }
 
         // Public factory-like ctor for application code
-        public Notebook(Guid notebookId, Guid userId, string name, string? color, int sortOrder, DateTime createdAt, Guid createdBy)
+        public Notebook(Guid notebookId, Guid userId, string name, string? color, int sortOrder, DateTime createdAt, Guid createdBy, DateTime updatedAt, Guid updatedBy)
         {
             NotebookId = notebookId;
             UserId = userId;
@@ -34,6 +34,8 @@ namespace DayFlow.Modules.Note.Domain.Entities
             SortOrder = sortOrder;
             CreatedAt = createdAt;
             CreatedBy = createdBy;
+            UpdatedAt = updatedAt;
+            UpdatedBy = updatedBy;
         }
     }
 }

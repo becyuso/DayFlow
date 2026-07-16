@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using DayFlow.Modules.Note.Domain.Entities;
-using DayFlow.Modules.Note.Infrastructure.Database;
+using DayFlow.Modules.Notes.Domain.Entities;
+using DayFlow.Modules.Notes.Infrastructure.Database;
 
-namespace DayFlow.Modules.Note.Infrastructure.Repositories
+namespace DayFlow.Modules.Notes.Infrastructure.Repositories
 {
     public interface INoteRepository
     {
-        Task<Notes?> GetByNoteIdAsync(Guid? noteId);
+        Task<Note?> GetByNoteIdAsync(Guid? noteId);
     }
 
     public class NoteRepository : INoteRepository
@@ -18,7 +18,7 @@ namespace DayFlow.Modules.Note.Infrastructure.Repositories
             _db = db;
         }
 
-        public async Task<Notes?> GetByNoteIdAsync(Guid? noteId)
+        public async Task<Note?> GetByNoteIdAsync(Guid? noteId)
         {
             return await _db.Notes.FirstOrDefaultAsync(x => x.NoteId == noteId);
         }

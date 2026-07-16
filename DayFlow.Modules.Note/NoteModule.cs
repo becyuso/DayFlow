@@ -1,11 +1,11 @@
-﻿using DayFlow.Modules.Note.Application;
-using DayFlow.Modules.Note.Infrastructure;
+﻿using DayFlow.Modules.Notes.Application;
+using DayFlow.Modules.Notes.Infrastructure;
 using DayFlow.Web.Common.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DayFlow.Modules.Note;
+namespace DayFlow.Modules.Notes;
 
 /// <summary>
 /// Note Module 對外唯一入口
@@ -66,7 +66,6 @@ public static class NoteModule
         {
         }
 
-
         public IEnumerable<string> ExpandViewLocations(
             ViewLocationExpanderContext context,
             IEnumerable<string> viewLocations)
@@ -79,10 +78,7 @@ public static class NoteModule
             IEnumerable<string> locations = features.SelectMany(m => new[]
             {
                 $"/Presentation/Web/{m}/Views/{{1}}/{{0}}.cshtml",
-                $"/Presentation/Web/{m}/Views/Shared/{{0}}.cshtml"
             });
-
-            locations.Append($"/Presentation/Web/_ViewStart.cshtml");
 
             return locations.Concat(viewLocations);
         }
