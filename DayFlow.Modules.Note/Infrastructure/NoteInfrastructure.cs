@@ -1,4 +1,7 @@
-﻿using DayFlow.Modules.Notes.Infrastructure.Database;
+﻿using DayFlow.BuildingBlocks.Application.Abstractions;
+using DayFlow.BuildingBlocks.Application.Messaging;
+using DayFlow.Modules.Notes.Infrastructure.Database;
+using DayFlow.Modules.Notes.Infrastructure.Persistence;
 using DayFlow.Modules.Notes.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -44,6 +47,10 @@ public static class NoteInfrastructure
         services.AddScoped<INoteRepository, NoteRepository>();
         services.AddScoped<INoteTagRepository, NoteTagRepository>();
         services.AddScoped<ITagRepository, TagRepository>();
+
+
+        services.AddScoped<ITransactionManager, EfTransactionManager>();
+        services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
         return services;
     }

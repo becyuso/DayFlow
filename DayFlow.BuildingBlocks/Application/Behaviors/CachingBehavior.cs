@@ -4,7 +4,7 @@
 //using Microsoft.Extensions.Caching.Distributed;
 //using Newtonsoft.Json;
 
-//namespace DayFlow.Modules.Notes.Application.Behaviors
+//namespace DayFlow.BuildingBlocks.Application.Behaviors
 //{
 //    public class CachingBehavior<TRequest, TResponse>
 //        : IPipelineBehavior<TRequest, TResponse>

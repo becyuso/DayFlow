@@ -1,4 +1,4 @@
-﻿namespace DayFlow.BuildingBlocks.Identity
+﻿namespace DayFlow.BuildingBlocks.Infrastructure.Identity
 {
     public interface IIdGenerator
     {

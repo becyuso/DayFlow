@@ -1,6 +1,6 @@
-﻿using DayFlow.BuildingBlocks.Identity;
-using DayFlow.BuildingBlocks.Time;
-using DayFlow.Modules.Notes.Application.Common;
+﻿using DayFlow.BuildingBlocks.Application.Results;
+using DayFlow.BuildingBlocks.Infrastructure.Identity;
+using DayFlow.BuildingBlocks.Infrastructure.Time;
 using DayFlow.Modules.Notes.Infrastructure.Database;
 using MediatR;
 

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 
-namespace DayFlow.Modules.Notes.Application.Behaviors
+namespace DayFlow.BuildingBlocks.Application.Behaviors
 {
     public sealed class ValidationBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>

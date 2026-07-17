@@ -1,4 +1,4 @@
-﻿namespace DayFlow.BuildingBlocks.Time
+﻿namespace DayFlow.BuildingBlocks.Infrastructure.Time
 {
     public interface IClock
     {

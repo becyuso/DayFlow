@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace DayFlow.BuildingBlocks.Identity
+namespace DayFlow.BuildingBlocks.Infrastructure.Identity
 {
     public static class ServiceCollectionExtensions
     {

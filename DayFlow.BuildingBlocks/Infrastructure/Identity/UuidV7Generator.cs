@@ -1,5 +1,4 @@
-﻿
-namespace DayFlow.BuildingBlocks.Identity;
+﻿namespace DayFlow.BuildingBlocks.Infrastructure.Identity;
 
 public sealed class UuidV7Generator : IIdGenerator
 {

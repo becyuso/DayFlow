@@ -1,5 +1,5 @@
-using DayFlow.Modules.Notes.Application.Common;
-using DayFlow.Modules.Notes.Application.Common.Interfaces;
+using DayFlow.BuildingBlocks.Application.Messaging;
+using DayFlow.BuildingBlocks.Application.Results;
 
 namespace DayFlow.Modules.Notes.Application.Features.Notebook.Update
 {

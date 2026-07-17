@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace DayFlow.Modules.Notes.Application.Behaviors;
+namespace DayFlow.BuildingBlocks.Application.Behaviors;
 
 public class ExceptionBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>

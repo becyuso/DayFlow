@@ -1,5 +1,5 @@
-﻿using DayFlow.BuildingBlocks.Identity;
-using DayFlow.BuildingBlocks.Time;
+﻿using DayFlow.BuildingBlocks.Infrastructure.Identity;
+using DayFlow.BuildingBlocks.Infrastructure.Time;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DayFlow.BuildingBlocks.DependencyInjection

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace DayFlow.Modules.Notes.Application.Common.Interfaces
+namespace DayFlow.BuildingBlocks.Application.Messaging
 {
     public interface ICommand<out TResponse>
       : IRequest<TResponse>

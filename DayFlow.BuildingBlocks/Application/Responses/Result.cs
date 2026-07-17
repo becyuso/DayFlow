@@ -1,7 +1,4 @@
-﻿
-using DayFlow.Modules.Notes.Application.Common.Interfaces;
-
-namespace DayFlow.Modules.Notes.Application.Common
+﻿namespace DayFlow.BuildingBlocks.Application.Results
 {
     public class Result : IResult
     {
@@ -32,7 +29,6 @@ namespace DayFlow.Modules.Notes.Application.Common
 
     public sealed class Result<T> : Result
     {
-
         public T? Data { get; init; }
 
         public static Result<T> Ok(

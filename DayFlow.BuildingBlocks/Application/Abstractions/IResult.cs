@@ -1,4 +1,4 @@
-﻿namespace DayFlow.Modules.Notes.Application.Common.Interfaces
+﻿namespace DayFlow.BuildingBlocks.Application.Results
 {
     public interface IResult
     {

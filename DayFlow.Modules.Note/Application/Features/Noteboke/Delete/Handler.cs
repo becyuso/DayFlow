@@ -1,4 +1,4 @@
-using DayFlow.Modules.Notes.Application.Common;
+using DayFlow.BuildingBlocks.Application.Results;
 using DayFlow.Modules.Notes.Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
