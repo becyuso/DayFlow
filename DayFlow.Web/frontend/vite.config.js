@@ -1,19 +1,25 @@
 import { defineConfig } from 'vite';
-import path from 'path';
+import path from 'node:path';
 export default defineConfig({
+    appType: "custom",
+    server: {
+        port: 5173,
+        strictPort: true
+    },
     build: {
-        outDir: 'wwwroot/dist',
+        outDir: '../wwwroot/dist',
         emptyOutDir: true,
         manifest: true,
         rollupOptions: {
             input: {
-                editor: 'frontend/app/editor.ts'
+                app: "./app/main.ts",
+                editor: "./app/editor.ts"
             }
         }
     },
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, 'frontend')
+            '@': path.resolve(__dirname)
         }
     }
 });

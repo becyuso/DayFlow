@@ -1,12 +1,16 @@
 using DayFlow.BuildingBlocks.DependencyInjection;
 using DayFlow.Modules.Identity;
 using DayFlow.Modules.Notes;
+using DayFlow.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var dayflowDbConn = builder.Configuration.GetConnectionString("DayflowDb");
+
+builder.Services.AddSingleton
+    <IViteManifestService, ViteManifestService>();
 
 // Add services to the container.
 var mvc = builder.Services

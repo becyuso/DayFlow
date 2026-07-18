@@ -7,8 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="frontend\node_modules\**" />
+    <Content Remove="frontend\node_modules\**" />
+    <EmbeddedResource Remove="frontend\node_modules\**" />
+    <None Remove="frontend\node_modules\**" />
+    <TypeScriptCompile Remove="frontend\node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="frontend\app\editor.ts" />
     <None Remove="vite.config.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="frontend\styles\site.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +45,6 @@
     <TypeScriptCompile Include="frontend\app\editor.ts" />
     <TypeScriptCompile Include="frontend\editors\tiptap\extensions.ts" />
     <TypeScriptCompile Include="frontend\editors\tiptap\index.ts" />
-    <TypeScriptCompile Include="vite.config.ts" />
   </ItemGroup>
 
 </Project>

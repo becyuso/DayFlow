@@ -4,7 +4,6 @@
     <File Path="MEMO.md" />
     <File Path="README.md" />
   </Folder>
-  <Folder Name="/方案項目/NewFolder1/" />
   <Project Path="DayFlow.Api/DayFlow.Api.csproj" Id="908a2513-38a8-4a35-ac50-a314c09e7e11" />
   <Project Path="DayFlow.BuildingBlocks/DayFlow.BuildingBlocks.csproj" Id="89efba5a-33b8-4c43-8d03-22aedcbe7bc9" />
   <Project Path="DayFlow.Modules.Identity/DayFlow.Modules.Identity.csproj" Id="eb62d79b-1fa0-4fb0-a29b-9571979e116e" />

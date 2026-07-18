@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
 {
@@ -17,6 +18,11 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
 
         public async Task<IActionResult> Index()
         {
+            TempData["Toast"] = JsonSerializer.Serialize((new
+            {
+                type = "success",
+                message = "筆記建立成功"
+            }));
             // TODO: integrate ListNotebooks query when implemented
             return View();
         }

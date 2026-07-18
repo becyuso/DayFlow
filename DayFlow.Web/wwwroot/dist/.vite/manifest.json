@@ -1,0 +1,20 @@
+{
+  "app/editor.ts": {
+    "file": "assets/editor-3Q70H9Bt.js",
+    "name": "editor",
+    "src": "app/editor.ts",
+    "isEntry": true,
+    "css": [
+      "assets/editor-u2s3wkMd.css"
+    ]
+  },
+  "app/main.ts": {
+    "file": "assets/app-CfJR_brz.js",
+    "name": "app",
+    "src": "app/main.ts",
+    "isEntry": true,
+    "css": [
+      "assets/app-ByBPWtpo.css"
+    ]
+  }
+}

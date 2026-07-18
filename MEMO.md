@@ -4,6 +4,17 @@
 ## 下載後 Build:找不到 'vite/client' 的類型定義檔案。
 專案 > 相依性 > npm > 右鍵 > 還原封裝
 
+## 執行npm
+先 
+cd /d "E:\Project\DayFlow\DayFlow.Web\frontend"
+再操作npm指令，安裝套件。
+
+### 其它指令
+|            npm command             |                   description                                          |
+| ---------------------------------- | ---------------------------------------------------------------------- |
+| npm run build                      | 執行專案設定好的「建置（build）」流程，產生可部署或正式使用的版本。    | 
+| npm run dev                        |                                                                        | 
+
 ## TypeScript                                                    
 
 **Microsoft.TypeScript.MSBuild** 
@@ -28,15 +39,18 @@
 | npm install @tiptap/core @tiptap/starter-kit   |             |
 | npm install @tiptap/extension-image            | 插入圖片    |
 
-## 執行npm
+## toast                                                    
 
-先 
-cd /d "E:\Code\C#\DayFlow\專案名稱"
-再操作npm指令，安裝套件。
+**Node Package Manager**
+
+|                  npm command                   | description |
+| ---------------------------------------------- | ----------- |
+| npm install toastr                             |             |
+| npm install @types/toastr --save-dev           |  型別定義   |
 
 ## .NET CLI 的指令
 
-先 cd /d "E:\Code\C#\DayFlow\專案名稱"
+先 cd /d "E:\Project\DayFlow\專案名稱"
 
 |          .NET CLI 指令          |                           description                             |
 | ------------------------------- | ----------------------------------------------------------------- |

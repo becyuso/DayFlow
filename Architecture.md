@@ -115,3 +115,42 @@ IdentityEndpoint.cs
 
 IdentityModule.cs
 ```
+
+
+**DayFlow.Web**
+
+```text
+DayFlow.Web/
+    DayFlow.Web.csproj
+    Program.cs
+    Controllers/
+        HomeController.cs
+    Models/
+        ErrorViewModel.cs
+    Views/
+        _ViewImports.cshtml
+        _ViewStart.cshtml
+        Home/
+            Index.cshtml
+        Shared/
+            _Layout.cshtml
+    frontend/
+        app/
+            editor.ts
+            editor.d.ts
+        editors/
+            tiptap/
+                index.d.ts
+        styles/
+            editor.css
+        types/                      <- 空資料夾（在 csproj 中列出）
+        vite.config.ts
+        package.json
+        tsconfig.json
+    wwwroot/
+        lib/
+            bootstrap/
+                dist/...
+            jquery/
+                LICENSE.txt
+```

@@ -1,0 +1,14 @@
+﻿.toast {
+    font-size: 1.1rem;
+    min-width: 320px;
+    padding: 16px;
+}
+
+.toast-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.toast-message {
+    line-height: 1.5;
+}
