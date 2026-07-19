@@ -13,7 +13,7 @@ cd /d "E:\Project\DayFlow\DayFlow.Web\frontend"
 |            npm command             |                   description                                          |
 | ---------------------------------- | ---------------------------------------------------------------------- |
 | npm run build                      | 執行專案設定好的「建置（build）」流程，產生可部署或正式使用的版本。    | 
-| npm run dev                        |                                                                        | 
+| npm run dev                        | 啟動開發環境                                                           | 
 
 ## TypeScript                                                    
 

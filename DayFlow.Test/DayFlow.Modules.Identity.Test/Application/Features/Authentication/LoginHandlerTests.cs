@@ -8,7 +8,7 @@ using DayFlow.Modules.Identity.Application.Security;
 using DayFlow.Modules.Identity.Infrastructure.Security;
 using System.Threading.Tasks;
 
-namespace DayFlow.Modules.Identity.Test.Application
+namespace DayFlow.Test.DayFlow.Modules.Identity.Test.Application.Features.Authentication
 {
     public class LoginHandlerTests
     {

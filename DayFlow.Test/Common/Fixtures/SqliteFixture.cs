@@ -4,23 +4,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DayFlow.Test.Common.Fixtures
 {
-    public class SqliteFixture : IDisposable
+    public sealed class SqliteFixture<TContext>
+        : IDisposable
+        where TContext : DbContext
     {
-        public IdentityDbContext Context { get; }
+        public TContext Context { get; }
 
         private readonly SqliteConnection _connection;
 
-        public SqliteFixture()
+        public SqliteFixture(
+        Func<DbContextOptions<TContext>, TContext> factory)
         {
             _connection = new SqliteConnection("DataSource=:memory:");
             _connection.Open();
 
-            var option = new DbContextOptionsBuilder<IdentityDbContext>()
-             .UseSqlite(_connection)
-             .EnableSensitiveDataLogging()
-             .Options;
+            var options =
+                new DbContextOptionsBuilder<TContext>()
+                .UseSqlite(_connection)
+                .EnableSensitiveDataLogging()
+                .Options;
 
-            Context = new IdentityDbContext(option);
+            Context = factory(options);
 
             Context.Database.EnsureCreated();
         }

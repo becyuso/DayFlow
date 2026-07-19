@@ -25,17 +25,21 @@ namespace DayFlow.Modules.Notes.Domain.Entities
         protected Notebook() { }
 
         // Public factory-like ctor for application code
-        public Notebook(Guid notebookId, Guid userId, string name, string? color, int sortOrder, DateTime createdAt, Guid createdBy, DateTime updatedAt, Guid updatedBy)
+        public static Notebook Create(Guid notebookId, Guid userId, string name, string? color, int sortOrder, DateTime createdAt, Guid createdBy, DateTime updatedAt, Guid updatedBy)
         {
-            NotebookId = notebookId;
-            UserId = userId;
-            Name = name;
-            Color = color;
-            SortOrder = sortOrder;
-            CreatedAt = createdAt;
-            CreatedBy = createdBy;
-            UpdatedAt = updatedAt;
-            UpdatedBy = updatedBy;
+            var n = new Notebook
+            {
+                NotebookId = notebookId,
+                UserId = userId,
+                Name = name,
+                Color = color,
+                SortOrder = sortOrder,
+                CreatedAt = createdAt,
+                CreatedBy = createdBy,
+                UpdatedAt = updatedAt,
+                UpdatedBy = updatedBy
+            };
+            return n;
         }
     }
 }

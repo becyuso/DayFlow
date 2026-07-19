@@ -1,5 +1,4 @@
-﻿using DayFlow.Modules.Identity.Domain.Entities;
-using DayFlow.Modules.Identity.Infrastructure.Database;
+﻿using DayFlow.Modules.Identity.Infrastructure.Database;
 using DayFlow.Test.DayFlow.Modules.Identity.Test.TestData.Builders;
 
 namespace DayFlow.Test.DayFlow.Modules.Identity.Test.TestData.Seeds

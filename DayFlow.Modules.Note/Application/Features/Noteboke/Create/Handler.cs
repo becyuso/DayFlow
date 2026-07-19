@@ -4,8 +4,6 @@ using DayFlow.BuildingBlocks.Infrastructure.Time;
 using DayFlow.Modules.Notes.Infrastructure.Database;
 using MediatR;
 
-using DomainEntities = DayFlow.Modules.Notes.Domain.Entities;
-
 namespace DayFlow.Modules.Notes.Application.Features.Notebook.Create
 {
     internal class Handler : IRequestHandler<CreateCommand, Result<CreateResult>>
@@ -26,7 +24,7 @@ namespace DayFlow.Modules.Notes.Application.Features.Notebook.Create
 
             var time = _iClock.TaiwanNow;
 
-            var entity = new DomainEntities.Notebook(
+            var entity = Domain.Entities.Notebook.Create(
                                       _idGenerator.NewId(),
                                       request.UserId.Value,
                                       request.Name ?? string.Empty,

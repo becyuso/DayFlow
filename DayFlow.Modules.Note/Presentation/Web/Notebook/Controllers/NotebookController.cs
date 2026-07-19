@@ -1,12 +1,13 @@
-﻿using DayFlow.Modules.Notes.Application.Features.Notebook.Create;
+﻿using DayFlow.BuildingBlocks.Application.Paging;
+using DayFlow.Modules.Notes.Application.Features.Notebook.Create;
 using DayFlow.Modules.Notes.Application.Features.Notebook.Delete;
+using DayFlow.Modules.Notes.Application.Features.Notebook.List;
 using DayFlow.Modules.Notes.Application.Features.Notebook.Update;
 using DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
 {
@@ -18,17 +19,21 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
 
         public async Task<IActionResult> Index()
         {
-            TempData["Toast"] = JsonSerializer.Serialize((new
-            {
-                type = "success",
-                message = "筆記建立成功"
-            }));
+            //TempData["Toast"] = JsonSerializer.Serialize((new
+            //{
+            //    type = "success",
+            //    message = "筆記建立成功"
+            //}));
             // TODO: integrate ListNotebooks query when implemented
+            var userId = GetCurrentUserId();
+            var query = new Query(userId, null, new PagingRequest(1, 20));
+            var result = await _mediator.Send(query);
+
             return View();
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View(new NotebookEditViewModel());
         }

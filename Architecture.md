@@ -116,6 +116,61 @@ IdentityEndpoint.cs
 IdentityModule.cs
 ```
 
+**模組Notes**
+
+```text
+DayFlow.Modules.Note/
+    NoteModule.cs
+    NoteEndpoint.cs
+
+    Application/
+        NoteApplication.cs
+        Features/
+            Noteboke/
+                Create/
+                    Command.cs
+                    Handler.cs
+                Delete/
+                    Handler.cs
+                List/
+                    Handler.cs
+                    Query.cs
+
+    Domain/
+        Entities/
+            Notebook.cs
+            Note.cs
+            Tag.cs
+            NoteTag.cs
+
+    Infrastructure/
+        NoteInfrastructure.cs
+        Database/
+            NoteDbContext.cs
+        Repositories/
+            NotebookRepository.cs
+            NotesRepository.cs
+            NoteTagRepository.cs
+            TagRepository.cs
+
+    Presentation/
+        Web/
+            _ViewStart.cshtml
+            _ViewImports.cshtml
+            Notebook/
+                Controllers/
+                    NotebookController.cs
+                ViewModels/
+                    NotebookEditViewModel.cs
+                    NotebookListItemViewModel.cs
+                    NotebookViewModel.cs
+                Views/
+                    Notebook/
+                        Index.cshtml
+                        Create.cshtml
+                        Edit.cshtml
+                        Delete.cshtml
+```
 
 **DayFlow.Web**
 

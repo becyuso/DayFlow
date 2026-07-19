@@ -44,7 +44,6 @@ namespace DayFlow.Test.DayFlow.Modules.Identity.Test.TestData.Builders
                 _displayName
             );
 
-            // ⚠️ 用 domain method 控制（推薦）
             user.UpdateLastLogin();
 
             // 如果你還沒 domain method，可以先 reflection（不建議長期）
