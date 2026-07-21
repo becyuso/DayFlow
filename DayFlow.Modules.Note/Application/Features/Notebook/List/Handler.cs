@@ -33,8 +33,9 @@ public sealed class Handler
         var totalCount = await query.CountAsync(cancellationToken);
 
         var items = await query
+            .Where(x => !x.IsDeleted)
             .OrderBy(x => x.SortOrder)
-            .ThenBy(x => x.Name)
+            .ThenByDescending(x => x.UpdatedAt)
             .Skip(request.Paging.Skip)
             .Take(request.Paging.Take)
             .Select(x => new ListResult

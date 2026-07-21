@@ -4,6 +4,16 @@
 	ViewData["Title"] = "筆記本列表";
 }
 
+<style>
+	.color-preview {
+		width: 20px;
+		height: 20px;
+		display: inline-block;
+		border-radius: 50%;
+		border: 1px solid #ccc;
+	}
+</style>
+
 <h2>@ViewData["Title"]</h2>
 
 <p>
@@ -25,9 +35,19 @@
 		{
 			<tr>
 				<td>@item.Name</td>
-				<td>@item.Color</td>
+				<td>
+					<div class="d-flex align-items-center gap-2">
+						<span class="color-preview"
+							  style="background-color:@item.Color">
+						</span>
+
+						<small class="text-muted">
+							@item.Color
+						</small>
+					</div>
+				</td>
 				<td>@item.SortOrder</td>
-				<td>@item.CreatedAt.ToString("g")</td>
+				<td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
 				<td>
 					<a asp-action="Edit"
 					   asp-route-id="@item.NotebookId"

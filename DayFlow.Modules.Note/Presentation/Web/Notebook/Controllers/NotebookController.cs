@@ -1,6 +1,7 @@
 ﻿using DayFlow.BuildingBlocks.Application.Paging;
 using DayFlow.Modules.Notes.Application.Features.Notebook.Create;
 using DayFlow.Modules.Notes.Application.Features.Notebook.Delete;
+using DayFlow.Modules.Notes.Application.Features.Notebook.Get;
 using DayFlow.Modules.Notes.Application.Features.Notebook.List;
 using DayFlow.Modules.Notes.Application.Features.Notebook.Update;
 using DayFlow.Modules.Notes.Presentation.Web.Notebook.Mapping;
@@ -71,8 +72,22 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            // Incomplete: when GetNotebook.Query exists, use it to fill the view model
-            return View(new NotebookEditViewModel { NotebookId = id });
+            var userId = GetCurrentUserId();
+
+            var query = new GetQuery(userId, id);
+            var result = await _mediator.Send(query);
+
+            if (result == null || !result.Success || result.Data == null)
+            {
+                TempData.ToastInfo("操作逾時，請重新操作");
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(new NotebookEditViewModel { 
+                NotebookId = id, 
+                Name = result.Data.Name, 
+                Color = result.Data.Color, 
+                SortOrder = result.Data.SortOrder });
         }
 
         [HttpPost]
@@ -102,9 +117,20 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return View(new NotebookEditViewModel { NotebookId = id });
+            var userId = GetCurrentUserId();
+
+            var query = new GetQuery(userId, id);
+            var result = await _mediator.Send(query);
+
+            if (result == null || !result.Success || result.Data == null)
+            {
+                TempData.ToastInfo("操作逾時，請重新操作");
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(new NotebookEditViewModel { NotebookId = id, Name = result.Data.Name });
         }
 
         [HttpPost]
