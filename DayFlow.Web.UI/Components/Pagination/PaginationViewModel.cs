@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Routing;
-
-namespace DayFlow.Web.UI.Components.Pagination
+﻿namespace DayFlow.Web.UI.Components.Pagination
 {
     public sealed class PaginationViewModel
     {

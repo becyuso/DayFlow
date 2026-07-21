@@ -90,8 +90,10 @@
 		</main>
 	</div>
 
-	@* Toast data *@
-	<partial name="_Toast" />
+	@* Toast *@
+
+	@await Component.InvokeAsync(
+	"Toast")
 
 	<footer class="border-top footer text-muted">
 		<div class="container">

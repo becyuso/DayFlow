@@ -1,0 +1,12 @@
+﻿@using System.Text.Json
+
+@{
+    var toastJson = TempData["Toast"] as string;
+}
+
+@if (!string.IsNullOrWhiteSpace(toastJson))
+{
+    <script id="toast-data" type="application/json">
+        @Html.Raw(JsonSerializer.Serialize(JsonDocument.Parse(toastJson).RootElement))
+    </script>
+}

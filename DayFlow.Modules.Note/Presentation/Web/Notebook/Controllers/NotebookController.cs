@@ -5,6 +5,7 @@ using DayFlow.Modules.Notes.Application.Features.Notebook.List;
 using DayFlow.Modules.Notes.Application.Features.Notebook.Update;
 using DayFlow.Modules.Notes.Presentation.Web.Notebook.Mapping;
 using DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels;
+using DayFlow.Web.UI.Components.Toast;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +23,6 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
             string? keyword = null,
             int page = 1)
         {
-            //TempData["Toast"] = JsonSerializer.Serialize((new
-            //{
-            //    type = "success",
-            //    message = "筆記建立成功"
-            //}));
-            // TODO: integrate ListNotebooks query when implemented
             var userId = GetCurrentUserId();
 
             var result = await _mediator.Send(
@@ -64,10 +59,12 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
 
             if (result == null || !result.Success)
             {
-                ModelState.AddModelError(string.Empty, result?.Message ?? "Failed to create notebook");
+                TempData.ToastError("筆記建立失敗");
+                //ModelState.AddModelError(string.Empty, result?.Message ?? "Failed to create notebook");
                 return View(model);
             }
 
+            TempData.ToastSuccess("筆記建立成功");
             return RedirectToAction(nameof(Index));
         }
 
@@ -95,10 +92,12 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
 
             if (!result.Success)
             {
-                ModelState.AddModelError(string.Empty, result.Message ?? "Failed to update notebook");
+                TempData.ToastError("筆記更新失敗");
+                //ModelState.AddModelError(string.Empty, result.Message ?? "Failed to update notebook");
                 return View(model);
             }
 
+            TempData.ToastSuccess("筆記更新成功");
             return RedirectToAction(nameof(Index));
         }
 
@@ -118,11 +117,11 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
 
             if (!result.Success)
             {
-                // surface error to UI via TempData and redirect back to Delete view
-                TempData["Error"] = result.Message ?? "Failed to delete notebook";
+                TempData.ToastError("筆記刪除失敗");
                 return RedirectToAction(nameof(Delete), new { id = notebookId });
             }
 
+            TempData.ToastSuccess("筆記刪除成功");
             return RedirectToAction(nameof(Index));
         }
 
