@@ -1,5 +1,5 @@
 ﻿using DayFlow.BuildingBlocks.Application.Behaviors;
-using DayFlow.Modules.Notes.Application.Features.Noteboke.Create;
+using DayFlow.Modules.Notes.Application.Features.Notebook.Create;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 

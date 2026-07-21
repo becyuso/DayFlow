@@ -35,6 +35,7 @@
     <ProjectReference Include="..\DayFlow.BuildingBlocks\DayFlow.BuildingBlocks.csproj" />
     <ProjectReference Include="..\DayFlow.Modules.Identity\DayFlow.Modules.Identity.csproj" />
     <ProjectReference Include="..\DayFlow.Modules.Note\DayFlow.Modules.Notes.csproj" />
+    <ProjectReference Include="..\DayFlow.Web.UI\DayFlow.Web.UI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,6 @@
-﻿using DayFlow.Modules.Notes.Application.Features.Notebook.Create;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace DayFlow.Modules.Notes.Application.Features.Noteboke.Create
+namespace DayFlow.Modules.Notes.Application.Features.Notebook.Create
 {
     public sealed class CreateValidator
         : AbstractValidator<CreateCommand>

@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels

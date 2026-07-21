@@ -1,13 +1,13 @@
-﻿using DayFlow.BuildingBlocks.Application.Messaging;
-using DayFlow.BuildingBlocks.Application.Paging;
+﻿using DayFlow.BuildingBlocks.Application.Paging;
 using DayFlow.BuildingBlocks.Application.Results;
 using DayFlow.Modules.Notes.Infrastructure.Database;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace DayFlow.Modules.Notes.Application.Features.Notebook.List;
 
 public sealed class Handler
-    : IQuery<PagedResult<QueryResult>>
+    : IRequestHandler<ListQuery, Result<PagedResult<ListResult>>>
 {
     private readonly NoteDbContext _db;
 
@@ -16,8 +16,8 @@ public sealed class Handler
         _db = db;
     }
 
-    public async Task<Result<PagedResult<QueryResult>>> Handle(
-        Query request,
+    public async Task<Result<PagedResult<ListResult>>> Handle(
+        ListQuery request,
         CancellationToken cancellationToken)
     {
         var query = _db.Notebooks
@@ -37,7 +37,7 @@ public sealed class Handler
             .ThenBy(x => x.Name)
             .Skip(request.Paging.Skip)
             .Take(request.Paging.Take)
-            .Select(x => new QueryResult
+            .Select(x => new ListResult
             {
                 NotebookId = x.NotebookId,
                 Name = x.Name,
@@ -47,7 +47,7 @@ public sealed class Handler
             })
             .ToListAsync(cancellationToken);
 
-        var result = new PagedResult<QueryResult>
+        var result = new PagedResult<ListResult>
         {
             Items = items,
             Page = request.Paging.Page,
@@ -55,6 +55,6 @@ public sealed class Handler
             TotalCount = totalCount
         };
 
-        return Result<PagedResult<QueryResult>>.Ok(result);
+        return Result<PagedResult<ListResult>>.Ok(result);
     }
 }

@@ -2,6 +2,7 @@ using DayFlow.BuildingBlocks.DependencyInjection;
 using DayFlow.Modules.Identity;
 using DayFlow.Modules.Notes;
 using DayFlow.Web.Services;
+using DayFlow.Web.UI;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Razor;
 
@@ -17,7 +18,9 @@ var mvc = builder.Services
     .AddControllersWithViews()
     .AddViewLocalization(
         LanguageViewLocationExpanderFormat.Suffix
-    ); ;
+    ).AddApplicationPart(
+        typeof(WebUiMarker).Assembly);
+
 builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

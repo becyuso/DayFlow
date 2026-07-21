@@ -126,7 +126,7 @@ DayFlow.Modules.Note/
     Application/
         NoteApplication.cs
         Features/
-            Noteboke/
+            Notebook/
                 Create/
                     Command.cs
                     Handler.cs

@@ -1,41 +1,49 @@
-@model IEnumerable<DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels.NotebookListItemViewModel>
+@model DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels.NotebookListViewModel
 
 @{
-    ViewData["Title"] = "筆記本列表";
+	ViewData["Title"] = "筆記本列表";
 }
 
 <h2>@ViewData["Title"]</h2>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">建立筆記本</a>
+	<a asp-action="Create" class="btn btn-primary">建立筆記本</a>
 </p>
 
 <table class="table table-striped">
-    <thead>
-        <tr>
-            <th>名稱</th>
-            <th>顏色</th>
-            <th>排序</th>
-            <th>建立時間</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.Color</td>
-                <td>@item.SortOrder</td>
-                <td>@item.CreatedAt.ToString("g")</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.NotebookId" class="btn btn-sm btn-secondary">編輯</a>
-                    <a asp-action="Delete" asp-route-id="@item.NotebookId" class="btn btn-sm btn-danger">刪除</a>
-                </td>
-            </tr>
-        }
-    }
-    </tbody>
+	<thead>
+		<tr>
+			<th>名稱</th>
+			<th>顏色</th>
+			<th>排序</th>
+			<th>建立時間</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Items)
+		{
+			<tr>
+				<td>@item.Name</td>
+				<td>@item.Color</td>
+				<td>@item.SortOrder</td>
+				<td>@item.CreatedAt.ToString("g")</td>
+				<td>
+					<a asp-action="Edit"
+					   asp-route-id="@item.NotebookId"
+					   class="btn btn-sm btn-secondary">
+						編輯
+					</a>
+					<a asp-action="Delete"
+					   asp-route-id="@item.NotebookId"
+					   class="btn btn-sm btn-danger">
+						刪除
+					</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
+@await Component.InvokeAsync(
+	"Pagination",
+	Model.Pagination)

@@ -5,7 +5,6 @@ namespace DayFlow.Modules.Identity.Presentation.Api.Notebook.Create
 {
     public static class Mapping
     {
-
         public static CreateCommand ToCommand(
             this CreateRequest request)
         {
@@ -18,8 +17,6 @@ namespace DayFlow.Modules.Identity.Presentation.Api.Notebook.Create
             );
         }
 
-
-
         public static CreateResponse ToResponse(
             this CreateResult result)
         {
@@ -27,6 +24,5 @@ namespace DayFlow.Modules.Identity.Presentation.Api.Notebook.Create
             (
             );
         }
-
     }
 }

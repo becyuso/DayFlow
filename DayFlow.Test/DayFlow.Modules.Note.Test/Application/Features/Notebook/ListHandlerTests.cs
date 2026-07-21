@@ -30,7 +30,7 @@ public class ListHandlerTests
             new Handler(_db);
 
         var query =
-            new Query(
+            new ListQuery(
                 userId,
                 null,
                 new PagingRequest(

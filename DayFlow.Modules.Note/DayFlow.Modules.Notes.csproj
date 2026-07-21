@@ -28,6 +28,7 @@
     <ProjectReference Include="..\DayFlow.BuildingBlocks\DayFlow.BuildingBlocks.csproj" />
     <ProjectReference Include="..\DayFlow.SharedKernel\DayFlow.SharedKernel.csproj" />
     <ProjectReference Include="..\DayFlow.Web.Common\DayFlow.Web.Common.csproj" />
+    <ProjectReference Include="..\DayFlow.Web.UI\DayFlow.Web.UI.csproj" />
   </ItemGroup>
 
 </Project>

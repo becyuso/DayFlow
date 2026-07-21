@@ -1,9 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <EnableDefaultRazorGenerateItems>true</EnableDefaultRazorGenerateItems>
   </PropertyGroup>
 
   <ItemGroup>

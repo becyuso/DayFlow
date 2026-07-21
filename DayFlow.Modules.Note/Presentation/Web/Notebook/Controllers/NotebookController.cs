@@ -3,6 +3,7 @@ using DayFlow.Modules.Notes.Application.Features.Notebook.Create;
 using DayFlow.Modules.Notes.Application.Features.Notebook.Delete;
 using DayFlow.Modules.Notes.Application.Features.Notebook.List;
 using DayFlow.Modules.Notes.Application.Features.Notebook.Update;
+using DayFlow.Modules.Notes.Presentation.Web.Notebook.Mapping;
 using DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +18,9 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
         private readonly IMediator _mediator;
         public NotebookController(IMediator mediator) => _mediator = mediator;
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string? keyword = null,
+            int page = 1)
         {
             //TempData["Toast"] = JsonSerializer.Serialize((new
             //{
@@ -26,10 +29,19 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Controllers
             //}));
             // TODO: integrate ListNotebooks query when implemented
             var userId = GetCurrentUserId();
-            var query = new Query(userId, null, new PagingRequest(1, 20));
-            var result = await _mediator.Send(query);
 
-            return View();
+            var result = await _mediator.Send(
+                new ListQuery(
+                    userId,
+                    keyword,
+                    new PagingRequest(page, 20)));
+
+            if (!result.Success || result.Data is null)
+            {
+                return View(new NotebookListViewModel());
+            }
+
+            return View(result.Data.ToViewModel(keyword));
         }
 
         [HttpGet]

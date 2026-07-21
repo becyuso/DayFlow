@@ -1,6 +1,6 @@
 ﻿namespace DayFlow.BuildingBlocks.Application.Paging;
 
-public sealed record PagedResult<T>
+public sealed record PagedResult<T> : IPagedResult
 {
     public required IReadOnlyList<T> Items { get; init; }
 

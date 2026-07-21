@@ -1,0 +1,44 @@
+﻿@using DayFlow.Web.UI.Components.Pagination
+
+@model PaginationViewModel
+
+@if (Model.TotalPages > 1)
+{
+	<nav aria-label="Pagination">
+		<ul class="pagination">
+			@if (Model.HasPrevious)
+			{
+				<li class="page-item">
+					<a class="page-link"
+					   asp-action="@Model.Action"
+					   asp-all-route-data="@Model.GetRouteValues(Model.Page - 1)">
+						上一頁
+					</a>
+				</li>
+			}
+			@for (var i = 1; i <= Model.TotalPages; i++)
+			{
+				<li class="
+					page-item
+					@(i == Model.Page ? "active" : "")">
+					<a class="page-link"
+					   asp-action="@Model.Action"
+					   asp-all-route-data="@Model.GetRouteValues(i)">
+						@i
+					</a>
+				</li>
+			}
+			@if (Model.HasNext)
+			{
+				<li class="page-item">
+					<a class="page-link"
+					   asp-action="@Model.Action"
+					   asp-all-route-data="@Model.GetRouteValues(Model.Page + 1)">
+						下一頁
+					</a>
+				</li>
+			}
+		</ul>
+
+	</nav>
+}

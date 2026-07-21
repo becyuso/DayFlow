@@ -4,13 +4,13 @@ using DayFlow.BuildingBlocks.Application.Results;
 
 namespace DayFlow.Modules.Notes.Application.Features.Notebook.List;
 
-public sealed record Query(
+public sealed record ListQuery(
     Guid UserId,
     string? Keyword,
     PagingRequest Paging)
-    : IQuery<Result<PagedResult<QueryResult>>>;
+    : IQuery<Result<PagedResult<ListResult>>>;
 
-public sealed record QueryResult
+public sealed record ListResult
 {
     public Guid NotebookId { get; init; }
 
