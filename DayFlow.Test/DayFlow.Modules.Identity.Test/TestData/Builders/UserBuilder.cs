@@ -1,4 +1,4 @@
-﻿using DayFlow.Modules.Identity.Domain.Entities;
+﻿using DayFlow.Modules.Identity.Domain.Users;
 
 namespace DayFlow.Test.DayFlow.Modules.Identity.Test.TestData.Builders
 {

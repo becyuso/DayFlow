@@ -1,7 +1,6 @@
 ﻿using DayFlow.Modules.Identity.Application.Security;
-using DayFlow.Modules.Identity.Domain.Entities;
 
-namespace DayFlow.Modules.Identity.Domain.Factory
+namespace DayFlow.Modules.Identity.Domain.Users
 {
     public class UserFactory
     {
@@ -17,7 +16,7 @@ namespace DayFlow.Modules.Identity.Domain.Factory
                            string hashPassword,
                            string displayName)
         {
-            return User.Create(
+            return Domain.Users.User.Create(
                 publicId,
                 email,
                 _hasher.Hash(displayName),

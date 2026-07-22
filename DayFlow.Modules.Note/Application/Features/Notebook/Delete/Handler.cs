@@ -1,35 +1,35 @@
 using DayFlow.BuildingBlocks.Application.Results;
 using DayFlow.BuildingBlocks.Infrastructure.Time;
+using DayFlow.Modules.Notes.Domain.Notebooks;
+using DayFlow.Modules.Notes.Domain.Notes;
 using DayFlow.Modules.Notes.Infrastructure.Database;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace DayFlow.Modules.Notes.Application.Features.Notebook.Delete
 {
     internal class Handler : IRequestHandler<DeleteCommand, Result<DeleteResult>>
     {
-        private readonly NoteDbContext _db;
+        private readonly INotebookRepository _notebookRepository;
+        private readonly INoteRepository _noteRepository;
         private readonly IClock _iClock;
 
-        public Handler(NoteDbContext db, IClock iClock) =>
-            (_db, _iClock) = (db, iClock);
+        public Handler(INotebookRepository notebookRepository, INoteRepository noteRepository, IClock iClock) =>
+            (_notebookRepository, _noteRepository, _iClock) = (notebookRepository, noteRepository, iClock);
 
         public async Task<Result<DeleteResult>> Handle(DeleteCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _db.Notebooks.FirstOrDefaultAsync(x => x.NotebookId == request.NotebookId && !x.IsDeleted, cancellationToken);
+            var entity = await _notebookRepository.GetByIdAsync(request.NotebookId, cancellationToken);
 
             if (entity == null)
                 return Result<DeleteResult>.Fail("Notebook not found");
 
             // optional: enforce owner
-            if (entity.UserId != request.UserId && request.UserId != System.Guid.Empty)
+            if (entity.UserId != request.UserId && request.UserId != Guid.Empty)
                 return Result<DeleteResult>.Fail("Not authorized to delete this notebook");
 
-            entity.IsDeleted = true;
-            entity.DeletedAt = _iClock.TaiwanNow;
-            entity.DeletedBy = request.UserId == System.Guid.Empty ? null : request.UserId;
+            entity.SoftDelete(_iClock.TaiwanNow, request.UserId);
 
-            await _db.SaveChangesAsync(cancellationToken);
+            await _noteRepository.SoftDeleteByNotebookIdAsync(entity.NotebookId, _iClock.TaiwanNow, cancellationToken);
 
             return Result<DeleteResult>.Ok(new());
         }

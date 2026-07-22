@@ -1,5 +1,5 @@
 using DayFlow.Modules.Identity.Application.Security;
-using DayFlow.Modules.Identity.Infrastructure.Repositories;
+using DayFlow.Modules.Identity.Domain.Users;
 using MediatR;
 
 namespace DayFlow.Modules.Identity.Application.Features.Authentication.Login
@@ -9,16 +9,12 @@ namespace DayFlow.Modules.Identity.Application.Features.Authentication.Login
         private readonly IUserRepository _repo;
         private readonly IPasswordHasher _passwordHasher;
 
-        public Handler(IUserRepository repo,
-                       IPasswordHasher passwordHasher)
-        {
-            _repo = repo;
-            _passwordHasher = passwordHasher;
-        }
+        public Handler(IUserRepository repo, IPasswordHasher passwordHasher) =>
+            (_repo, _passwordHasher) = (repo, passwordHasher);
 
         public async Task<LoginResult> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _repo.GetByEmailAsync(request.Email);
+            var user = await _repo.GetByEmailReadOnlyAsync(request.Email!, cancellationToken);
 
             if (user == null)
                 return LoginResult.Fail("Invalid credentials");

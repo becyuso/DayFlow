@@ -1,4 +1,5 @@
-﻿using DayFlow.Modules.Identity.Infrastructure.Database;
+﻿using DayFlow.Modules.Identity.Domain.Users;
+using DayFlow.Modules.Identity.Infrastructure.Database;
 using DayFlow.Modules.Identity.Infrastructure.Repositories;
 using DayFlow.Modules.Identity.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;

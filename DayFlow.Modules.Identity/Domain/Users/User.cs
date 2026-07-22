@@ -1,4 +1,4 @@
-namespace DayFlow.Modules.Identity.Domain.Entities
+namespace DayFlow.Modules.Identity.Domain.Users
 {
     public class User
     {

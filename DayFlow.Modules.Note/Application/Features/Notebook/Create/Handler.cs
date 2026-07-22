@@ -1,30 +1,30 @@
 ﻿using DayFlow.BuildingBlocks.Application.Results;
 using DayFlow.BuildingBlocks.Infrastructure.Identity;
 using DayFlow.BuildingBlocks.Infrastructure.Time;
-using DayFlow.Modules.Notes.Infrastructure.Database;
+using DayFlow.Modules.Notes.Domain.Notebooks;
 using MediatR;
 
 namespace DayFlow.Modules.Notes.Application.Features.Notebook.Create
 {
     internal class Handler : IRequestHandler<CreateCommand, Result<CreateResult>>
     {
-        private readonly NoteDbContext _db;
+        private readonly INotebookRepository _notebookRepository;
         private readonly IIdGenerator _idGenerator;
         private readonly IClock _iClock;
 
-        public Handler(NoteDbContext db, IIdGenerator idGenerator, IClock iClock) =>
-            (_db, _idGenerator, _iClock) = (db, idGenerator, iClock);
+        public Handler(INotebookRepository notebookRepository, IIdGenerator idGenerator, IClock iClock) =>
+            (_notebookRepository, _idGenerator, _iClock) = (notebookRepository, idGenerator, iClock);
 
         public async Task<Result<CreateResult>> Handle(
             CreateCommand request,
             CancellationToken cancellationToken)
         {
-            if (request.UserId == null || request.UserId == System.Guid.Empty)
+            if (request.UserId == null || request.UserId == Guid.Empty)
                 return Result<CreateResult>.Fail("Invalid user");
 
             var time = _iClock.TaiwanNow;
 
-            var entity = Domain.Entities.Notebook.Create(
+            var entity = Domain.Notebooks.Notebook.Create(
                                       _idGenerator.NewId(),
                                       request.UserId.Value,
                                       request.Name ?? string.Empty,
@@ -35,7 +35,7 @@ namespace DayFlow.Modules.Notes.Application.Features.Notebook.Create
                                       time,
                                       request.UserId.Value);
 
-            _db.Notebooks.Add(entity);
+            _notebookRepository.Add(entity);
 
             return Result<CreateResult>.Ok(
                 new CreateResult

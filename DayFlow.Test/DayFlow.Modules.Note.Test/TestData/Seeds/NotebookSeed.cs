@@ -1,8 +1,5 @@
-﻿using DayFlow.Modules.Identity.Infrastructure.Database;
-using DayFlow.Modules.Notes.Domain.Entities;
+﻿using DayFlow.Modules.Notes.Domain.Notebooks;
 using DayFlow.Modules.Notes.Infrastructure.Database;
-using DayFlow.Test.DayFlow.Modules.Identity.Test.TestData.Builders;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace DayFlow.Test.DayFlow.Modules.Note.Test.TestData.Seeds;
 

@@ -1,10 +1,9 @@
 ﻿using DayFlow.BuildingBlocks.Application.Results;
-using DayFlow.Modules.Notes.Domain.Notebooks;
 using DayFlow.Modules.Notes.Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace DayFlow.Modules.Notes.Application.Features.Notebook.Get;
+namespace DayFlow.Modules.Notes.Application.Features.Note.Get;
 
 public sealed class Handler
     : IRequestHandler<GetQuery, Result<GetResult>>
@@ -12,24 +11,27 @@ public sealed class Handler
     private readonly NoteDbContext _db;
 
     public Handler(NoteDbContext db)
-        => _db = db;
+    {
+        _db = db;
+    }
 
     public async Task<Result<GetResult>> Handle(
         GetQuery request,
         CancellationToken cancellationToken)
     {
         var result =
-        await _db.Notebooks
+            await _db.Notes
                 .AsNoTracking()
                 .Where(x =>
-                    x.NotebookId == request.NotebookId &&
+                    x.NoteId == request.NoteId &&
                     x.UserId == request.UserId)
                 .Select(x => new GetResult
                 {
+                    NoteId = x.NoteId,
                     NotebookId = x.NotebookId,
-                    Name = x.Name,
-                    Color = x.Color,
-                    SortOrder = x.SortOrder,
+                    Title = x.Title,
+                    Content = x.Content,
+                    Summary = x.Summary,
                     CreatedAt = x.CreatedAt
                 })
                 .FirstOrDefaultAsync(cancellationToken);
@@ -37,7 +39,7 @@ public sealed class Handler
         if (result is null)
         {
             return Result<GetResult>.Fail(
-                "Notebook not found.");
+                "Notenot found.");
         }
 
         return Result<GetResult>.Ok(result);

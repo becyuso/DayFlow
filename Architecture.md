@@ -137,10 +137,13 @@ DayFlow.Modules.Note/
                     Query.cs
 
     Domain/
-        Entities/
+        Notebooks/
             Notebook.cs
+        Notes/
             Note.cs
+        Tags/
             Tag.cs
+        NoteTags/
             NoteTag.cs
 
     Infrastructure/

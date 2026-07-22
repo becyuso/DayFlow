@@ -1,4 +1,7 @@
-namespace DayFlow.Modules.Notes.Domain.Entities
+using DayFlow.Modules.Notes.Domain.Notes;
+using DayFlow.Modules.Notes.Domain.Tags;
+
+namespace DayFlow.Modules.Notes.Domain.NoteTags
 {
     // Represents notes.note_tags
     public class NoteTag

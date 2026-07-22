@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using DayFlow.Modules.Identity.Domain.Entities;
+using DayFlow.Modules.Identity.Domain.Users;
 
 namespace DayFlow.Modules.Identity.Infrastructure.Database
 {

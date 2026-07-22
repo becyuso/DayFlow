@@ -1,5 +1,9 @@
 ﻿using DayFlow.BuildingBlocks.Application.Abstractions;
 using DayFlow.BuildingBlocks.Application.Messaging;
+using DayFlow.Modules.Notes.Domain.Notebooks;
+using DayFlow.Modules.Notes.Domain.Notes;
+using DayFlow.Modules.Notes.Domain.NoteTags;
+using DayFlow.Modules.Notes.Domain.Tags;
 using DayFlow.Modules.Notes.Infrastructure.Database;
 using DayFlow.Modules.Notes.Infrastructure.Persistence;
 using DayFlow.Modules.Notes.Infrastructure.Repositories;

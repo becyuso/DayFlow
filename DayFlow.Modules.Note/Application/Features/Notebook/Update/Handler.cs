@@ -1,34 +1,35 @@
 using DayFlow.BuildingBlocks.Application.Results;
-using DayFlow.Modules.Notes.Infrastructure.Database;
+using DayFlow.BuildingBlocks.Infrastructure.Time;
+using DayFlow.Modules.Notes.Domain.Notebooks;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace DayFlow.Modules.Notes.Application.Features.Notebook.Update
 {
     public class Handler : IRequestHandler<UpdateCommand, Result<UpdateResult>>
     {
-        private readonly NoteDbContext _db;
+        private readonly INotebookRepository _notebookRepository;
+        private readonly IClock _iClock;
 
-        public Handler(NoteDbContext db) => _db = db;
+        public Handler(INotebookRepository notebookRepository, IClock iClock) =>
+            (_notebookRepository, _iClock) = (notebookRepository, iClock);
 
         public async Task<Result<UpdateResult>> Handle(UpdateCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _db.Notebooks.FirstOrDefaultAsync(x => x.NotebookId == request.NotebookId && !x.IsDeleted, cancellationToken);
+            var entity = await _notebookRepository.GetByIdAsync(request.NotebookId, cancellationToken);
 
             if (entity == null)
                 return Result<UpdateResult>.Fail("Notebook not found");
 
             // optional: enforce owner
-            if (entity.UserId != request.UserId && request.UserId != System.Guid.Empty)
+            if (entity.UserId != request.UserId && request.UserId != Guid.Empty)
                 return Result<UpdateResult>.Fail("Not authorized to update this notebook");
 
-            entity.Name = request.Name;
-            entity.Color = request.Color;
-            entity.SortOrder = request.SortOrder;
-            entity.UpdatedAt = System.DateTime.UtcNow;
-            entity.UpdatedBy = request.UserId == System.Guid.Empty ? null : request.UserId;
-
-            await _db.SaveChangesAsync(cancellationToken);
+            entity.Update(
+                request.Name,
+                request.Color,
+                request.SortOrder,
+                _iClock.TaiwanNow,
+                request.UserId);
 
             return Result<UpdateResult>.Ok(new());
         }

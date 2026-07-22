@@ -4,46 +4,41 @@ using DayFlow.Modules.Notes.Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace DayFlow.Modules.Notes.Application.Features.Notebook.List;
+namespace DayFlow.Modules.Notes.Application.Features.Note.List;
 
 public sealed class Handler
     : IRequestHandler<ListQuery, Result<PagedResult<ListResult>>>
 {
     private readonly NoteDbContext _db;
 
-    public Handler(NoteDbContext db)
-    {
-        _db = db;
-    }
+    public Handler(NoteDbContext db) => _db = db;
 
     public async Task<Result<PagedResult<ListResult>>> Handle(
         ListQuery request,
         CancellationToken cancellationToken)
     {
-        var query = _db.Notebooks
+        var query = _db.Notes
             .AsNoTracking()
             .Where(x => x.UserId == request.UserId && !x.IsDeleted);
 
         if (!string.IsNullOrWhiteSpace(request.Keyword))
         {
             query = query.Where(x =>
-                x.Name.Contains(request.Keyword));
+                x.Title.Contains(request.Keyword));
         }
 
         var totalCount = await query.CountAsync(cancellationToken);
 
         var items = await query
-            .OrderBy(x => x.SortOrder)
-            .ThenByDescending(x => x.UpdatedAt)
+            .OrderBy(x => x.UpdatedAt)
             .Skip(request.Paging.Skip)
             .Take(request.Paging.Take)
             .Select(x => new ListResult
             {
-                NotebookId = x.NotebookId,
-                Name = x.Name,
-                Color = x.Color,
-                SortOrder = x.SortOrder,
-                CreatedAt = x.CreatedAt
+                NoteId = x.NoteId,
+                Title = x.Title,
+                Summary = x.Summary,
+                UpdatedAt = x.UpdatedAt
             })
             .ToListAsync(cancellationToken);
 

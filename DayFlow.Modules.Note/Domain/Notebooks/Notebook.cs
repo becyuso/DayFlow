@@ -1,6 +1,6 @@
-using System;
+using DayFlow.Modules.Notes.Domain.Notes;
 
-namespace DayFlow.Modules.Notes.Domain.Entities
+namespace DayFlow.Modules.Notes.Domain.Notebooks
 {
     // Represents notes.notebooks
     public class Notebook
@@ -37,9 +37,33 @@ namespace DayFlow.Modules.Notes.Domain.Entities
                 CreatedAt = createdAt,
                 CreatedBy = createdBy,
                 UpdatedAt = updatedAt,
-                UpdatedBy = updatedBy
+                UpdatedBy = updatedBy,
+
+                IsDeleted = false
             };
             return n;
+        }
+
+        public void Update(string name, string? color, int sortOrder, DateTime updatedAt, Guid updatedBy)
+        {
+            Name = name;
+            Color = color;
+            SortOrder = sortOrder;
+
+            UpdatedAt = updatedAt;
+            UpdatedBy = updatedBy;
+        }
+
+        public void SoftDelete(
+            DateTime deletedAt,
+            Guid deletedBy)
+        {
+            if (IsDeleted)
+                return;
+
+            IsDeleted = true;
+            DeletedAt = deletedAt;
+            DeletedBy = deletedBy;
         }
     }
 }

@@ -1,14 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using DayFlow.Modules.Notes.Domain.Entities;
+﻿using DayFlow.Modules.Notes.Domain.NoteTags;
 using DayFlow.Modules.Notes.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace DayFlow.Modules.Notes.Infrastructure.Repositories
 {
-    public interface INoteTagRepository
-    {
-        Task<NoteTag?> GetByNoteIdAsync(Guid? noteId, Guid? tagId);
-    }
-
     public class NoteTagRepository : INoteTagRepository
     {
         private readonly NoteDbContext _db;

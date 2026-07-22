@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using DayFlow.Modules.Notes.Domain.Entities;
+﻿using DayFlow.Modules.Notes.Domain.Notebooks;
+using DayFlow.Modules.Notes.Domain.Notes;
+using DayFlow.Modules.Notes.Domain.NoteTags;
+using DayFlow.Modules.Notes.Domain.Tags;
+using Microsoft.EntityFrameworkCore;
 
 namespace DayFlow.Modules.Notes.Infrastructure.Database
 {
@@ -16,7 +19,20 @@ namespace DayFlow.Modules.Notes.Infrastructure.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // notes.notebooks
+            #region Global Query Filters
+
+            modelBuilder.Entity<Notebook>()
+                .HasQueryFilter(
+                x => !x.IsDeleted);
+
+            modelBuilder.Entity<Note>()
+                .HasQueryFilter(
+                x => !x.IsDeleted);
+
+            #endregion
+
+            #region Entity Configurations
+
             modelBuilder.Entity<Notebook>(b =>
             {
                 b.ToTable("notebooks", "notes");
@@ -37,7 +53,6 @@ namespace DayFlow.Modules.Notes.Infrastructure.Database
                 b.HasMany(x => x.Notes).WithOne(x => x.Notebook).HasForeignKey(x => x.NotebookId).HasConstraintName("fk_notes_notebooks");
             });
 
-            // notes.notes
             modelBuilder.Entity<Note>(b =>
             {
                 b.ToTable("notes", "notes");
@@ -59,7 +74,6 @@ namespace DayFlow.Modules.Notes.Infrastructure.Database
                 b.HasMany(x => x.NoteTags).WithOne(x => x.Notes).HasForeignKey(x => x.NoteId).HasConstraintName("fk_note_tags_note");
             });
 
-            // notes.tags
             modelBuilder.Entity<Tag>(b =>
             {
                 b.ToTable("tags", "notes");
@@ -79,7 +93,6 @@ namespace DayFlow.Modules.Notes.Infrastructure.Database
                 b.HasMany(x => x.NoteTags).WithOne(x => x.Tag).HasForeignKey(x => x.TagId).HasConstraintName("fk_note_tags_tag");
             });
 
-            // notes.note_tags
             modelBuilder.Entity<NoteTag>(b =>
             {
                 b.ToTable("note_tags", "notes");
@@ -92,6 +105,8 @@ namespace DayFlow.Modules.Notes.Infrastructure.Database
                 b.HasOne(x => x.Notes).WithMany(x => x.NoteTags).HasForeignKey(x => x.NoteId).HasConstraintName("fk_note_tags_note");
                 b.HasOne(x => x.Tag).WithMany(x => x.NoteTags).HasForeignKey(x => x.TagId).HasConstraintName("fk_note_tags_tag");
             });
+
+            #endregion
         }
     }
 }
