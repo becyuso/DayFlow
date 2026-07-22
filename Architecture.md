@@ -29,13 +29,10 @@ DayFlow.Modules.Identity
 │   ├── Repositories
 │   └── IdentityApplication.cs
 ├── Domain
-│   ├── Entities
+│   ├── Users
+│   │   └── IUserRepository.cs
 │   │   └── User.cs
-│   ├── Factory
 │   │   └── UserFactory.cs
-│   ├── ValueObjects
-│   ├── Enums
-│   └── Events
 ├── Infrastructure
 │   ├── Database
 │   │   └── IdentityDbContext.cs
@@ -77,17 +74,10 @@ Application/
     IdentityApplication.cs
 
 Domain/
-    Entities/
+    Users/
+        IUserRepository.cs
         User.cs
-
-    Factory/
         UserFactory.cs
-
-    ValueObjects/
-
-    Enums/
-
-    Events/
 
 Infrastructure/
     Database/
@@ -138,12 +128,16 @@ DayFlow.Modules.Note/
 
     Domain/
         Notebooks/
+            INotebookRepository.cs
             Notebook.cs
         Notes/
+            INoteRepository.cs
             Note.cs
         Tags/
+            ITagRepository.cs
             Tag.cs
         NoteTags/
+            INoteTagRepository.cs
             NoteTag.cs
 
     Infrastructure/
