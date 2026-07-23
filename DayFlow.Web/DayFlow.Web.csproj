@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="frontend\app\editor.ts" />
     <None Remove="vite.config.ts" />
   </ItemGroup>
 
@@ -43,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="frontend\app\editor.ts" />
     <TypeScriptCompile Include="frontend\editors\tiptap\extensions.ts" />
     <TypeScriptCompile Include="frontend\editors\tiptap\index.ts" />
   </ItemGroup>

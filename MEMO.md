@@ -34,10 +34,12 @@ cd /d "E:\Project\DayFlow\DayFlow.Web\frontend"
 
 **Node Package Manager**
 
-|                  npm command                   | description |
-| ---------------------------------------------- | ----------- |
-| npm install @tiptap/core @tiptap/starter-kit   |             |
-| npm install @tiptap/extension-image            | 插入圖片    |
+|                  npm command                   | description           |
+| ---------------------------------------------- | --------------------- |
+| npm install @tiptap/core @tiptap/starter-kit   |                       |
+| npm install @tiptap/extension-image            | 插入圖片              |
+| npm install @tiptap/extension-text-style       | FontSize / FontFamily |
+| npm install @tiptap/extension-font-family      | font-family           |
 
 ## toast                                                    
 

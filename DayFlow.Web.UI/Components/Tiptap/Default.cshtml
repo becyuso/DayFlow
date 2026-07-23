@@ -1,0 +1,52 @@
+﻿
+<div class="tiptap-container">
+	<div id="@($"{Model.Id}_toolbar")"
+		 class="tiptap-toolbar">
+	</div>
+
+	<div id="@Model.Id"></div>
+
+	<input id="@($"{Model.Id}_value")"
+		   name="@Model.Id"
+		   type="hidden"
+		   value="@Model.Value" />
+</div>
+
+<script>
+
+	(function(){
+
+		function init(){
+
+			window.mountRichTextEditor(
+				"@Model.Id",
+				@Html.Raw(
+												System.Text.Json.JsonSerializer.Serialize(
+																				Model.Value ?? ""
+												)
+				)
+			)
+
+		}
+
+
+		if(window.mountRichTextEditor){
+
+			init()
+
+		}
+		else {
+
+			window.addEventListener(
+				"tiptap-ready",
+				init,
+				{
+					once:true
+				}
+			)
+
+		}
+
+	})()
+
+</script>

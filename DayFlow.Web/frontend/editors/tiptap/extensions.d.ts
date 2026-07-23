@@ -1,2 +1,2 @@
-export declare const editorExtensions: (import("@tiptap/core").Extension<import("@tiptap/starter-kit").StarterKitOptions, any> | import("@tiptap/core").Node<import("@tiptap/extension-image").ImageOptions, any>)[];
+export declare const tiptapExtensions: (import("@tiptap/core").Mark<import("@tiptap/extension-text-style").TextStyleOptions, any> | import("@tiptap/core").Extension<import("@tiptap/starter-kit").StarterKitOptions, any> | import("@tiptap/core").Node<import("@tiptap/extension-image").ImageOptions, any> | import("@tiptap/core").Extension<import("@tiptap/extension-text-style").FontFamilyOptions, any>)[];
 //# sourceMappingURL=extensions.d.ts.map

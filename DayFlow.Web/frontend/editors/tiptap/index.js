@@ -1,20 +1,15 @@
-import { Editor } from '@tiptap/core';
-import StarterKit from '@tiptap/starter-kit';
-export function createEditor(element) {
+import { Editor } from "@tiptap/core";
+import { tiptapExtensions } from "./extensions";
+export function createTiptapEditor(element, content = "") {
     return new Editor({
         element,
-        extensions: [
-            StarterKit
-        ],
-        content: `
-            <h2>
-                Hello Tiptap
-            </h2>
-
-            <p>
-                Enterprise Editor
-            </p>
-        `
+        extensions: tiptapExtensions,
+        content,
+        editorProps: {
+            attributes: {
+                class: "tiptap-content"
+            }
+        }
     });
 }
 //# sourceMappingURL=index.js.map
