@@ -1,0 +1,38 @@
+﻿@model DayFlow.Modules.Notes.Presentation.Web.Note.ViewModels.NoteEditViewModel
+
+@{
+    ViewData["Title"] = "編輯筆記";
+}
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a asp-controller="Notebook"
+			   asp-action="Index">
+				筆記本
+			</a>
+		</li>
+
+		<li class="breadcrumb-item active">
+			@Model.NotebookName
+		</li>
+	</ol>
+</nav>
+
+<h2>編輯筆記</h2>
+
+<form asp-action="Edit" method="post">
+
+    @Html.AntiForgeryToken()
+
+    <input asp-for="NoteId" type="hidden" />
+
+    <partial name="_EditForm" model="Model" />
+
+</form>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

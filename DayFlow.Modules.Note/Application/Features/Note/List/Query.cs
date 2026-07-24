@@ -15,6 +15,8 @@ public sealed record ListResult
 {
     public Guid NoteId { get; init; }
 
+    public Guid NotebookId { get; init; }
+
     public string Title { get; init; } = string.Empty;
 
     public string? Summary { get; init; }

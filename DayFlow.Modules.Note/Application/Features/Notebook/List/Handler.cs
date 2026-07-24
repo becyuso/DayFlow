@@ -43,7 +43,7 @@ public sealed class Handler
                 Name = x.Name,
                 Color = x.Color,
                 SortOrder = x.SortOrder,
-                CreatedAt = x.CreatedAt
+                UpdatedAt = x.UpdatedAt
             })
             .ToListAsync(cancellationToken);
 

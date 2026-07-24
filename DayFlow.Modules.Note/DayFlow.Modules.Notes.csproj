@@ -31,10 +31,4 @@
     <ProjectReference Include="..\DayFlow.Web.UI\DayFlow.Web.UI.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Presentation\Web\Note\Mapping\" />
-    <Folder Include="Presentation\Web\Note\Views\" />
-    <Folder Include="Presentation\Web\Note\ViewModels\" />
-  </ItemGroup>
-
 </Project>

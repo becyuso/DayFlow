@@ -33,10 +33,11 @@ namespace DayFlow.Modules.Notes.Application.Features.Note.Create
 
             var entity = Domain.Notes.Note.Create(
                                       _idGenerator.NewId(),
-                                      request.UserId,
                                       request.NotebookId,
+                                      request.UserId,
                                       request.Title,
                                       request.Content ?? string.Empty,
+                                      request.Summary ?? string.Empty,
                                       time,
                                       request.UserId,
                                       time,

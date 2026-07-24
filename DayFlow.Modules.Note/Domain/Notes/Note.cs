@@ -30,7 +30,7 @@ namespace DayFlow.Modules.Notes.Domain.Notes
         // EF 用的 protected ctor
         protected Note() { }
 
-        public static Note Create(Guid noteId, Guid notebookId, Guid userId, string title, string? content, DateTime createdAt, Guid createdBy, DateTime updatedAt, Guid updatedBy)
+        public static Note Create(Guid noteId, Guid notebookId, Guid userId, string title, string? content, string? summary, DateTime createdAt, Guid createdBy, DateTime updatedAt, Guid updatedBy)
         {
             var n = new Note
             {
@@ -39,6 +39,7 @@ namespace DayFlow.Modules.Notes.Domain.Notes
                 UserId = userId,
                 Title = title,
                 Content = content,
+                Summary = summary,
                 CreatedAt = createdAt,
                 CreatedBy = createdBy,
                 UpdatedAt = updatedAt,
@@ -48,6 +49,20 @@ namespace DayFlow.Modules.Notes.Domain.Notes
             };
             return n;
         }
+
+        public void Update(string title, string? content, string? summary, DateTime updatedAt, Guid updatedBy)
+        {
+            if (IsDeleted)
+                return;
+
+            Title = title;
+            Content = content;
+            Summary = summary;
+
+            UpdatedAt = updatedAt;
+            UpdatedBy = updatedBy;
+        }
+
 
         public void Delete(
             DateTime deletedAt,

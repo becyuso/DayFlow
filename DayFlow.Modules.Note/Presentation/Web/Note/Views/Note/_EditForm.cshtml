@@ -1,0 +1,107 @@
+﻿@model DayFlow.Modules.Notes.Presentation.Web.Note.ViewModels.NoteEditViewModel
+
+@* <div class="mb-3">
+
+    <label asp-for="NotebookId"></label>
+
+    <select asp-for="NotebookId"
+            asp-items="Model.NotebookOptions"
+            class="form-select">
+    </select>
+
+    <span asp-validation-for="NotebookId"
+          class="text-danger"></span>
+
+</div> *@
+<div class="mb-3">
+
+	<input type="hidden" asp-for="NotebookId" />
+
+</div>
+
+<div class="mb-3">
+
+	<label asp-for="Title"></label>
+
+	<input asp-for="Title"
+		   class="form-control" />
+
+	<span asp-validation-for="Title"
+		  class="text-danger"></span>
+
+</div>
+
+<div class="mb-3">
+
+	<label asp-for="Content"></label>
+
+	@await Component.InvokeAsync(
+		"Tiptap",
+		new DayFlow.Web.UI.Components.Tiptap.TiptapViewModel
+		{
+			Id = nameof(Model.Content),
+			Value = Model.Content ?? ""
+		})
+
+	<span asp-validation-for="Content"
+		  class="text-danger"></span>
+
+</div>
+
+<div class="mb-3">
+
+	<label asp-for="Summary"></label>
+
+	<textarea asp-for="Summary"
+			  class="form-control"
+			  rows="3"></textarea>
+
+</div>
+
+<button type="submit"
+		class="btn btn-primary">
+
+	儲存
+
+</button>
+
+<a asp-action="Index"
+   asp-route-notebookId="@Model.NotebookId"
+   class="btn btn-secondary">
+
+	返回
+
+</a>
+
+<script>
+	(function () {
+
+		var editorId = "@nameof(Model.Content)";
+		var script = document.currentScript;
+		var form = script && script.closest("form");
+
+		if (!form) {
+			return;
+		}
+
+		form.addEventListener("submit", function () {
+
+			var editorDiv = document.getElementById(editorId);
+			var hiddenInput = document.getElementById(editorId + "_value");
+
+			if (!editorDiv || !hiddenInput) {
+				return;
+			}
+
+			// Tiptap/ProseMirror 實際內容通常在 .ProseMirror 這個子元素內
+			// 若找不到就退回讀取整個容器的 innerHTML
+			var proseMirrorEl = editorDiv.querySelector(".ProseMirror");
+
+			hiddenInput.value = proseMirrorEl
+				? proseMirrorEl.innerHTML
+				: editorDiv.innerHTML;
+
+		});
+
+	})();
+</script>

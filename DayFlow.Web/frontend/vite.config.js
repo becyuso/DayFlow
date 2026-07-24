@@ -12,8 +12,7 @@ export default defineConfig({
         manifest: true,
         rollupOptions: {
             input: {
-                app: "./app/main.ts",
-                editor: "./app/editor.ts"
+                app: "./app/main.ts"
             }
         }
     },

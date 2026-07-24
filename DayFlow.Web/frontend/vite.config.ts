@@ -14,9 +14,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 app:
-                    "./app/main.ts",
-                editor:
-                    "./app/editor.ts"
+                    "./app/main.ts"
             }
         }
     },

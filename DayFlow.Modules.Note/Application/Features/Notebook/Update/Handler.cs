@@ -5,7 +5,8 @@ using MediatR;
 
 namespace DayFlow.Modules.Notes.Application.Features.Notebook.Update
 {
-    public class Handler : IRequestHandler<UpdateCommand, Result<UpdateResult>>
+    public class Handler 
+        : IRequestHandler<UpdateCommand, Result<UpdateResult>>
     {
         private readonly INotebookRepository _notebookRepository;
         private readonly IClock _iClock;

@@ -7,7 +7,8 @@ namespace DayFlow.Modules.Notes.Application.Features.Note.Create
      Guid UserId,
      Guid NotebookId,
      string Title,
-     string? Content)
+     string? Content,
+     string? Summary)
      : ICommand<Result<CreateResult>>;
 
     public sealed record CreateResult

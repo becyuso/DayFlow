@@ -90,6 +90,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="bold"
         title="粗體">
@@ -101,6 +102,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="italic"
         title="斜體">
@@ -112,6 +114,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="strike"
         title="刪除線">
@@ -130,6 +133,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="h1">
 
@@ -140,6 +144,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="h2">
 
@@ -150,6 +155,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="h3">
 
@@ -167,6 +173,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="bullet">
 
@@ -177,6 +184,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="ordered">
 
@@ -187,6 +195,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="quote">
 
@@ -204,6 +213,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="code">
 
@@ -214,6 +224,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="codeblock">
 
@@ -224,6 +235,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="hr">
 
@@ -241,6 +253,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="image">
 
@@ -258,6 +271,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="undo">
 
@@ -268,6 +282,7 @@ export function createToolbar(
 
 
     <button
+        type="button"
         class="tiptap-tool"
         data-command="redo">
 

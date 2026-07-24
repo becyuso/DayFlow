@@ -20,5 +20,5 @@ public sealed record ListResult
 
     public int SortOrder { get; init; }
 
-    public DateTime CreatedAt { get; init; }
+    public DateTime? UpdatedAt { get; init; }
 }

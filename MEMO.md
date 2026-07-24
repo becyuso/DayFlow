@@ -62,10 +62,142 @@ cd /d "E:\Project\DayFlow\DayFlow.Web\frontend"
 | dotnet remove package           | 移除 NuGet 套件。                                                 | 
 | dotnet restore	              | 還原 NuGet 套件。                                                 | 
 | dotnet build	                  | 建置專案。                                                        | 
-| dotnet run	                  | 執行專案。                                                        | 
+| dotnet run	                  | 執行專案。(建置階段查看錯誤)                                      | 
 | dotnet test	                  | 執行單元測試。                                                    | 
 | dotnet clean	                  | 清除建置產物。                                                    | 
 | dotnet nuget locals all --clear | 清除 NuGet 快取（解決套件異常時很有用）                           | 
+
+## 找出專案目前目錄底下所有 DLL 檔案（包含子目錄），移除 Windows 對它們標記的「來自網際網路」封鎖標記
+PowerShell執行：
+```text
+Get-ChildItem "E:\Project\DayFlow" -Recurse | Unblock-File
+```
+
+## 檢查DLL是否可正常載入
+
+Get-Item "E:\Project\DayFlow\DayFlow.Web\bin\Debug\net10.0\DayFlow.Modules.Notes.dll" -Stream *
+
+## 其它訊息
+
+事件檢視器 → 應用程式與服務記錄 → Microsoft → Windows → CodeIntegrity → Operational
+PowerShell執行：
+```text
+Get-WinEvent -LogName "Microsoft-Windows-CodeIntegrity/Operational" -MaxEvents 5
+```
+
+## 其它問題  
+
+Q: Windows啟用了 WDAC（Windows Defender Application Control）/ Code Integrity 企業簽章政策，要求載入的 DLL 必須符合「Enterprise signing level」要求。
+A: Windows 11 較新版本有個 Smart App Control 功能，是微軟自己的 WDAC 應用，一旦開啟後沒有官方方式關閉，只能重灌系統才能徹底移除。它會封鎖未簽章或信譽不足的執行檔/DLL，尤其是自己編譯出來、動態載入的 DLL 特別容易中招。
+PowerShell執行：
+```text
+Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CI\Policy" -Name "VerifiedAndReputablePolicyState" -ErrorAction SilentlyContinue
+```
+解決方式：
+若這個值存在且為 1（開啟中）或 2（評估模式），八九不離十就是它在擋。
+設定 → 隱私權與安全性 → Windows 安全性 → App 與瀏覽器控制 → Smart App Control(智慧型應用程式控制) → 關閉（如果選項還在，代表可以直接關）
+如果選項已經消失（代表已經正式生效、鎖死），唯一解法是重新安裝 Windows——這是微軟刻意設計的單向開關，是這個功能最常被開發者詬病的地方
+
+## WDAC政策
+
+**確認是否有 WDAC Policy**
+系統管理員 PowerShell執行： dir C:\Windows\System32\CodeIntegrity
+確認Length Name是否有.p7b
+Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CI\Policy" -Name "VerifiedAndReputablePolicyState" -ErrorAction SilentlyContinue
+
+## 個人憑證(針對某個.dll作為範例)
+以 E:\Project\DayFlow\DayFlow.Web\bin\Debug\net10.0\DayFlow.Modules.Notes.dll 為例
+
+**查詢個人憑證用途**
+PowerShell執行：
+```text
+Get-ChildItem Cert:\CurrentUser\My |
+Format-List Subject, Thumbprint, EnhancedKeyUsageList, NotBefore, NotAfter, HasPrivateKey
+```
+
+```text
+Get-ChildItem Cert:\LocalMachine\My |
+Format-List Subject, Thumbprint, EnhancedKeyUsageList, NotBefore, NotAfter, HasPrivateKey
+```
+
+是否類似 
+EnhancedKeyUsageList : Code Signing
+HasPrivateKey : True
+
+**個人開發電腦建立一張 Dev Code Signing 憑證**
+PowerShell執行：
+```text
+New-SelfSignedCertificate `
+-Type CodeSigningCert `
+-Subject "CN=DayFlow Development Code Signing" `
+-CertStoreLocation Cert:\CurrentUser\My
+```
+
+**確認**
+PowerShell執行：
+```text
+Get-ChildItem Cert:\CurrentUser\My |
+Where-Object {
+    $_.Subject -like "*DayFlow*"
+} |
+Format-List Subject, EnhancedKeyUsageList, HasPrivateKey
+```
+
+**確認是否安裝signtool**
+PowerShell執行：
+```text
+Get-ChildItem "C:\Program Files (x86)\Windows Kits\10\bin\" -Recurse -Filter "signtool.exe" -ErrorAction SilentlyContinue
+Get-ChildItem "C:\Program Files\Microsoft Visual Studio\" -Recurse -Filter "signtool.exe" -ErrorAction SilentlyContinue
+```
+
+**若是安裝不在C:**
+PowerShell執行：
+```text
+reg query "HKLM\SOFTWARE\Microsoft\Windows Kits\Installed Roots"
+```
+查看有沒有類似 KitsRoot10    REG_SZ    C:\Program Files (x86)\Windows Kits\10\
+
+**安裝signtool**
+PowerShell執行：
+1.找尋最新版本:
+```text
+winget search "Windows SDK"
+```
+2. 安裝:
+```text
+winget install --id Microsoft.WindowsSDK.10.0.18362
+```
+
+**簽 DLL**
+尋找完整路徑，PowerShell執行：
+```text
+Get-ChildItem "E:\Windows Kits\10" -Recurse -Filter signtool.exe
+```
+例: E:\Windows Kits\10\bin\10.0.28000.0\x64\signtool.exe
+PowerShell執行：
+```text
+& "E:\Windows Kits\10\bin\10.0.28000.0\x64\signtool.exe" sign `
+ /fd SHA256 `
+ /n "DayFlow Development Code Signing" `
+ "E:\Project\DayFlow\DayFlow.Web\bin\Debug\net10.0\DayFlow.Modules.Notes.dll"
+ ```
+ 
+**確認簽章成功**
+PowerShell執行：
+```text
+Get-AuthenticodeSignature `
+"E:\Project\DayFlow\DayFlow.Web\bin\Debug\net10.0\DayFlow.Modules.Notes.dll"
+```
+
+**最後確認**
+1. DLL 是否有 Authenticode 簽章
+2. Code Integrity 是否接受這個簽章
+PowerShell執行：
+```text
+[System.Reflection.Assembly]::LoadFrom(
+"E:\Project\DayFlow\DayFlow.Web\bin\Debug\net10.0\DayFlow.Modules.Notes.dll"
+)
+ ```
 
 ## Other                                                  
 

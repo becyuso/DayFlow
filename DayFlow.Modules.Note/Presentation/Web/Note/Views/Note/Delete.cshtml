@@ -1,0 +1,60 @@
+﻿@model DayFlow.Modules.Notes.Presentation.Web.Note.ViewModels.NoteEditViewModel
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Notebook"
+               asp-action="Index">
+                筆記本
+            </a>
+        </li>
+
+        <li class="breadcrumb-item active">
+            @Model.NotebookName
+        </li>
+    </ol>
+</nav>
+
+
+<h3 class="text-danger">
+
+    確定刪除這筆筆記？
+
+</h3>
+
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-2">
+        標題
+    </dt>
+
+    <dd class="col-sm-10">
+
+        @Model.Title
+
+    </dd>
+
+</dl>
+
+<form asp-action="DeleteConfirmed"
+      asp-route-notebookId="@Model.NotebookId"
+      method="post">
+
+    <input type="hidden" asp-for="NoteId" />
+
+    <button class="btn btn-danger">
+
+        刪除
+
+    </button>
+
+    <a asp-action="Index"
+       asp-route-notebookId="@Model.NotebookId"
+       class="btn btn-secondary">
+
+        返回
+
+    </a>
+
+</form>

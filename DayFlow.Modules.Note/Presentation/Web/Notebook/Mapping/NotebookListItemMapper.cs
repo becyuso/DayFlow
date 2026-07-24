@@ -14,7 +14,8 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Notebook.Mapping
                 Name = result.Name,
                 Color = result.Color,
                 SortOrder = result.SortOrder,
-                CreatedAt = result.CreatedAt
+                
+                UpdatedAt= result.UpdatedAt
             };
         }
     }

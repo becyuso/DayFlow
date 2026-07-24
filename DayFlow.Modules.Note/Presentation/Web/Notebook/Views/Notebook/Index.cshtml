@@ -1,4 +1,4 @@
-@model DayFlow.Modules.Notes.Presentation.Web.Notebook.ViewModels.NotebookListViewModel
+@model NotebookListViewModel
 
 @{
 	ViewData["Title"] = "筆記本列表";
@@ -10,12 +10,70 @@
 		height: 20px;
 		display: inline-block;
 		border-radius: 50%;
-		border: 1px solid #ccc;
+		border: 1px solid #dbe3ef;
 	}
+
+	/* Notebook Link */
+
+	.trend-link {
+		display: inline-flex;
+		align-items: center;
+		gap: .45rem;
+		padding: .35rem .65rem;
+		border-radius: .6rem;
+		color: #2563eb;
+		font-weight: 500;
+		text-decoration: none;
+		transition: all .25s ease;
+	}
+
+		.trend-link:hover {
+			color: #0d6efd;
+			background: linear-gradient( 90deg, #eff6ff 0%, #dbeafe 100% );
+			text-decoration: none;
+			transform: translateY(-1px);
+		}
+
+		.trend-link:active {
+			transform: translateY(0);
+		}
+
+		.trend-link:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 .2rem rgba(13,110,253,.15);
+		}
+
+		/* 文字 */
+
+		.trend-link span,
+		.trend-link {
+			transition: color .25s ease;
+		}
+
+			.trend-link:hover span,
+			.trend-link:hover {
+				color: #0a58ca;
+				font-weight: 600;
+			}
+
+			/* Icon */
+
+			.trend-link .icon {
+				font-size: .95rem;
+				color: #7aa7ff;
+				opacity: .6;
+				transform: translateX(-4px);
+				transition: all .25s ease;
+			}
+
+			.trend-link:hover .icon {
+				opacity: 1;
+				color: #0d6efd;
+				transform: translateX(2px) scale(1.12);
+			}
 </style>
 
 <h2>@ViewData["Title"]</h2>
-
 <p>
 	<a asp-action="Create" class="btn btn-primary">建立筆記本</a>
 </p>
@@ -23,10 +81,10 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>名稱</th>
-			<th>顏色</th>
-			<th>排序</th>
-			<th>建立時間</th>
+			<th>@(Html.DisplayNameFor<NotebookListItemViewModel, string>(m => m.Name))</th>
+			<th>@(Html.DisplayNameFor<NotebookListItemViewModel, string?>(m => m.Color))</th>
+			<th>@(Html.DisplayNameFor<NotebookListItemViewModel, int>(m => m.SortOrder))</th>
+			<th>@(Html.DisplayNameFor<NotebookListItemViewModel, DateTime?>(m => m.UpdatedAt))</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -34,20 +92,28 @@
 		@foreach (var item in Model.Items)
 		{
 			<tr>
-				<td>@item.Name</td>
+				<td>
+					<a asp-controller="Note"
+					   asp-action="Index"
+					   asp-route-notebookId="@item.NotebookId"
+					   class="trend-link">
+						@Html.DisplayFor(m => item.Name)
+						<i class="bi bi-arrow-up-right-circle icon"></i>
+					</a>
+				</td>
 				<td>
 					<div class="d-flex align-items-center gap-2">
 						<span class="color-preview"
-							  style="background-color:@item.Color">
+							  style="background-color:@Html.DisplayFor(m => item.Color)">
 						</span>
 
 						<small class="text-muted">
-							@item.Color
+							@Html.DisplayFor(m => item.Color)
 						</small>
 					</div>
 				</td>
-				<td>@item.SortOrder</td>
-				<td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+				<td>@Html.DisplayFor(m => item.SortOrder)</td>
+				<td>@Html.DisplayFor(m => item.UpdatedAt)</td>
 				<td>
 					<a asp-action="Edit"
 					   asp-route-id="@item.NotebookId"

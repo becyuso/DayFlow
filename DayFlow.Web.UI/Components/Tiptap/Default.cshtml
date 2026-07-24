@@ -1,52 +1,45 @@
-﻿
-<div class="tiptap-container">
-	<div id="@($"{Model.Id}_toolbar")"
-		 class="tiptap-toolbar">
-	</div>
+﻿<div class="tiptap-container">
 
-	<div id="@Model.Id"></div>
+    <div id="@($"{Model.Id}_toolbar")"
+         class="tiptap-toolbar">
+    </div>
 
-	<input id="@($"{Model.Id}_value")"
-		   name="@Model.Id"
-		   type="hidden"
-		   value="@Model.Value" />
+    <div id="@Model.Id"></div>
+
+    <input id="@($"{Model.Id}_value")"
+           name="@Model.Id"
+           type="hidden"
+           value="@Model.Value" />
+
 </div>
 
 <script>
 
-	(function(){
+    (function () {
 
-		function init(){
+        function init() {
 
-			window.mountRichTextEditor(
-				"@Model.Id",
-				@Html.Raw(
-												System.Text.Json.JsonSerializer.Serialize(
-																				Model.Value ?? ""
-												)
-				)
-			)
+            window.mountRichTextEditor(
+                "@Model.Id",
+                @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Value ?? ""))
+            );
 
-		}
+        }
 
+        if (window.mountRichTextEditor) {
 
-		if(window.mountRichTextEditor){
+            init();
 
-			init()
+        }
+        else {
 
-		}
-		else {
+            window.addEventListener(
+                "tiptap-ready",
+                init,
+                { once: true });
 
-			window.addEventListener(
-				"tiptap-ready",
-				init,
-				{
-					once:true
-				}
-			)
+        }
 
-		}
-
-	})()
+    })();
 
 </script>

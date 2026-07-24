@@ -1,0 +1,64 @@
+﻿@model DayFlow.Modules.Notes.Presentation.Web.Note.ViewModels.NoteListViewModel
+
+@{
+	ViewData["Title"] = "筆記列表";
+}
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a asp-controller="Notebook"
+			   asp-action="Index">
+				筆記本
+			</a>
+		</li>
+
+		<li class="breadcrumb-item active">
+			@Model.NotebookName
+		</li>
+	</ol>
+</nav>
+
+<h2>@ViewData["Title"]</h2>
+<p>
+	<a asp-action="Create" asp-route-notebookId="@Model.NotebookId" class="btn btn-primary">新增筆記</a>
+</p>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>@(Html.DisplayNameFor<NoteListItemViewModel, string?>(m => m.Title))</th>
+			<th>@(Html.DisplayNameFor<NoteListItemViewModel, string?>(m => m.Summary))</th>
+			<th>@(Html.DisplayNameFor<NoteListItemViewModel, DateTime?>(m => m.UpdatedAt))</th>
+			<th width="160"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@foreach (var item in Model.Items)
+		{
+			<tr>
+				<td>@Html.DisplayFor(m => item.Title)</td>
+				<td>@Html.DisplayFor(m => item.Summary)</td>
+				<td>@Html.DisplayFor(m => item.UpdatedAt)</td>
+				<td>
+					<a asp-action="Edit"
+					   asp-route-id="@item.NoteId"
+					   asp-route-notebookId="@Model.NotebookId"
+					   class="btn btn-sm btn-warning">
+						編輯
+					</a>
+					<a asp-action="Delete"
+					   asp-route-id="@item.NoteId"
+					   asp-route-notebookId="@Model.NotebookId"
+					   class="btn btn-sm btn-danger">
+						刪除
+					</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+@await Component.InvokeAsync(
+	"Pagination",
+	Model.Pagination)

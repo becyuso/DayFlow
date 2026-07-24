@@ -19,7 +19,9 @@ public sealed class Handler
     {
         var query = _db.Notes
             .AsNoTracking()
-            .Where(x => x.UserId == request.UserId && !x.IsDeleted);
+            .Where(x =>
+                x.UserId == request.UserId &&
+                x.NotebookId == request.NotebookId);
 
         if (!string.IsNullOrWhiteSpace(request.Keyword))
         {
@@ -36,6 +38,7 @@ public sealed class Handler
             .Select(x => new ListResult
             {
                 NoteId = x.NoteId,
+                NotebookId = x.NotebookId,
                 Title = x.Title,
                 Summary = x.Summary,
                 UpdatedAt = x.UpdatedAt

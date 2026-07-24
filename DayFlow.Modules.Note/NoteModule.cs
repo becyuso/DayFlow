@@ -72,7 +72,8 @@ public static class NoteModule
         {
             var features = new[]
             {
-                "Notebook"
+                "Notebook",
+                "Note"
             };
 
             IEnumerable<string> locations = features.SelectMany(m => new[]
