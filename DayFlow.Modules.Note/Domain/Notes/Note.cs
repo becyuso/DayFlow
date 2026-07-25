@@ -1,31 +1,21 @@
-using DayFlow.Modules.Notes.Domain.Notebooks;
-using DayFlow.Modules.Notes.Domain.NoteTags;
-using Microsoft.Data.SqlClient;
-using System.Drawing;
-using System.Xml.Linq;
-
 namespace DayFlow.Modules.Notes.Domain.Notes
 {
     // Represents notes.notes
     public class Note
     {
-        public Guid NoteId { get; set; }
-        public Guid NotebookId { get; set; }
-        public Guid UserId { get; set; }
-        public string Title { get; set; } = null!;
-        public string? Content { get; set; }
-        public string? Summary { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public Guid CreatedBy { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public Guid? UpdatedBy { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? DeletedAt { get; set; }
-        public Guid? DeletedBy { get; set; }
-
-        // Navigation
-        public Notebook? Notebook { get; set; }
-        public ICollection<NoteTag>? NoteTags { get; set; }
+        public Guid NoteId { get; private set; }
+        public Guid NotebookId { get; private set; }
+        public Guid UserId { get; private set; }
+        public string Title { get; private set; } = null!;
+        public string? Content { get; private set; }
+        public string? Summary { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public Guid CreatedBy { get; private set; }
+        public DateTime? UpdatedAt { get; private set; }
+        public Guid? UpdatedBy { get; private set; }
+        public bool IsDeleted { get; private set; }
+        public DateTime? DeletedAt { get; private set; }
+        public Guid? DeletedBy { get; private set; }
 
         // EF 用的 protected ctor
         protected Note() { }
@@ -50,10 +40,14 @@ namespace DayFlow.Modules.Notes.Domain.Notes
             return n;
         }
 
-        public void Update(string title, string? content, string? summary, DateTime updatedAt, Guid updatedBy)
+        public void Update(
+            string title,
+            string? content,
+            string? summary,
+            DateTime updatedAt,
+            Guid updatedBy)
         {
-            if (IsDeleted)
-                return;
+            EnsureNotDeleted();
 
             Title = title;
             Content = content;
@@ -69,11 +63,17 @@ namespace DayFlow.Modules.Notes.Domain.Notes
             Guid deletedBy)
         {
             if (IsDeleted)
-                return;
+                return; // 冪等:已刪除就不重複處理,也不視為錯誤
 
             IsDeleted = true;
             DeletedAt = deletedAt;
             DeletedBy = deletedBy;
+        }
+
+        private void EnsureNotDeleted()
+        {
+            if (IsDeleted)
+                throw new Exception(NoteId.ToString());
         }
     }
 }

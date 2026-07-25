@@ -17,5 +17,12 @@ namespace DayFlow.Modules.Notes.Infrastructure.Repositories
         {
             return await _db.NoteTags.FirstOrDefaultAsync(x => x.NoteId == noteId && x.TagId == tagId);
         }
+
+        //public async Task<Note?> GetForUpdate(Guid id)
+        //{
+        //    return await _db.Notes
+        //        .Include(x => x.NoteTags)
+        //        .FirstOrDefaultAsync(x => x.NoteId == id);
+        //}
     }
 }

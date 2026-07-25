@@ -62,6 +62,45 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> View(
+            Guid notebookId,
+            Guid id)
+        {
+            var userId = GetCurrentUserId();
+
+            var notebookResult = await _mediator.Send(
+             new NotebookGet.GetQuery(userId, notebookId));
+
+            if (!notebookResult.Success || notebookResult.Data is null)
+                return RedirectToAction(
+                        nameof(NotebookController.Index),
+                        nameof(NotebookController).Replace(nameof(Controller), ""));
+
+            var result = await _mediator.Send(
+                new NoteGet.GetQuery(userId, id));
+
+            if (!result.Success || result.Data == null)
+            {
+                TempData.ToastInfo("操作逾時，請重新操作");
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notebookId = result.Data?.NotebookId
+                    });
+            }
+
+            return View(new NoteEditViewModel
+            {
+                NoteId = result.Data.NoteId,
+                NotebookId = result.Data.NotebookId,
+                NotebookName = notebookResult.Data.Name,
+                Title = result.Data.Title,
+                Content = result.Data.Content,
+                Summary = result.Data.Summary
+            });
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Create(
             Guid notebookId)
         {

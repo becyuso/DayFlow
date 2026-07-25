@@ -1,5 +1,3 @@
-using DayFlow.Modules.Notes.Domain.NoteTags;
-
 namespace DayFlow.Modules.Notes.Domain.Tags
 {
     // Represents notes.tags
@@ -16,10 +14,6 @@ namespace DayFlow.Modules.Notes.Domain.Tags
         public bool IsDeleted { get; set; }
         public DateTime? DeletedAt { get; set; }
         public Guid? DeletedBy { get; set; }
-
-        // Navigation
-        public ICollection<NoteTag>? NoteTags { get; set; }
-
 
         // EF 用的 protected ctor
         protected Tag() { }

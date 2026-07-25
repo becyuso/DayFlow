@@ -1,20 +1,13 @@
-using DayFlow.Modules.Notes.Domain.Notes;
-using DayFlow.Modules.Notes.Domain.Tags;
-
 namespace DayFlow.Modules.Notes.Domain.NoteTags
 {
     // Represents notes.note_tags
     public class NoteTag
     {
-        public Guid NoteId { get; set; }
-        public Guid TagId { get; set; }
+        public Guid NoteId { get; private set; }
+        public Guid TagId { get; private set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; private set; }
         public Guid CreatedBy { get; set; }
-
-        // Navigation (optional)
-        public Note? Notes { get; set; }
-        public Tag? Tag { get; set; }
 
         // EF 用的 protected ctor
         protected NoteTag() { }
