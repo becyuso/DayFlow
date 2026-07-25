@@ -50,7 +50,7 @@ namespace DayFlow.Modules.Notes.Infrastructure.Database
                 b.Property(x => x.DeletedAt).HasColumnName("deleted_at").HasColumnType("datetime2");
                 b.Property(x => x.DeletedBy).HasColumnName("deleted_by");
 
-                b.HasMany(x => x.Notes).WithOne(x => x.Notebook).HasForeignKey(x => x.NotebookId).HasConstraintName("fk_notes_notebooks");
+                //b.HasMany(x => x.Notes).WithOne(x => x.Notebook).HasForeignKey(x => x.NotebookId).HasConstraintName("fk_notes_notebooks");
             });
 
             modelBuilder.Entity<Note>(b =>
@@ -71,7 +71,7 @@ namespace DayFlow.Modules.Notes.Infrastructure.Database
                 b.Property(x => x.DeletedAt).HasColumnName("deleted_at").HasColumnType("datetime2");
                 b.Property(x => x.DeletedBy).HasColumnName("deleted_by");
 
-                b.HasMany(x => x.NoteTags).WithOne(x => x.Notes).HasForeignKey(x => x.NoteId).HasConstraintName("fk_note_tags_note");
+                //b.HasMany(x => x.NoteTags).WithOne(x => x.Notes).HasForeignKey(x => x.NoteId).HasConstraintName("fk_note_tags_note");
             });
 
             modelBuilder.Entity<Tag>(b =>
@@ -90,7 +90,7 @@ namespace DayFlow.Modules.Notes.Infrastructure.Database
                 b.Property(x => x.DeletedAt).HasColumnName("deleted_at").HasColumnType("datetime2");
                 b.Property(x => x.DeletedBy).HasColumnName("deleted_by");
 
-                b.HasMany(x => x.NoteTags).WithOne(x => x.Tag).HasForeignKey(x => x.TagId).HasConstraintName("fk_note_tags_tag");
+                //b.HasMany(x => x.NoteTags).WithOne(x => x.Tag).HasForeignKey(x => x.TagId).HasConstraintName("fk_note_tags_tag");
             });
 
             modelBuilder.Entity<NoteTag>(b =>
@@ -102,8 +102,8 @@ namespace DayFlow.Modules.Notes.Infrastructure.Database
                 b.Property(x => x.CreatedAt).HasColumnName("created_at").HasColumnType("datetime2").IsRequired();
                 b.Property(x => x.CreatedBy).HasColumnName("created_by").IsRequired();
 
-                b.HasOne(x => x.Notes).WithMany(x => x.NoteTags).HasForeignKey(x => x.NoteId).HasConstraintName("fk_note_tags_note");
-                b.HasOne(x => x.Tag).WithMany(x => x.NoteTags).HasForeignKey(x => x.TagId).HasConstraintName("fk_note_tags_tag");
+            //    b.HasOne(x => x.Notes).WithMany(x => x.NoteTags).HasForeignKey(x => x.NoteId).HasConstraintName("fk_note_tags_note");
+            //    b.HasOne(x => x.Tag).WithMany(x => x.NoteTags).HasForeignKey(x => x.TagId).HasConstraintName("fk_note_tags_tag");
             });
 
             #endregion

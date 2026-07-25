@@ -1,3 +1,5 @@
+using DayFlow.BuildingBlocks.Domain.Exceptions;
+
 namespace DayFlow.Modules.Notes.Domain.Notebooks
 {
     // Represents notes.notebooks
@@ -26,12 +28,33 @@ namespace DayFlow.Modules.Notes.Domain.Notebooks
 
         #endregion
 
+        #region  Constructors
         // EF 用的 protected ctor
         protected Notebook() { }
+        #endregion
 
-        // Public factory-like ctor for application code
-        public static Notebook Create(Guid notebookId, Guid userId, string name, string? color, int sortOrder, DateTime createdAt, Guid createdBy, DateTime updatedAt, Guid updatedBy)
+        #region Factory Methods / Domain Behaviors
+        public static Notebook Create(
+            Guid notebookId,
+            Guid userId,
+            string name,
+            string? color,
+            int sortOrder,
+            DateTime createdAt,
+            Guid createdBy,
+            DateTime updatedAt,
+            Guid updatedBy)
         {
+            ValidateId(notebookId);
+
+            ValidateUserId(userId);
+
+            ValidateName(name);
+
+            ValidateSortOrder(sortOrder);
+
+            ValidateColor(color);
+
             var n = new Notebook
             {
                 NotebookId = notebookId,
@@ -58,6 +81,12 @@ namespace DayFlow.Modules.Notes.Domain.Notebooks
         {
             EnsureNotDeleted();
 
+            ValidateName(name);
+
+            ValidateSortOrder(sortOrder);
+
+            ValidateColor(color);
+
             Name = name;
             Color = color;
             SortOrder = sortOrder;
@@ -78,10 +107,85 @@ namespace DayFlow.Modules.Notes.Domain.Notebooks
             DeletedBy = deletedBy;
         }
 
+        #endregion
+
+        #region Guard
+
         private void EnsureNotDeleted()
         {
             if (IsDeleted)
-                throw new Exception(NotebookId.ToString());
+                throw new DomainException(
+                    "Notebook has been deleted.");
         }
+
+        #endregion
+
+        #region Validation
+
+        private static void ValidateId(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                throw new DomainException(
+                    "NotebookId is required.");
+            }
+        }
+
+        private static void ValidateUserId(Guid userId)
+        {
+            if (userId == Guid.Empty)
+            {
+                throw new DomainException(
+                    "UserId is required.");
+            }
+        }
+
+        private static void ValidateName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new DomainException(
+                    "Notebook name is required.");
+            }
+
+
+            if (name.Length > 100)
+            {
+                throw new DomainException(
+                    "Notebook name cannot exceed 100 characters.");
+            }
+        }
+
+        private static void ValidateSortOrder(int sortOrder)
+        {
+            if (sortOrder < 0)
+            {
+                throw new DomainException(
+                    "SortOrder must be greater than or equal to 0.");
+            }
+        }
+
+        private static void ValidateColor(string? color)
+        {
+            if (string.IsNullOrWhiteSpace(color))
+                return;
+
+            if (color.Length > 50)
+            {
+                throw new DomainException(
+                    "Color cannot exceed 50 characters.");
+            }
+
+
+            // 如果使用 Hex Color
+            // 例如 #FFFFFF
+            if (!color.StartsWith("#"))
+            {
+                throw new DomainException(
+                    "Color format is invalid.");
+            }
+        }
+
+        #endregion
     }
 }

@@ -1,3 +1,5 @@
+using DayFlow.BuildingBlocks.Domain.Exceptions;
+
 namespace DayFlow.Modules.Notes.Domain.Notes
 {
     // Represents notes.notes
@@ -17,11 +19,35 @@ namespace DayFlow.Modules.Notes.Domain.Notes
         public DateTime? DeletedAt { get; private set; }
         public Guid? DeletedBy { get; private set; }
 
+        #region  Constructors
         // EF 用的 protected ctor
         protected Note() { }
+        #endregion
 
-        public static Note Create(Guid noteId, Guid notebookId, Guid userId, string title, string? content, string? summary, DateTime createdAt, Guid createdBy, DateTime updatedAt, Guid updatedBy)
+        #region Factory Methods / Domain Behaviors
+        public static Note Create(
+            Guid noteId,
+            Guid notebookId,
+            Guid userId,
+            string title,
+            string? content,
+            string? summary,
+            DateTime createdAt,
+            Guid createdBy,
+            DateTime updatedAt,
+            Guid updatedBy)
         {
+
+            ValidateId(noteId);
+
+            ValidateNotebookId(notebookId);
+
+            ValidateUserId(userId);
+
+            ValidateTitle(title);
+
+            ValidateSummary(summary);
+
             var n = new Note
             {
                 NoteId = noteId,
@@ -49,6 +75,10 @@ namespace DayFlow.Modules.Notes.Domain.Notes
         {
             EnsureNotDeleted();
 
+            ValidateTitle(title);
+
+            ValidateSummary(summary);
+
             Title = title;
             Content = content;
             Summary = summary;
@@ -69,11 +99,78 @@ namespace DayFlow.Modules.Notes.Domain.Notes
             DeletedAt = deletedAt;
             DeletedBy = deletedBy;
         }
+        #endregion
 
+        #region Guard
         private void EnsureNotDeleted()
         {
             if (IsDeleted)
-                throw new Exception(NoteId.ToString());
+            {
+                throw new DomainException(
+                    "Note has already been deleted.");
+            }
         }
+
+        #endregion
+
+        #region Validation
+
+        private static void ValidateId(Guid noteId)
+        {
+            if (noteId == Guid.Empty)
+            {
+                throw new DomainException(
+                    "NoteId is required.");
+            }
+        }
+
+        private static void ValidateNotebookId(Guid notebookId)
+        {
+            if (notebookId == Guid.Empty)
+            {
+                throw new DomainException(
+                    "NotebookId is required.");
+            }
+        }
+
+        private static void ValidateUserId(Guid userId)
+        {
+            if (userId == Guid.Empty)
+            {
+                throw new DomainException(
+                    "UserId is required.");
+            }
+        }
+
+        private static void ValidateTitle(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                throw new DomainException(
+                    "Note title is required.");
+            }
+
+
+            if (title.Length > 200)
+            {
+                throw new DomainException(
+                    "Note title cannot exceed 200 characters.");
+            }
+        }
+
+        private static void ValidateSummary(string? summary)
+        {
+            if (summary == null)
+                return;
+
+
+            if (summary.Length > 500)
+            {
+                throw new DomainException(
+                    "Summary cannot exceed 500 characters.");
+            }
+        }
+
+        #endregion
     }
 }
