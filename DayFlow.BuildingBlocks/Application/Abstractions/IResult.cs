@@ -3,6 +3,7 @@
     public interface IResult
     {
         bool Success { get; }
+        string? Code { get; }
         string? Message { get; }
     }
 }

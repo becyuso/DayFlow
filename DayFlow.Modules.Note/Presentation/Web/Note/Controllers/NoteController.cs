@@ -81,7 +81,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
 
             if (!result.Success || result.Data == null)
             {
-                TempData.ToastInfo("操作逾時，請重新操作");
+                TempData.ToastInfo(result?.Message ?? "操作逾時，請重新操作");
                 return RedirectToAction(nameof(Index),
                     new
                     {
@@ -145,14 +145,14 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
 
             if (result == null || !result.Success)
             {
-                TempData.ToastError("筆記建立失敗");
+                TempData.ToastError(result?.Message ?? "操作逾時，請重新操作");
 
                 model.NotebookOptions = await GetNotebookOptions(userId);
 
                 return View(model);
             }
 
-            TempData.ToastSuccess("筆記建立成功");
+            TempData.ToastSuccess(result?.Message ?? "操作成功");
 
             return RedirectToAction(nameof(Index), new
             {
@@ -182,7 +182,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
 
             if (result == null || !result.Success || result.Data == null)
             {
-                TempData.ToastInfo("操作逾時，請重新操作");
+                TempData.ToastInfo(result?.Message ?? "操作逾時，請重新操作");
                 return RedirectToAction(nameof(Index), new
                 {
                     notebookId = notebookId
@@ -229,14 +229,14 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
 
             if (!result.Success)
             {
-                TempData.ToastError("筆記更新失敗");
+                TempData.ToastError(result?.Message ?? "操作逾時，請重新操作");
 
                 model.NotebookOptions = await GetNotebookOptions(userId);
 
                 return View(model);
             }
 
-            TempData.ToastSuccess("筆記更新成功");
+            TempData.ToastSuccess(result?.Message ?? "操作成功");
 
             return RedirectToAction(nameof(Index), new
             {
@@ -266,7 +266,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
 
             if (result == null || !result.Success || result.Data == null)
             {
-                TempData.ToastInfo("操作逾時，請重新操作");
+                TempData.ToastInfo(result?.Message ?? "操作逾時，請重新操作");
                 return RedirectToAction(nameof(Index), new
                 {
                     notebookId = notebookId
@@ -295,11 +295,11 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
 
             if (!result.Success)
             {
-                TempData.ToastError("筆記刪除失敗");
+                TempData.ToastError(result?.Message ?? "操作逾時，請重新操作");
                 return RedirectToAction(nameof(Delete), new { notebookId = notebookId });
             }
 
-            TempData.ToastSuccess("筆記刪除成功");
+            TempData.ToastSuccess(result?.Message ?? "操作成功");
 
             return RedirectToAction(nameof(Index), new
             {

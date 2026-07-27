@@ -1,4 +1,6 @@
-﻿using DayFlow.BuildingBlocks.Application.Results;
+﻿using DayFlow.BuildingBlocks.Application.Messages;
+using DayFlow.BuildingBlocks.Application.Results;
+using DayFlow.Modules.Notes.Application.Messages;
 using DayFlow.Modules.Notes.Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -39,9 +41,10 @@ public sealed class Handler
         if (result is null)
         {
             return Result<GetResult>.Fail(
-                "Notenot found.");
+                NoteMessageCodes.NoteNotFound);
         }
 
-        return Result<GetResult>.Ok(result);
+        return Result<GetResult>.Ok(
+                result);
     }
 }

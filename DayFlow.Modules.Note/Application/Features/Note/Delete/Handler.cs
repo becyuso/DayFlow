@@ -1,10 +1,9 @@
-﻿using DayFlow.BuildingBlocks.Application.Results;
+﻿using DayFlow.BuildingBlocks.Application.Messages;
+using DayFlow.BuildingBlocks.Application.Results;
 using DayFlow.BuildingBlocks.Infrastructure.Time;
-using DayFlow.Modules.Notes.Domain.Notebooks;
+using DayFlow.Modules.Notes.Application.Messages;
 using DayFlow.Modules.Notes.Domain.Notes;
-using DayFlow.Modules.Notes.Infrastructure.Database;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace DayFlow.Modules.Notes.Application.Features.Note.Delete
 {
@@ -20,15 +19,17 @@ namespace DayFlow.Modules.Notes.Application.Features.Note.Delete
         {
             var entity = await _noteRepository.GetByIdAsync(request.NoteId, cancellationToken);
             if (entity == null)
-                return Result<DeleteResult>.Fail("Note not found");
+                return Result<DeleteResult>.Fail(NoteMessageCodes.NoteNotFound);
 
             // optional: enforce owner
             if (entity.UserId != request.UserId && request.UserId != Guid.Empty)
-                return Result<DeleteResult>.Fail("Not authorized to delete this note");
+                return Result<DeleteResult>.Fail(CommonMessageCode.Unauthorized);
 
             entity.Delete(_iClock.TaiwanNow, request.UserId);
 
-            return Result<DeleteResult>.Ok(new());
+            return Result<DeleteResult>.Ok(
+                CommonMessageCode.DeleteSuccess, 
+                new());
         }
     }
 }

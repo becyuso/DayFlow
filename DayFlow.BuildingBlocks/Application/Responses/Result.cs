@@ -4,25 +4,37 @@
     {
         public bool Success { get; init; }
 
-        public string? Message { get; init; }
+        public string? Code { get; init; }
+
+        public string? Message { get; private set; }
+
+        public void SetMessage(string message)
+        {
+            Message = message;
+        }
+        public static Result Ok()
+        {
+            return Ok(
+                default);
+        }
 
         public static Result Ok(
-            string? message = null)
+            string? code)
         {
             return new Result
             {
                 Success = true,
-                Message = message
+                Code = code
             };
         }
 
         public static Result Fail(
-            string message)
+            string code)
         {
             return new Result
             {
                 Success = false,
-                Message = message
+                Code = code
             };
         }
     }
@@ -32,24 +44,32 @@
         public T? Data { get; init; }
 
         public static Result<T> Ok(
-            T data,
-            string? message = null)
+            T data)
+        {
+            return Ok(
+                default,
+                data);
+        }
+
+        public static Result<T> Ok(
+            string? code,
+            T data)
         {
             return new Result<T>
             {
                 Success = true,
                 Data = data,
-                Message = message
+                Code = code
             };
         }
 
         public new static Result<T> Fail(
-            string message)
+            string code)
         {
             return new Result<T>
             {
                 Success = false,
-                Message = message
+                Code = code
             };
         }
 

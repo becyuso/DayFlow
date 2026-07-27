@@ -1,4 +1,5 @@
-﻿using DayFlow.BuildingBlocks.Application.Results;
+﻿using DayFlow.BuildingBlocks.Application.Messages;
+using DayFlow.BuildingBlocks.Application.Results;
 using DayFlow.BuildingBlocks.Infrastructure.Time;
 using DayFlow.Modules.Notes.Domain.Notes;
 using MediatR;
@@ -19,11 +20,11 @@ namespace DayFlow.Modules.Notes.Application.Features.Note.Update
             var entity = await _noteRepository.GetByIdAsync(request.NoteId, cancellationToken);
 
             if (entity == null)
-                return Result<UpdateResult>.Fail("Note not found");
+                return Result<UpdateResult>.Fail(CommonMessageCode.InvalidUser);
 
             // optional: enforce owner
             if (entity.UserId != request.UserId && request.UserId != Guid.Empty)
-                return Result<UpdateResult>.Fail("Not authorized to update this note");
+                return Result<UpdateResult>.Fail(CommonMessageCode.Unauthorized);
 
             entity.Update(
                 request.Title,
@@ -32,7 +33,9 @@ namespace DayFlow.Modules.Notes.Application.Features.Note.Update
                 _iClock.TaiwanNow,
                 request.UserId);
 
-            return Result<UpdateResult>.Ok(new());
+            return Result<UpdateResult>.Ok(
+                CommonMessageCode.UpdateSuccess,
+                new());
         }
     }
 }

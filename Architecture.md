@@ -12,6 +12,15 @@
 | CQRS                      | 架構模式 | 如何分離讀取與寫入            |
 | Transaction Boundary      | 設計原則 | 如何控制交易(Transaction)範圍 |
 
+## 專案、模組
+DayFlow.SharedKernel
+DayFlow.BuildingBlocks
+DayFlow.Web.Common
+DayFlow.Web.UI
+DayFlow.Modules.Identity
+DayFlow.Modules.Notes
+DayFlow.Web
+
 ## 模組目錄參考（ASCII Tree）
 
 **模組Identity**

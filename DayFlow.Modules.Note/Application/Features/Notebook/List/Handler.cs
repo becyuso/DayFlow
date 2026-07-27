@@ -55,6 +55,7 @@ public sealed class Handler
             TotalCount = totalCount
         };
 
-        return Result<PagedResult<ListResult>>.Ok(result);
+        return Result<PagedResult<ListResult>>.Ok(
+            result);
     }
 }

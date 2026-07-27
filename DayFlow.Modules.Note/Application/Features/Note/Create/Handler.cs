@@ -1,6 +1,8 @@
-﻿using DayFlow.BuildingBlocks.Application.Results;
+﻿using DayFlow.BuildingBlocks.Application.Messages;
+using DayFlow.BuildingBlocks.Application.Results;
 using DayFlow.BuildingBlocks.Infrastructure.Identity;
 using DayFlow.BuildingBlocks.Infrastructure.Time;
+using DayFlow.Modules.Notes.Application.Messages;
 using DayFlow.Modules.Notes.Domain.Notebooks;
 using DayFlow.Modules.Notes.Domain.Notes;
 using MediatR;
@@ -22,12 +24,12 @@ namespace DayFlow.Modules.Notes.Application.Features.Note.Create
             CancellationToken cancellationToken)
         {
             if (request.UserId == default || request.UserId == Guid.Empty)
-                return Result<CreateResult>.Fail("Invalid user");
+                return Result<CreateResult>.Fail(CommonMessageCode.InvalidUser);
 
             var notebook =
                 await _notebookRepository.GetByIdAsync(request.NotebookId, cancellationToken);
             if (notebook == null)
-                return Result<CreateResult>.Fail("Notebook not found");
+                return Result<CreateResult>.Fail(NoteMessageCodes.NotebookNotFound);
 
             var time = _iClock.TaiwanNow;
 
@@ -46,6 +48,7 @@ namespace DayFlow.Modules.Notes.Application.Features.Note.Create
             _noteRepository.Add(entity);
 
             return Result<CreateResult>.Ok(
+                CommonMessageCode.CreateSuccess,
                 new CreateResult
                 {
                     NoteId = entity.NoteId

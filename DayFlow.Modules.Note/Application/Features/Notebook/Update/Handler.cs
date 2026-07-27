@@ -1,5 +1,7 @@
+using DayFlow.BuildingBlocks.Application.Messages;
 using DayFlow.BuildingBlocks.Application.Results;
 using DayFlow.BuildingBlocks.Infrastructure.Time;
+using DayFlow.Modules.Notes.Application.Messages;
 using DayFlow.Modules.Notes.Domain.Notebooks;
 using MediatR;
 
@@ -19,11 +21,11 @@ namespace DayFlow.Modules.Notes.Application.Features.Notebook.Update
             var entity = await _notebookRepository.GetByIdAsync(request.NotebookId, cancellationToken);
 
             if (entity == null)
-                return Result<UpdateResult>.Fail("Notebook not found");
+                return Result<UpdateResult>.Fail(NoteMessageCodes.NotebookNotFound);
 
             // optional: enforce owner
             if (entity.UserId != request.UserId && request.UserId != Guid.Empty)
-                return Result<UpdateResult>.Fail("Not authorized to update this notebook");
+                return Result<UpdateResult>.Fail(CommonMessageCode.Unauthorized);
 
             entity.Update(
                 request.Name,
@@ -32,7 +34,9 @@ namespace DayFlow.Modules.Notes.Application.Features.Notebook.Update
                 _iClock.TaiwanNow,
                 request.UserId);
 
-            return Result<UpdateResult>.Ok(new());
+            return Result<UpdateResult>.Ok(
+                CommonMessageCode.UpdateSuccess,
+                new());
         }
     }
 }
