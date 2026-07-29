@@ -20,17 +20,56 @@ namespace DayFlow.Modules.Notes.Domain.Notebooks
 
         #region Navigation
 
-        // 同屬一個Aggregate
-        // Navigation:集合類型,必須有 backing field,
-        // 外部只能透過 IReadOnlyCollection 讀取,不能直接 Add/Remove
-        //private readonly List<Note> _notes = new();
-        //public IReadOnlyCollection<Note> Notes => _notes;
+        //private readonly List<NotebookShare> _shares = new();
+
+        //public IReadOnlyCollection<NotebookShare> Shares
+        //    => _shares.AsReadOnly();
 
         #endregion
 
         #region  Constructors
         // EF 用的 protected ctor
         protected Notebook() { }
+        #endregion
+
+        #region Domain Behavior
+
+        //public void AddShare(
+        //    Guid userId,
+        //    NotebookShareRole role)
+        //{
+        //    if (_shares.Any(x => x.UserId == userId))
+        //        throw new DomainException(
+        //            "User already exists.");
+
+        //    _shares.Add(
+        //        new NotebookShare(
+        //            Guid.NewGuid(),
+        //            NotebookId,
+        //            userId,
+        //            role));
+        //}
+
+        //public void RemoveShare(
+        //    Guid userId)
+        //{
+        //    var share =
+        //        _shares.FirstOrDefault(
+        //            x => x.UserId == userId);
+
+        //    if (share == null)
+        //        return;
+
+        //    if (share.Role == NotebookShareRole.Owner &&
+        //        _shares.Count(x => x.Role == NotebookShareRole.Owner) == 1)
+        //    {
+        //        throw new DomainException(
+        //            "Notebook must have at least one owner.");
+        //    }
+
+        //    _shares.Remove(share);
+        //}
+
         #endregion
 
         #region Factory Methods / Domain Behaviors
@@ -185,6 +224,31 @@ namespace DayFlow.Modules.Notes.Domain.Notebooks
                     "Color format is invalid.");
             }
         }
+
+        #endregion
+
+        #region Domain Rules
+
+        /// <summary>
+        /// 單一 Notebook 允許容納的最大 Note 筆數(不含已刪除的 Note)。
+        /// </summary>
+        public const int MaxNoteCount = 50;
+
+        /// <summary>
+        /// 判斷目前筆數是否仍允許再新增一筆 Note。
+        /// </summary>
+        /// <param name="currentNoteCount">
+        /// 該 Notebook 目前的有效 Note 筆數(呼叫端應排除已刪除的 Note)。
+        /// </param>
+        public static bool EnsureCanAddNote(int currentNoteCount)
+            => currentNoteCount < MaxNoteCount;
+
+        /// <summary>
+        /// 判斷是否已達上限(CanAddNote 的相反語意,方便在需要"已達上限"語意的地方直接使用,
+        /// 避免呼叫端寫成 !CanAddNote(...) 這種否定表達,降低誤讀機率)。
+        /// </summary>
+        public static bool EnsureHasReachedLimit(int currentNoteCount)
+            => !EnsureCanAddNote(currentNoteCount);
 
         #endregion
     }

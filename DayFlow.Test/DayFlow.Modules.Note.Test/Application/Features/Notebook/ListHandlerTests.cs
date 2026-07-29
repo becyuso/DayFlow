@@ -44,7 +44,7 @@ public class ListHandlerTests
                 CancellationToken.None);
 
         // Assert
-        result.Success
+        result.IsSuccess
             .Should()
             .BeTrue();
 

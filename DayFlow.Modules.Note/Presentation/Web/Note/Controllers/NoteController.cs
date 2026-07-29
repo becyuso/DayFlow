@@ -43,7 +43,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
             var notebookResult = await _mediator.Send(
                 new NotebookGet.GetQuery(userId, notebookId));
 
-            if (!notebookResult.Success || notebookResult.Data is null)
+            if (!notebookResult.IsSuccess || notebookResult.Data is null)
                 return RedirectToAction(
                         nameof(NotebookController.Index),
                         nameof(NotebookController).Replace(nameof(Controller), ""));
@@ -55,7 +55,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
                     null,
                     new PagingRequest(page, 20)));
 
-            if (!result.Success || result.Data is null)
+            if (!result.IsSuccess || result.Data is null)
                 return View(new NoteListViewModel());
 
             return View(result.Data.ToViewModel(notebookId, notebookResult.Data.Name));
@@ -71,7 +71,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
             var notebookResult = await _mediator.Send(
              new NotebookGet.GetQuery(userId, notebookId));
 
-            if (!notebookResult.Success || notebookResult.Data is null)
+            if (!notebookResult.IsSuccess || notebookResult.Data is null)
                 return RedirectToAction(
                         nameof(NotebookController.Index),
                         nameof(NotebookController).Replace(nameof(Controller), ""));
@@ -79,7 +79,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
             var result = await _mediator.Send(
                 new NoteGet.GetQuery(userId, id));
 
-            if (!result.Success || result.Data == null)
+            if (!result.IsSuccess || result.Data == null)
             {
                 TempData.ToastInfo(result?.Message ?? "操作逾時，請重新操作");
                 return RedirectToAction(nameof(Index),
@@ -110,7 +110,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
             var notebookResult = await _mediator.Send(
                 new NotebookGet.GetQuery(userId, notebookId));
 
-            if (!notebookResult.Success || notebookResult.Data is null)
+            if (!notebookResult.IsSuccess || notebookResult.Data is null)
                 return RedirectToAction(
                         nameof(NotebookController.Index),
                         nameof(NotebookController).Replace(nameof(Controller), ""));
@@ -143,7 +143,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result == null || !result.Success)
+            if (result == null || !result.IsSuccess)
             {
                 TempData.ToastError(result?.Message ?? "操作逾時，請重新操作");
 
@@ -171,7 +171,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
             var notebookResult = await _mediator.Send(
                 new NotebookGet.GetQuery(userId, notebookId));
 
-            if (!notebookResult.Success || notebookResult.Data is null)
+            if (!notebookResult.IsSuccess || notebookResult.Data is null)
                 return RedirectToAction(
                         nameof(NotebookController.Index),
                         nameof(NotebookController).Replace(nameof(Controller), ""));
@@ -180,7 +180,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
             var result = await _mediator.Send(
                 new NoteGet.GetQuery(userId, id));
 
-            if (result == null || !result.Success || result.Data == null)
+            if (result == null || !result.IsSuccess || result.Data == null)
             {
                 TempData.ToastInfo(result?.Message ?? "操作逾時，請重新操作");
                 return RedirectToAction(nameof(Index), new
@@ -227,7 +227,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
                 TempData.ToastError(result?.Message ?? "操作逾時，請重新操作");
 
@@ -255,7 +255,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
             var notebookResult = await _mediator.Send(
                 new NotebookGet.GetQuery(userId, notebookId));
 
-            if (!notebookResult.Success || notebookResult.Data is null)
+            if (!notebookResult.IsSuccess || notebookResult.Data is null)
                 return RedirectToAction(
                         nameof(NotebookController.Index),
                         nameof(NotebookController).Replace(nameof(Controller), ""));
@@ -264,7 +264,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
             var result = await _mediator.Send(
                 new NoteGet.GetQuery(userId, id));
 
-            if (result == null || !result.Success || result.Data == null)
+            if (result == null || !result.IsSuccess || result.Data == null)
             {
                 TempData.ToastInfo(result?.Message ?? "操作逾時，請重新操作");
                 return RedirectToAction(nameof(Index), new
@@ -293,7 +293,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
             var result = await _mediator.Send(
                 new DeleteCommand(noteId, userId));
 
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
                 TempData.ToastError(result?.Message ?? "操作逾時，請重新操作");
                 return RedirectToAction(nameof(Delete), new { notebookId = notebookId });
@@ -315,7 +315,7 @@ namespace DayFlow.Modules.Notes.Presentation.Web.Note.Controllers
                     null,
                     new PagingRequest(1, 1000)));
 
-            if (!result.Success || result.Data == null)
+            if (!result.IsSuccess || result.Data == null)
             {
                 return Enumerable.Empty<SelectListItem>();
             }

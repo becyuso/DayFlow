@@ -9,7 +9,12 @@ namespace DayFlow.Modules.Identity.Infrastructure.Database
         {
         }
 
+        #region DbSets
+
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<SecuritySetting> SecuritySettings { get; set; } = null!;
+
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,7 +37,30 @@ namespace DayFlow.Modules.Identity.Infrastructure.Database
                 b.Property(x => x.CreatedAt).HasColumnName("created_at").HasColumnType("datetime2");
                 b.Property(x => x.UpdatedAt).HasColumnName("updated_at").HasColumnType("datetime2");
                 b.Property(x => x.DeletedAt).HasColumnName("deleted_at").HasColumnType("datetime2");
+                //b.Navigation(x => x.SecuritySetting).AutoInclude(); 改用Include(x => x.SecuritySetting)
+
+                b.HasOne(x => x.SecuritySetting)
+                .WithOne(x => x.User)
+                .HasForeignKey<SecuritySetting>(
+                    x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
             });
+
+            modelBuilder.Entity<SecuritySetting>(b =>
+            {
+                b.ToTable("user_security_settings", "identity");
+                // 使用 UserId 作為 PK
+                // 因為 SecuritySetting 是 User Aggregate 內部 Entity
+                b.HasKey(x => x.UserId).HasName("PK_identity.user_security_settings");
+                b.Property(x => x.UserId).HasColumnName("user_id").ValueGeneratedNever();
+                b.Property(x => x.TwoFactorEnabled).HasColumnName("two_factor_enabled").IsRequired();
+                b.Property(x => x.FailedLoginCount).HasColumnName("failed_login_count").IsRequired();
+                b.Property(x => x.LockedUntil).HasColumnName("locked_until").HasColumnType("datetime2");
+                b.Property(x => x.LastPasswordChangedAt).HasColumnName("last_password_changed_at").HasColumnType("datetime2");
+                b.Property(x => x.CreatedAt).HasColumnName("created_at").HasColumnType("datetime2");
+                b.Property(x => x.UpdatedAt).HasColumnName("updated_at").HasColumnType("datetime2");
+            });
+
         }
     }
 }

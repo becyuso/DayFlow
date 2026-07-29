@@ -21,8 +21,12 @@ namespace DayFlow.Modules.Notes.Application.Messages
                 "您沒有權限操作此筆記本");
 
             registry.Add(
-                NoteMessageCodes.NoteNotFound,
-                "找不到此筆記");
+                NoteMessageCodes.NotebookNoteLimitExceeded,
+                "此筆記本的筆記數量已達上限");
+
+            registry.Add(
+                    NoteMessageCodes.NoteNotFound,
+                    "找不到此筆記");
 
             registry.Add(
                 NoteMessageCodes.NoteTitleTooLong,

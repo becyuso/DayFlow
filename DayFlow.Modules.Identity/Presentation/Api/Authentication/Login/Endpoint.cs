@@ -34,12 +34,12 @@ namespace DayFlow.Modules.Identity.Presentation.Api.Authentication.Login
                 command,
                 cancellationToken);
 
-            if (result.Success == false)
+            if (result.IsSuccess == false)
             {
                 return Results.Unauthorized();
             }
 
-            return Results.Ok(result.ToResponse());
+            return Results.Ok(result.Data);
         }
     }
 }

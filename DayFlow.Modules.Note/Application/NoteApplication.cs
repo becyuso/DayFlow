@@ -2,7 +2,9 @@
 using DayFlow.BuildingBlocks.Application.Messages;
 using DayFlow.Modules.Notes.Application.Features.Notebook.Create;
 using DayFlow.Modules.Notes.Application.Messages;
+using DayFlow.Modules.Notes.Infrastructure.Behaviors;
 using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DayFlow.Modules.Notes.Application;
@@ -32,7 +34,7 @@ public static class NoteApplication
             cfg.AddOpenBehavior(
                 typeof(DomainExceptionBehavior<,>));    // 攔截業務規則例外,轉成 Result.Failure
             cfg.AddOpenBehavior(
-                typeof(TransactionBehavior<,>));        // 交易範圍,包住 Handler + SaveChanges
+                typeof(NoteTransactionBehavior<,>));    // 交易範圍,包住 Handler + SaveChanges
             //cfg.AddOpenBehavior(
             //    typeof(CachingBehavior<,>));
 

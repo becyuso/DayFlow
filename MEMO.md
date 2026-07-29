@@ -243,3 +243,26 @@ builder.Services
     <PreserveCompilationContext>true</PreserveCompilationContext>
 </PropertyGroup>
 ```
+
+**Hard Limit 實作方案比較**
+
+| 方案                              | 核心做法                                                     | 優點                     | 缺點                              | 一致性  | 複雜度  | 適用場景                     |
+| --------------------------------- | ------------------------------------------------------------ | ------------------------ | --------------------------------- | ------- | ------- | ---------------------------- |
+| 1. Serializable Transaction       | Transaction 內 Count + Insert，IsolationLevel.Serializable   | 最簡單、資料庫保證一致   | 高競爭資源會等待                  | 5       | 2       | SaaS、ERP、CRM、一般企業系統 |
+| 2. Atomic Counter                 | 額外維護 used_count，透過 Atomic UPDATE 增減                 | 效能最佳，可承受高流量   | Counter 必須保持正確              | 5       | 4       | SaaS Quota、容量限制         |
+| 3. Optimistic Concurrency         | Version / RowVersion 更新檢查                                | 不需要 Lock，高吞吐      | Retry 複雜                        | 4       | 3       | Profile、設定資料            |
+| 4. Pessimistic Lock               | UPDLOCK / HOLDLOCK / FOR UPDATE                              | 精準控制競爭             | DB Lock 使用錯誤容易造成 Blocking | 5       | 3       | 庫存、票券、扣款             |
+| 5. Distributed Lock               | Redis / ZooKeeper Lock                                       | 跨服務同步               | 系統複雜，需要處理 Lock Timeout   | 4       | 5       | Microservices                |
+| 6. Queue / Saga                   | 請求進 Queue 排隊處理                                        | 極高吞吐                 | 非同步，結果延遲                  | 5       | 5       | 訂單、支付、大型平台         |
+
+實務選擇建議
+
+| 情境                | 建議                            |
+| ----------------- | ----------------------------- |
+| 小型企業系統            | Serializable                  |
+| CRUD SaaS         | Serializable / Atomic Counter |
+| Multi Tenant SaaS | Atomic Counter + Transaction  |
+| 高流量 SaaS          | Atomic Counter + Row Lock     |
+| 庫存                | Row Lock                      |
+| 金融交易              | Row Lock + Serializable       |
+| 微服務跨 DB           | Distributed Lock / Queue      |

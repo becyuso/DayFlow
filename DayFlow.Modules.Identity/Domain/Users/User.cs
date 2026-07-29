@@ -1,3 +1,5 @@
+using DayFlow.BuildingBlocks.Domain.Exceptions;
+
 namespace DayFlow.Modules.Identity.Domain.Users
 {
     public class User
@@ -14,6 +16,15 @@ namespace DayFlow.Modules.Identity.Domain.Users
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
         public DateTime? DeletedAt { get; private set; }
+
+        #region Navigation
+
+        public SecuritySetting? SecuritySetting
+        {
+            get; private set;
+        }
+
+        #endregion
 
         // EF 用的 protected ctor
         protected User() { }
@@ -41,16 +52,62 @@ namespace DayFlow.Modules.Identity.Domain.Users
             return u;
         }
 
-        public void UpdateLastLogin()
+        public void UpdateLastLogin(DateTime now)
         {
-            LastLoginAt = DateTime.UtcNow;
-            UpdatedAt = DateTime.UtcNow;
+            LastLoginAt = now;
+            UpdatedAt = now;
         }
 
-        public void MarkDeleted()
+        public void MarkDeleted(DateTime now)
         {
-            DeletedAt = DateTime.UtcNow;
-            UpdatedAt = DateTime.UtcNow;
+            DeletedAt = now;
+            UpdatedAt = now;
         }
+
+        #region Guard
+
+        private void EnsureSecuritySetting()
+        {
+            if (SecuritySetting == null)
+            {
+                throw new DomainException(
+                    "User SecuritySetting is missing.");
+            }
+        }
+
+        #endregion
+
+        #region Domain Behavior
+
+        public bool IsLocked(DateTime now)
+        {
+            EnsureSecuritySetting();
+
+            return SecuritySetting!.IsLocked(now);
+        }
+
+        public void RecordLoginFailure(
+            DateTime now)
+        {
+            EnsureSecuritySetting();
+
+            SecuritySetting!.RecordLoginFailure(5, now);
+
+            UpdatedAt = now;
+        }
+
+        public void RecordSuccessfulLogin(
+            DateTime now)
+        {
+            EnsureSecuritySetting();
+
+            SecuritySetting!.ResetLoginFailure(now);
+
+            LastLoginAt = now;
+
+            UpdatedAt = now;
+        }
+
+        #endregion
     }
 }

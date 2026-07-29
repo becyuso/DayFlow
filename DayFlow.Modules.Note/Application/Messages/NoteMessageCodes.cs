@@ -13,10 +13,14 @@
         public const string NotebookAccessDenied =
             $"{NOTES}_NOTEBOOK_ACCESS_DENIED";
 
+        public const string NotebookNoteLimitExceeded =
+            $"{NOTES}_NOTEBOOK_NOTE_LIMIT_EXCEEDED";
+
         public const string NoteNotFound =
             $"{NOTES}_NOTE_NOT_FOUND";
 
         public const string NoteTitleTooLong =
             $"{NOTES}_NOTE_TITLE_TOO_LONG";
+
     }
 }

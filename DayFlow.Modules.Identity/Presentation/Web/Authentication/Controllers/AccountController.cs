@@ -37,18 +37,18 @@ namespace DayFlow.Modules.Identity.Presentation.Web.Authentication.Controllers
         public async Task<IActionResult> SignIn(string email, string password, string returnUrl = "/")
         {
             var result = await _mediator.Send(new LoginCommand(email, password));
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
-                ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Invalid credentials");
+                ModelState.AddModelError(string.Empty, result?.Data?.ErrorMessage ?? "Invalid credentials");
                 ViewData["ReturnUrl"] = returnUrl;
                 return View();
             }
 
             var claims = new List<Claim>
             {
-                new (ClaimTypes.Name, result.DisplayName ?? string.Empty),
-                new (ClaimTypes.Email, result.Email ?? string.Empty),
-                new (ClaimTypes.NameIdentifier, result.PublicId?.ToString() ?? string.Empty)
+                new (ClaimTypes.Name, result.Data.DisplayName ?? string.Empty),
+                new (ClaimTypes.Email, result.Data.Email ?? string.Empty),
+                new (ClaimTypes.NameIdentifier, result.Data.PublicId?.ToString() ?? string.Empty)
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

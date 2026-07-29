@@ -2,7 +2,7 @@
 {
     public class Result : IResult
     {
-        public bool Success { get; init; }
+        public bool IsSuccess { get; init; }
 
         public string? Code { get; init; }
 
@@ -23,7 +23,7 @@
         {
             return new Result
             {
-                Success = true,
+                IsSuccess = true,
                 Code = code
             };
         }
@@ -33,7 +33,7 @@
         {
             return new Result
             {
-                Success = false,
+                IsSuccess = false,
                 Code = code
             };
         }
@@ -57,7 +57,7 @@
         {
             return new Result<T>
             {
-                Success = true,
+                IsSuccess = true,
                 Data = data,
                 Code = code
             };
@@ -68,7 +68,7 @@
         {
             return new Result<T>
             {
-                Success = false,
+                IsSuccess = false,
                 Code = code
             };
         }

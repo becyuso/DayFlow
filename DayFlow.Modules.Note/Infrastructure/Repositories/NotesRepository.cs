@@ -23,6 +23,17 @@ namespace DayFlow.Modules.Notes.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.NoteId == noteId, cancellationToken);
         }
 
+        public async Task<int> CountByNotebookIdAsync(
+            Guid notebookId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _db.Notes
+                .AsNoTracking()
+                .CountAsync(
+                    x => x.NotebookId == notebookId,
+                    cancellationToken);
+        }
+
         public void Add(Note note)
         {
             _db.Notes.Add(note);

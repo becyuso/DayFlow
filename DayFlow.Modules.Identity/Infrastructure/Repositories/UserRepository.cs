@@ -10,10 +10,23 @@ namespace DayFlow.Modules.Identity.Infrastructure.Repositories
 
         public UserRepository(IdentityDbContext db) => _db = db;
 
-        public async Task<User?> GetByEmailReadOnlyAsync(string email, CancellationToken cancellationToken = default)
+        public async Task<User?> GetByEmailReadOnlyAsync(
+            string email,
+            CancellationToken cancellationToken = default)
         {
             return await _db.Users.AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+        }
+
+        public async Task<User?> GetByEmailAsync(
+            string email,
+            CancellationToken cancellationToken)
+        {
+            return await _db.Users
+                .Include(x => x.SecuritySetting)
+                .FirstOrDefaultAsync(
+                    x => x.Email == email,
+                    cancellationToken);
         }
     }
 }

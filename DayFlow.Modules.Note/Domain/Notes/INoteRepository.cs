@@ -6,6 +6,8 @@
 
         Task<Note?> GetByIdReadOnlyAsync(Guid noteId, CancellationToken cancellationToken = default);
 
+        Task<int> CountByNotebookIdAsync(Guid notebookId, CancellationToken cancellationToken = default);
+
         void Add(Note note);
 
         void Remove(Note note);

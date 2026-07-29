@@ -26,10 +26,19 @@ namespace DayFlow.Modules.Notes.Application.Features.Note.Create
             if (request.UserId == default || request.UserId == Guid.Empty)
                 return Result<CreateResult>.Fail(CommonMessageCode.InvalidUser);
 
-            var notebook =
-                await _notebookRepository.GetByIdAsync(request.NotebookId, cancellationToken);
-            if (notebook == null)
+            var notebook = await _notebookRepository.GetByIdAsync(
+                request.NotebookId, 
+                cancellationToken);
+
+            if (notebook is null)
                 return Result<CreateResult>.Fail(NoteMessageCodes.NotebookNotFound);
+
+            var currentNoteCount = await _noteRepository.CountByNotebookIdAsync(
+                request.NotebookId,
+                cancellationToken);
+
+            if (!Domain.Notebooks.Notebook.EnsureCanAddNote(currentNoteCount))
+                return Result<CreateResult>.Fail(NoteMessageCodes.NotebookNoteLimitExceeded);
 
             var time = _iClock.TaiwanNow;
 
